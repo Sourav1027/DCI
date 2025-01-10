@@ -205,7 +205,7 @@
   transition: all 0.3s ease;
   height: calc(100vh - 60px); /* Subtract header height */
   overflow-y: auto;
-  
+  margin-bottom:20px;
 }
 
 /* Card Styles */
@@ -280,7 +280,7 @@
 
 /* Submenu item colors */
 .submenu .nav-link .nav-text {
-  color: #4b5563;
+  color:rgb(235, 238, 243);
 }
 
 .submenu .nav-link:hover .nav-text,

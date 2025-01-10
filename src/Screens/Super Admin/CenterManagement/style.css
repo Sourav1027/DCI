@@ -1,0 +1,221 @@
+/* CenterManagement.css */
+.center-management-container {
+    padding: 10px;
+    background-color: #f8f9fa;
+    /* min-height: 100vh; */
+    margin-top:20px;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    align-items: center;
+    flex-wrap:wrap;
+    margin-bottom: 24px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .header-content {
+    flex: 1;
+  }
+  
+  .dashboard-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+  }
+  
+  .dashboard-subtitle {
+    color: #6c757d;
+    margin: 4px 0 0 0;
+    font-size: 14px;
+  }
+  
+  .header-actions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .export-btn, .add-btn {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .export-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border: none;
+    color: white;
+  }
+  
+  .export-btn:hover {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  }
+  
+  .add-btn {
+    background-color: #0d6efd;
+    border: none;
+    color: white;
+  }
+  
+  .add-btn:hover {
+    background-color: #0b5ed7;
+  }
+  
+  .search-section {
+    margin-top: 16px; /* Adds spacing from the header-actions */
+    width: 100%; /* Ensures it takes the full width of its container */
+    display: flex;
+    justify-content: flex-end; /* Adjust alignment if needed */
+    flex-wrap: wrap; /* Ensures responsive wrapping */
+  }
+  
+  .search-bar {
+    position: relative;
+    max-width: 400px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #dce0e4;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
+  }
+  
+  .data-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width:100%;
+    margin-top:10px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  
+  .custom-table th {
+    background: #f8fafc;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .custom-table td {
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    font-size: 14px;
+    text-align: left;
+
+  }
+  
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .status-badge.active {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .status-badge.inactive {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 4px; /* Space between buttons */
+    justify-content: left; /* Center buttons horizontally */
+    align-items: center; /* Center buttons vertically */
+    height: 100%; /* Ensure it spans the height of the table cell */
+}
+  
+  .btn-icon {
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-icon:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .btn-edit {
+    color: #0d6efd;
+  }
+  
+  .btn-status {
+    color: #dc3545;
+  }
+  
+  .btn-delete {
+    color: #dc3545;
+  }
+  
+  .pagination-section {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+  }
+  
+  .pagination-btn {
+    padding: 6px 12px;
+    border: 1px solid #dce0e4;
+    border-radius: 4px;
+    background-color: white;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination-btn.active {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+  }
+  
+  .pagination-btn:hover:not(.active) {
+    background-color: #f8f9fa;
+  }
+  
+  .success-toast {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    z-index: 1000;
+  }

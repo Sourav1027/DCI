@@ -3,19 +3,25 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
-  Edit,
-  Trash2,
-  Download,
   Plus,
   GraduationCap,
 } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPencil,
+  faTrash,
+  faFileExport,
+} from "@fortawesome/free-solid-svg-icons";
 import "./student.css";
 import AddStudent from "./AddNewStudent/addnewStudent";
+import * as XLSX from "xlsx";
+import { deleteConfirmation } from "../../components/Providers/sweetalert";
+import "animate.css";
 
 const Student = () => {
   const [showAddForm, setShowAddForm] = useState(false);
 
-  const students = [
+  const [students, setStudents] = useState([
     {
       id: 1,
       name: "John Doe",
@@ -56,36 +62,56 @@ const Student = () => {
       batch: "Morning Batch",
       status: "Active",
     },
-  ];
+  ]);
+
+  const handleDelete = async (studentId) => {
+    const deleteStudent = () => {
+      const updatedStudents = students.filter(
+        (student) => student.id !== studentId
+      );
+      setStudents(updatedStudents);
+    };
+
+    await deleteConfirmation(deleteStudent);
+  };
+
   const handleAddStudent = (newStudent) => {
     console.log("New student:", newStudent);
   };
 
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(students);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Students");
+    XLSX.writeFile(wb, "StudentsList.xlsx");
+  };
+
   return (
     <div className="student-dashboard">
-      <div className="dashboard-container">
-        {/* Header */}
-        <div className="dashboard-header">
-          <div className="title-section">
-            <GraduationCap size={32} className="title-icon" />
-            <h1>Student Management</h1>
-          </div>
-          <div className="header-actions">
-            <button className="add-btn" onClick={() => setShowAddForm(true)}>
-              <Plus size={18} />
-              <span>Add New Student</span>
-            </button>
-            {showAddForm && (
-              <AddStudent
-                onClose={() => setShowAddForm(false)}
-                onSubmit={handleAddStudent}
-              />
-            )}
-            <button className="export-btn">
-              <Download size={18} />
-              <span>Export</span>
-            </button>
-          </div>
+      {/* Header */}
+      <div className="dashboard-header">
+        <div className="title-section">
+          <GraduationCap size={32} className="title-icon" />
+          <h1>Student Management</h1>
+        </div>
+        <div className="header-actions">
+          <button className="add-btn" onClick={() => setShowAddForm(true)}>
+            <Plus size={18} />
+            <span>Add New Student</span>
+          </button>
+          {showAddForm && (
+            <AddStudent
+              onClose={() => setShowAddForm(false)}
+              onSubmit={handleAddStudent}
+            />
+          )}
+          <button
+            className="btn btn-outline-primary export-btn"
+            onClick={exportToExcel}
+          >
+            <FontAwesomeIcon icon={faFileExport} className="me-2" />
+            Export
+          </button>
         </div>
 
         {/* Filters */}
@@ -159,10 +185,13 @@ const Student = () => {
                   <td>
                     <div className="action-buttons">
                       <button className="icon-btn edit">
-                        <Edit size={16} />
+                        <FontAwesomeIcon icon={faPencil} />
                       </button>
-                      <button className="icon-btn delete">
-                        <Trash2 size={16} />
+                      <button
+                        className="icon-btn delete"
+                        onClick={() => handleDelete(student.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </div>
                   </td>

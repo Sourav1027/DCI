@@ -1,138 +1,241 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
+import { Book, Plus, Save, WatchIcon, X } from "lucide-react";
+import { Modal, Button } from "react-bootstrap";
+import { deleteConfirmation } from "../../Providers/sweetalert";
+import 'animate.css';
+
+const initialFormData = {
+  courseName: "",
+  duration: "",
+};
 
 const Course = () => {
-  const [courses, setCourses] = useState([]);
-  const [courseName, setCourseName] = useState("");
+  const [courses, setcourses] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
+  const [formData, setFormData] = useState(initialFormData);
+  const [errors, setErrors] = useState({});
+
+  // Validation function to check form inputs
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.courseName) {
+      newErrors.courseName = "Course Name is required";
+    }
+    if (!formData.duration || isNaN(formData.duration) || formData.duration <= 0) {
+      newErrors.duration = "Duration must be a positive number";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission for adding/updating courses
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (courseName.trim() === "") return;
+    if (!validateForm()) return;
 
     const currentDate = new Date().toLocaleDateString();
 
     if (editIndex !== null) {
-      const updatedCourses = [...courses];
-      updatedCourses[editIndex] = { name: courseName, date: currentDate };
-      setCourses(updatedCourses);
+      // Update existing course
+      const updatedcourses = [...courses];
+      updatedcourses[editIndex] = {
+        name: formData.courseName.trim(),
+        duration: formData.duration.trim(),
+        date: currentDate,
+      };
+      setcourses(updatedcourses);
       setEditIndex(null);
     } else {
-      setCourses([...courses, { name: courseName, date: currentDate }]);
+      // Add new course
+      setcourses([
+        ...courses,
+        { name: formData.courseName.trim(), duration:formData.duration, date: currentDate },
+      ]);
     }
 
-    setCourseName("");
-    setShowForm(false);
+    // Reset form and close modal
+    setFormData(initialFormData);
+    setShowModal(false);
   };
 
+  // Populate form for editing a course
   const handleEdit = (index) => {
-    setCourseName(courses[index].name);
+    setFormData({ courseName: courses[index].name });
     setEditIndex(index);
-    setShowForm(true);
+    setShowModal(true);
+    setErrors({});
   };
 
-  const handleDelete = (index) => {
-    const updatedCourses = courses.filter((_, i) => i !== index);
-    setCourses(updatedCourses);
+  // Confirm before deleting a course
+  const handleDelete = async (index) => {
+    const deleteCourse = () => {
+      const updatedcourses = courses.filter((_, i) => i !== index);
+      setcourses(updatedcourses);
+    };
+
+    await deleteConfirmation(deleteCourse);
+  };
+  // Close modal and reset form
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setFormData(initialFormData);
+    setEditIndex(null);
+    setErrors({});
+  };
+
+  // Handle input changes and clear specific field errors
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Remove error message as user types
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
   };
 
   return (
     <div className="course-container">
       <div className="header-section">
         <h1 className="course-title">Course Management</h1>
-        <button
-          className="add-course-btn"
-          onClick={() => {
-            setShowForm(true);
-            setCourseName("");
-            setEditIndex(null);
-          }}
-        >
-          <FontAwesomeIcon icon={faPlus} /> Add New Course
-        </button>
-      </div>
 
-      {showForm && (
-        <div className="form-section">
-          <form onSubmit={handleSubmit} className="course-form">
-            <div className="form-group">
-              <label htmlFor="courseName">Course Name</label>
-              <input
-                type="text"
-                className="form-control"
-                id="courseName"
-                placeholder="Enter course name"
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
-              />
-            </div>
-            <div className="button-group">
-              <button type="submit" className="submitButton">
-                {editIndex !== null ? "Update Course" : "Add Course"}
-              </button>
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() => {
-                  setShowForm(false);
-                  setCourseName("");
-                  setEditIndex(null);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
+        <div className="header-batch">
+          <button
+            className="add-course-btn"
+            onClick={() => {
+              setShowModal(true);
+              setFormData(initialFormData);
+              setEditIndex(null);
+              setErrors({});
+            }}
+          >
+            <Plus size={18} />
+            <span>Add New Course</span>
+          </button>
         </div>
-      )}
 
-<div className="table-container">
-<table className="data-table">
-          <thead>
-            <tr>
-              <th>Sr. No.</th>
-              <th>Course Name</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {courses.map((course, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {index + 1}
-                </td>
+        {/* Modal for Adding/Editing Batch */}
+        <Modal show={showModal} onHide={handleCloseModal}  backdrop="static" keyboard={false}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              {editIndex !== null ? "Edit Course" : "Add New Course"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="form-group">
+                <label htmlFor="courseName">Course Name</label>
+                <div className="input-group">
+                  <span className="input-icon">
+                    <Book size={18} />
+                  </span>
+                  <input
+                    type="text"
+                    className={`form-input ${errors.courseName ? "is-invalid" : ""}`}
+                    id="courseName"
+                    name="courseName"
+                    placeholder="Enter course name"
+                    value={formData.courseName}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.courseName && (
+                  <div className="error-message">{errors.courseName}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="duration">Duration Time</label>
+                <div className="input-group">
+                  <span className="input-icon">
+                    <WatchIcon size={18} />
+                  </span>
+                  <input
+                    type="text"
+                    className={`form-input ${errors.duration ? "is-invalid" : ""}`}
+                    id="duration"
+                    name="duration"
+                    placeholder="Enter Duration (in months)"
+                    value={formData.duration}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.duration && (
+                  <div className="error-message">{errors.duration}</div>
+                )}
+              </div>
+              <div className="button-group mt-3">
+                <Button 
+                  type="submit" 
+                  variant="primary"
+                  
+                >
+                  <Save className="mr-2" size={16} />
+                  {editIndex !== null ? "Update Course" : "Add Course"}
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleCloseModal}
+                  className="ms-2"
+                >
+                  <X className="mr-2" size={16} />
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </Modal.Body>
+        </Modal>
 
-                <td>{course.name}</td>
-                <td>{course.date}</td>
-                <td>
-                  <button
-                    className="action-btn edit"
-                    onClick={() => handleEdit(index)}
-                  >
-                    <FontAwesomeIcon icon={faEdit} />
-                  </button>
-                  <button
-                    className="action-btn delete"
-                    onClick={() => handleDelete(index)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {courses.length === 0 && (
+        {/* Table Displaying courses */}
+        <div className="table-container">
+          <table className="data-table">
+            <thead>
               <tr>
-                <td colSpan="4" className="no-data">
-                  No courses available. Please add a course.
-                </td>
+                <th>Sr. No.</th>
+                <th>Batch Name</th>
+                <th>Duration Time</th>
+                <th>Date</th>
+                <th>Actions</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {courses.length > 0 ? (
+                courses.map((course, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {index + 1}
+                    </td>
+                    <td>{course.name}</td>
+                    <td>{course.duration} month{course.duration > 1 ? 's' : ''}</td>
+                    <td>{course.date}</td>
+                    <td>
+                    <div className="action-buttons">
+                       <button className="btn btn-icon btn-edit"onClick={() => handleEdit(index)}>
+                        <FontAwesomeIcon icon={faPencil} />
+                      </button>
+                      <button className="btn btn-icon btn-delete"onClick={() => handleDelete(index)}>
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="no-data text-center">
+                    No courses available. Please add a course.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -81,37 +81,16 @@
   /* Filters */
   .filter-container {
     display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
     margin-bottom: 15px;
     margin-top:15px;
-    width:100%;
+    justify-content: end;
   }
   
-  .select-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e0e7ff;
-    border-radius: 12px;
-    background: white;
-    color: #1e293b;
-    font-size: 14px;
-    font-weight: 500;
-    outline: none;
-    transition: all 0.3s ease;
-  }
-  
-  .select-input:focus {
-    border-color: #6366f1;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-  }
-  
-  .search-wrapper {
+  .search-container {
     position: relative;
-    width:100%;
     border: 2px solid #e0e7ff;
     border-radius: 12px;
-  
   }
   .search-wrapper:focus {
     border-color: #6366f1;
@@ -142,7 +121,7 @@
   } */
   
   /* Table */
-  .table-container {
+  .table-box {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -150,12 +129,14 @@
     width:100%;
   }
   
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
+  .table-full {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px; /* Small text size */
+  background-color: #fff;
   }
   
-  .data-table th {
+  .table-full th {
     background: #f8fafc;
     padding: 16px 24px;
     text-align: left;
@@ -166,11 +147,12 @@
     letter-spacing: 0.5px;
   }
   
-  .data-table td {
+  .table-full td {
     padding: 16px 24px;
     border-bottom: 1px solid #e2e8f0;
     color: #1e293b;
-    font-size: 14px;
+    font-size: 12px;
+    
   }
   
   .student-info {

@@ -3,9 +3,9 @@ import {X, User, Mail, Phone, Calendar, MapPin, Book, Clock, Building2, UserSear
   School } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
-import "./addnew.css";
+import "./addEnquiry.css";
 
-const AddStudent = ({ onClose, onSubmit }) => {
+const AddEnquiry = ({ onClose, onSubmit }) => {
   const initialFormData = {
     centerName: "",
     firstName: "",
@@ -14,19 +14,10 @@ const AddStudent = ({ onClose, onSubmit }) => {
     phone: "",
     dob: "",
     address: "",
-    fatherName: "",
-    motherName: "",
-    photo: null,
     course: "",
     batch: "",
-    previousEducation: "",
-    emergencyContact: "",
     gender: "",
-    admissionDate: "",
-    fee: "",
     counsellorName: "",
-    reference: "",
-    paymentTerm: "",
     collegeName: "",
   };
 
@@ -64,15 +55,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
     if (!formData.dob) {
       newErrors.dob = "Date of Birth is required";
     }
-    if (!formData.fatherName) {
-      newErrors.fatherName = "Father Name is required";
-    }
-    if (!formData.motherName) {
-      newErrors.motherName = "Mother Name is required";
-    }
-    if (!formData.photo) {
-      newErrors.photo = "Photo is required";
-    }
+   
     if (!formData.gender) {
       newErrors.gender = "Gender is required";
     }
@@ -82,30 +65,13 @@ const AddStudent = ({ onClose, onSubmit }) => {
     if (!formData.batch) {
       newErrors.batch = "Batch is required";
     }
-    if (!formData.previousEducation) {
-      newErrors.previousEducation = "Previous Education is required";
-    }
-    if (!formData.emergencyContact) {
-      newErrors.emergencyContact = "Emergency Contact is required";
-    }
     if (!formData.counsellorName) {
       newErrors.counsellorName = "Counsellor Name is required";
-    }
-    if (!formData.reference) {
-      newErrors.reference = "Reference is required";
-    }
-    if (!formData.fee) {
-      newErrors.fee = "Fee is required";
-    }
-    if (!formData.paymentTerm) {
-      newErrors.paymentTerm = "Payment Term is required";
     }
     if (!formData.collegeName) {
       newErrors.collegeName = "College Name is required";
     }
-    if (!formData.admissionDate) {
-      newErrors.admissionDate = "Admission Date is required";
-    }
+
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -152,7 +118,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
       <div className="modal-content">
         <div className="modal-header">
           <div className="header-content">
-            <h2>Student Registration Form</h2>
+            <h2>Student Enquiry Form</h2>
           </div>
           <button className="close-btn" onClick={onClose}>
             <X size={20} />
@@ -162,7 +128,6 @@ const AddStudent = ({ onClose, onSubmit }) => {
         <form onSubmit={handleSubmit} className="student-form">
           <div className="form-grid">
             <div className="form-section">
-              <h3>Personal Information</h3>
               <div className="input-grid">
                 <div class="row g-2 text-center">
                   <div class="col-sm-6 col-md-4">
@@ -336,30 +301,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
-                    <div className="form-group">
-                      <label htmlFor="photo" className="form-label">
-                        Photo Upload
-                      </label>
-                      <div className="input-group">
-                        <span className="input-icon">
-                          <ImageUp size={18} />
-                        </span>
-                        <input
-                          type="file"
-                          className={`form-input ${errors.photo ? "is-invalid" : ""}`}
-                          id="photo"
-                          name="photo"
-                          value={formData.photo}
-                          onChange={handleChange}
-                          placeholder="Enter Photo Upload"
-                        />
-                      </div>
-                      {errors.photo && (
-                        <div className="error-message">{errors.photo}</div>
-                      )}
-                    </div>
-                  </div>
+                  
                   <div class="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="address" className="form-label">
@@ -384,91 +326,6 @@ const AddStudent = ({ onClose, onSubmit }) => {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="form-section">
-              <h3>Contact Information</h3>
-              <div className="input-grid">
-              <div class="row g-2 text-center">
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="fatherName" className="form-label">
-                      Father Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <User size={18} />
-                      </span>
-                      <input
-                        type="fatherName"
-                        className={`form-input ${errors.fatherName ? "is-invalid" : ""}`}
-                        id="fatherName"
-                        name="fatherName"
-                        value={formData.fatherName}
-                        onChange={handleChange}
-                        placeholder="Enter Father Name"
-                      />
-                    </div>
-                    {errors.fatherName && (
-                      <div className="error-message">{errors.fatherName}</div>
-                    )}
-                  </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                  <div className="form-group">
-                    <label htmlFor="motherName" className="form-label">
-                      Mother Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <User size={18} />
-                      </span>
-                      <input
-                        type="motherName"
-                        className={`form-input ${errors.motherName ? "is-invalid" : ""}`}
-                        id="motherName"
-                        name="motherName"
-                        value={formData.motherName}
-                        onChange={handleChange}
-                        placeholder="Enter Mother Name"
-                      />
-                    </div>
-                    {errors.motherName && (
-                      <div className="error-message">{errors.motherName}</div>
-                    )}
-                  </div>
-                </div>
-               
-                <div class="col-sm-6 col-md-4">
-                  <div className="form-group">
-                    <label htmlFor="emergencyContact" className="form-label">
-                      Emergency Contact Number
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Phone size={18} />
-                      </span>
-                      <input
-                        type="tel"
-                        maxLength="10"
-                        className={`form-input ${errors.emergencyContact ? "is-invalid" : ""}`}
-                        id="emergencyContact"
-                        name="emergencyContact"
-                        value={formData.emergencyContact}
-                        onChange={handleMobileChange}
-                        placeholder="Enter Contact Number"
-                        pattern="[0-9]{10}"
-                      />
-                    </div>
-                    {errors.emergencyContact && (
-                      <div className="error-message">
-                        {errors.emergencyContact}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
             </div>
 
             <div className="form-section">
@@ -525,30 +382,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
                     )}
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="reference" className="form-label">
-                      Reference
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Asterisk size={18} />
-                      </span>
-                      <input
-                        type="reference"
-                        className={`form-input ${errors.reference ? "is-invalid" : ""}`}
-                        id="reference"
-                        name="reference"
-                        value={formData.reference}
-                        onChange={handleChange}
-                        placeholder="Enter Reference"
-                      />
-                    </div>
-                    {errors.reference && (
-                      <div className="error-message">{errors.reference}</div>
-                    )}
-                  </div>
-                </div>
+        
                 <div class="col-sm-12 col-md-4 col-lg-4">
                   <div className="form-group">
                     <label htmlFor="counsellorName" className="form-label">
@@ -575,54 +409,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
                     )}
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="fee" className="form-label">
-                      Fee Amount
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <IndianRupee size={18} />
-                      </span>
-                      <input
-                        type="fee"
-                        className={`form-input ${errors.fee ? "is-invalid" : ""}`}
-                        id="fee"
-                        name="fee"
-                        value={formData.fee}
-                        onChange={handleChange}
-                        placeholder="Enter Amount"
-                      />
-                    </div>
-                    {errors.fee && (
-                      <div className="error-message">{errors.fee}</div>
-                    )}
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="paymentTerm" className="form-label">
-                      Payment Term
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Landmark size={18} />
-                      </span>
-                      <select
-                        id="paymentTerm"
-                        name="paymentTerm"
-                        className={`form-input ${errors.paymentTerm ? "is-invalid" : ""}`}
-                      >
-                        <option value="">Select Payment Term</option>
-                        <option>Online</option>
-                        <option>Cash</option>
-                      </select>
-                    </div>
-                    {errors.paymentTerm && (
-                      <div className="error-message">{errors.paymentTerm}</div>
-                    )}
-                  </div>
-                </div>
+               
                 <div class="col-sm-12 col-md-4 col-lg-4">
                   <div className="form-group">
                     <label htmlFor="collegeName" className="form-label">
@@ -647,32 +434,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
                     )}
                   </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="admissionDate" className="form-label">
-                      Admission Date
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Calendar size={18} />
-                      </span>
-                      <input
-                        type="date"
-                        className={`form-input ${errors.admissionDate ? "is-invalid" : ""}`}
-                        id="admissionDate"
-                        name="admissionDate"
-                        value={formData.admissionDate}
-                        onChange={handleChange}
-                        placeholder="Enter Admission Date"
-                      />
-                    </div>
-                    {errors.admissionDate && (
-                      <div className="error-message">
-                        {errors.admissionDate}
-                      </div>
-                    )}
-                  </div>
-                </div>
+               
               </div>
             </div>
             </div>
@@ -681,7 +443,7 @@ const AddStudent = ({ onClose, onSubmit }) => {
           <div className="form-actions">
             <button type="submit" className="btn btn-primary">
               <FontAwesomeIcon icon={faPlus} className="me-2" />
-              Add Student
+              Submit
             </button>
             <button
               type="button"
@@ -698,4 +460,4 @@ const AddStudent = ({ onClose, onSubmit }) => {
   );
 };
 
-export default AddStudent;
+export default AddEnquiry;

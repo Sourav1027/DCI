@@ -1,0 +1,26 @@
+.add-center-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Adds spacing between form elements */
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adds spacing between columns */
+  }
+  
+  .form-row > div {
+    flex: 1; /* Ensures equal width for all elements */
+    min-width: 200px; /* Prevents elements from shrinking too much */
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: flex-end; /* Aligns buttons to the right */
+    gap: 1rem;
+  }
+  
+  .me-2 {
+    margin-right: 0.5rem; /* Adjust spacing between icons and labels */
+  }

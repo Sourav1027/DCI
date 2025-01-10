@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LoginForm from "./login-form/loginform";
+import SignupForm from "./signup-form/signup-form";
 import Copyright from "../copyright/copyright";
 import img from "../../../assets/photos/cllg.svg";
 import Logo from "../../../assets/logo/logo";
-import "./login.css";
+import "./signup.css";
 
-const Login = () => {
+const Signup = () => {
   return (
     <div className="login-container">
       <div className="login-wrapper">
@@ -30,15 +30,15 @@ const Login = () => {
 
             {/* Sign-in Form */}
             <div className="login-heading">
-              <h4 className="login-title">Sign in</h4>
-              <p className="login-subtitle">Sign in to your account</p>
+              <h4 className="login-title">Register</h4>
+              <p className="login-subtitle">Register in to your account</p>
             </div>
-            <LoginForm />
+            <SignupForm />
             <hr className="login-divider" />
             <p className="login-register-prompt">
-              Don’t have an account?{" "}
-              <Link to="/Signup" className="login-register-link">
-                Sign up
+              Already have an account?{" "}
+              <Link to="/" className="login-register-link">
+                Sign in
               </Link>
             </p>
           </div>
@@ -51,4 +51,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

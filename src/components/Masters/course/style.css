@@ -1,8 +1,9 @@
 .course-container {
-  padding: 2rem;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  
+  padding: 10px;
+  background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
+  /* min-height: 100vh; */
+  margin-top: 20px;
+  width:100%;
 }
 
 .header-section {
@@ -143,26 +144,25 @@
 }
 
 
-.action-btn {
-  padding: 0.5rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: transform 0.2s, background-color 0.2s;
+.action-buttons {
+  display: flex;
+  gap: 4px; /* Space between buttons */
+  justify-content: left; /* Center buttons horizontally */
+  align-items: left; /* Center buttons vertically */
+  height: 100%; /* Ensure it spans the height of the table cell */
 }
 
-.action-btn.edit {
+.action-buttons.edit {
   background: #dbeafe;
   color: #2563eb;
 }
 
-.action-btn.delete {
+.action-buttons.delete {
   background: #fee2e2;
   color: #dc2626;
 }
 
-.action-btn:hover {
+.action-buttons:hover {
   transform: translateY(-2px);
 }
 

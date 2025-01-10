@@ -1,0 +1,257 @@
+/* Notification.css */
+.notification-container {
+  padding: 10px;
+  background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
+  /* min-height: 100vh; */
+  margin-top: 20px;
+  width:100%;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  flex-wrap:wrap;
+}
+
+.header-content {
+  flex: 1;
+}
+.main-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6366f1;
+  text-align: left;
+  margin-bottom: 10px;
+}
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.add-btn {
+  background-color: #0d6efd;
+  border: none;
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.search-section {
+  margin-top: 16px; /* Adds spacing from the header-actions */
+  width: 100%; /* Ensures it takes the full width of its container */
+  display: flex;
+  justify-content: flex-end; /* Adjust alignment if needed */
+  flex-wrap: wrap; /* Ensures responsive wrapping */
+}
+
+.search-bar {
+  position: relative;
+  max-width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #dce0e4;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
+}
+
+.data-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width:100%;
+  margin-top:10px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.custom-table th {
+  background: #f8fafc;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.custom-table td {
+  border-bottom: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-size: 14px;
+  text-align: left;
+
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.last-buttons {
+  display: flex;
+  gap: 4px; /* Space between buttons */
+  justify-content: left; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  height: 100%; /* Ensure it spans the height of the table cell */
+}
+
+.btn-icon {
+  padding: 6px;
+  border-radius: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-icon:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-edit {
+  color: #0d6efd;
+}
+
+.btn-status {
+  color: #dc3545;
+}
+
+.btn-delete {
+  color: #dc3545;
+}
+
+.notification-form {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.send-button {
+  display: block;
+  width: 100%;
+  background-color: #10b981;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #059669;
+}
+
+.history-section {
+  margin-top: 30px;
+}
+
+.history-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-section th,
+.history-section td {
+  padding: 10px 15px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+
+.history-section th {
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+}
+
+.history-section td {
+  color: #4b5563;
+}

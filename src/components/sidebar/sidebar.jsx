@@ -1,20 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import {Routes,Route,Link,useLocation,useNavigate,} from "react-router-dom";
+import {Routes,Route, Link, useLocation, useNavigate,} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTachometerAlt, faUsers, faCreditCard, faBook, faSms, faSun, faMoon, faUser, faSignOutAlt, faChevronDown, faChevronUp, faBars,
- faTimes,faFileAlt,faClock,faScrewdriverWrench,faBookBookmark} from "@fortawesome/free-solid-svg-icons";
+import {faTachometerAlt,faUsers,faCreditCard,faBook,faSms,faSun,faMoon,faUser,faSignOutAlt,faChevronDown,faChevronUp,faBars,faTimes,
+  faFileAlt,faClock,faScrewdriverWrench,faBookBookmark,faSchool,faSearchLocation,faChalkboardTeacher,faBookOpen,} from "@fortawesome/free-solid-svg-icons";
 import Dashboard from "../Dashboard/dashboard";
 import "./sidebar.css";
 import Student from "../../Screens/Students/student";
 import FeeManagement from "../../Screens/FeeManagement/feeManagement";
 import ExamManagement from "../../Screens/ExamManagement/examManagement";
-import SMS from "../../Screens/SMS/sms";
+import SMS from "../../Screens/Super Admin/SMS/sms";
 import Certificate from "../../Screens/Certificates/certificate";
 import Profile from "../utils/profile/profile";
 import Login from "../EntryScreen/Login/login";
 import Course from "../Masters/course/course";
 import Batch from "../Masters/Batch/batch";
+import CenterManagement from "../../Screens/Super Admin/CenterManagement/centerManagement";
+import EnquiryManagement from "../../Screens/Super Admin/EnquiryManagement/enquiryManagement";
+import Trainer from "../../Screens/Super Admin/TrainerManagement/trainer";
+import Syllabus from "../../Screens/Super Admin/syllabus/syllabus";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -32,6 +36,20 @@ const Sidebar = () => {
       path: "/dashboard",
       component: Dashboard,
     },
+    //============================Super-admin===============================================
+    {
+      title: "Centers",
+      icon: <FontAwesomeIcon icon={faSchool} />,
+      path: "/center-management",
+      component: CenterManagement,
+    },
+    {
+      title: "Enquiry",
+      icon: <FontAwesomeIcon icon={faSearchLocation} />,
+      path: "/enquiry-management",
+      component: EnquiryManagement,
+    },
+
     {
       title: "Students",
       icon: <FontAwesomeIcon icon={faUsers} />,
@@ -39,16 +57,16 @@ const Sidebar = () => {
       component: Student,
     },
     {
-      title: "Fee Management",
-      icon: <FontAwesomeIcon icon={faCreditCard} />,
-      path: "/fee-management",
-      component: FeeManagement,
+      title: "Trainers",
+      icon: <FontAwesomeIcon icon={faChalkboardTeacher} />,
+      path: "/trainer-management",
+      component: Trainer,
     },
     {
-      title: "Exam Structure",
-      icon: <FontAwesomeIcon icon={faBook} />,
-      path: "/exam-managment",
-      component: ExamManagement,
+      title: "Syllabus",
+      icon: <FontAwesomeIcon icon={faBookOpen} />,
+      path: "/syllabus-management",
+      component: Syllabus,
     },
     {
       title: "SMS",
@@ -56,12 +74,29 @@ const Sidebar = () => {
       path: "/sms",
       component: SMS,
     },
-    {
-      title: "Certificate",
-      icon: <FontAwesomeIcon icon={faFileAlt} />,
-      path: "/certificate-generator",
-      component: Certificate,
-    },
+    //=================================================
+
+    // {
+    //   title: "Fee Management",
+    //   icon: <FontAwesomeIcon icon={faCreditCard} />,
+    //   path: "/fee-management",
+    //   component: FeeManagement,
+    // },
+    // {
+    //   title: "Exam Structure",
+    //   icon: <FontAwesomeIcon icon={faBook} />,
+    //   path: "/exam-managment",
+    //   component: ExamManagement,
+    // },
+  
+    // {
+    //   title: "Certificate",
+    //   icon: <FontAwesomeIcon icon={faFileAlt} />,
+    //   path: "/certificate-generator",
+    //   component: Certificate,
+    // },
+
+
     {
       title: "Master",
       icon: <FontAwesomeIcon icon={faScrewdriverWrench} />,
