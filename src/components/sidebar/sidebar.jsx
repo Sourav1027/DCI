@@ -2,13 +2,13 @@
 import React, { useState, useEffect } from "react";
 import {Routes,Route, Link, useLocation, useNavigate,} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTachometerAlt,faUsers,faCreditCard,faBook,faSms,faSun,faMoon,faUser,faSignOutAlt,faChevronDown,faChevronUp,faBars,faTimes,
-  faFileAlt,faClock,faScrewdriverWrench,faBookBookmark,faSchool,faSearchLocation,faChalkboardTeacher,faBookOpen,} from "@fortawesome/free-solid-svg-icons";
+import {faTachometerAlt,faUsers,faCreditCard,faBook,faSms,faUser,faSignOutAlt,faChevronDown,faChevronUp,faBars,faTimes,
+  faFileAlt,faClock,faScrewdriverWrench,faBookBookmark,faSchool,faSearchLocation,faChalkboardTeacher,faBookOpen,
+  faPersonDotsFromLine,} from "@fortawesome/free-solid-svg-icons";
 import Dashboard from "../Dashboard/dashboard";
 import "./sidebar.css";
 import Student from "../../Screens/Students/student";
-import FeeManagement from "../../Screens/FeeManagement/feeManagement";
-import ExamManagement from "../../Screens/ExamManagement/examManagement";
+import ExamManagement from "../../Screens/Super Admin/ExamManagement/examManagement";
 import SMS from "../../Screens/Super Admin/SMS/sms";
 import Certificate from "../../Screens/Certificates/certificate";
 import Profile from "../utils/profile/profile";
@@ -19,12 +19,13 @@ import CenterManagement from "../../Screens/Super Admin/CenterManagement/centerM
 import EnquiryManagement from "../../Screens/Super Admin/EnquiryManagement/enquiryManagement";
 import Trainer from "../../Screens/Super Admin/TrainerManagement/trainer";
 import Syllabus from "../../Screens/Super Admin/syllabus/syllabus";
+import FeeManagement from "../../Screens/Super Admin/FeeManagement/feeManagement";
+import SoftSkills from "../../Screens/Super Admin/softSkills/softSkills";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [isDark, setIsDark] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const [masterSubmenuOpen, setMasterSubmenuOpen] = useState(false);
@@ -36,7 +37,6 @@ const Sidebar = () => {
       path: "/dashboard",
       component: Dashboard,
     },
-    //============================Super-admin===============================================
     {
       title: "Centers",
       icon: <FontAwesomeIcon icon={faSchool} />,
@@ -49,7 +49,6 @@ const Sidebar = () => {
       path: "/enquiry-management",
       component: EnquiryManagement,
     },
-
     {
       title: "Students",
       icon: <FontAwesomeIcon icon={faUsers} />,
@@ -74,29 +73,24 @@ const Sidebar = () => {
       path: "/sms",
       component: SMS,
     },
-    //=================================================
-
-    // {
-    //   title: "Fee Management",
-    //   icon: <FontAwesomeIcon icon={faCreditCard} />,
-    //   path: "/fee-management",
-    //   component: FeeManagement,
-    // },
-    // {
-    //   title: "Exam Structure",
-    //   icon: <FontAwesomeIcon icon={faBook} />,
-    //   path: "/exam-managment",
-    //   component: ExamManagement,
-    // },
-  
-    // {
-    //   title: "Certificate",
-    //   icon: <FontAwesomeIcon icon={faFileAlt} />,
-    //   path: "/certificate-generator",
-    //   component: Certificate,
-    // },
-
-
+    {
+      title: "Fee Management",
+      icon: <FontAwesomeIcon icon={faSms} />,
+      path: "/fee-management",
+      component: FeeManagement,
+    },
+    {
+      title: "Exam Structure",
+      icon: <FontAwesomeIcon icon={faBook} />,
+      path: "/exam-management",
+      component: ExamManagement,
+    },
+    {
+      title: "Soft skills",
+      icon: <FontAwesomeIcon icon={faPersonDotsFromLine} />,
+      path: "/soft-skills",
+      component: SoftSkills,
+    },
     {
       title: "Master",
       icon: <FontAwesomeIcon icon={faScrewdriverWrench} />,
@@ -121,8 +115,8 @@ const Sidebar = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setIsOpen(window.innerWidth >= 768);
+      setIsMobileOrTablet(window.innerWidth < 992);
+      setIsOpen(window.innerWidth >= 992);
     };
 
     handleResize();
@@ -132,34 +126,31 @@ const Sidebar = () => {
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
-    if (isMobile && showProfile) {
+    if (isMobileOrTablet && showProfile) {
       setShowProfile(false);
     }
   };
+
   const toggleMasterSubmenu = (e) => {
     e.preventDefault();
     setMasterSubmenuOpen(!masterSubmenuOpen);
   };
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-    document.body.classList.toggle("dark-theme");
-  };
 
   const handleNavClick = () => {
-    if (isMobile) {
+    if (isMobileOrTablet) {
       setIsOpen(false);
     }
   };
+
   const handleProfileClick = () => {
     setShowProfile(false);
-    navigate("/profile"); // Navigate to the profile page
+    navigate("/profile");
   };
 
   const handleLogout = () => {
     setShowProfile(false);
-    // Clear authentication data (if stored in localStorage/sessionStorage)
     localStorage.removeItem("authToken");
-    navigate("/"); // Redirect to the login page
+    navigate("/");
   };
 
   const renderMenuItem = (item) => {
@@ -213,8 +204,8 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`layout-wrapper ${isDark ? "dark-theme" : ""}`}>
-      {isMobile && isOpen && (
+    <div className="layout-wrapper">
+      {isMobileOrTablet && isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={toggleSidebar}
@@ -223,12 +214,12 @@ const Sidebar = () => {
 
       <aside
         className={`sidebar-container ${isOpen ? "expanded" : "collapsed"} ${
-          isMobile ? "mobile" : ""
+          isMobileOrTablet ? "mobile" : ""
         }`}
       >
         <div className="sidebar-header">
           <h3 className="sidebar-title">d-Codetech</h3>
-          {isMobile && (
+          {isMobileOrTablet && (
             <button onClick={toggleSidebar} className="mobile-close">
               <FontAwesomeIcon icon={faTimes} size="lg" />
             </button>
@@ -244,17 +235,13 @@ const Sidebar = () => {
         className={`main-wrapper ${isOpen ? "sidebar-expanded" : "sidebar-collapsed"}`}
       >
         <header className="main-header">
-          {isMobile && (
+          {isMobileOrTablet && (
             <button className="mobile-menu" onClick={toggleSidebar}>
               <FontAwesomeIcon icon={faBars} size="lg" />
             </button>
           )}
 
           <div className="header-controls">
-            <button className="theme-toggle" onClick={toggleTheme}>
-              <FontAwesomeIcon icon={isDark ? faSun : faMoon} />
-            </button>
-
             <div className="profile-menu">
               <button
                 className="profile-toggle"
@@ -289,7 +276,6 @@ const Sidebar = () => {
                 element={item.component && <item.component />}
               />
             ))}
-            {/* Submenu routes */}
             {menuItems
               .find((item) => item.hasSubmenu)
               ?.submenuItems.map((subItem) => (

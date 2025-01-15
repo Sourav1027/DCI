@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
-import { Book, Play, Plus, Save, X } from "lucide-react";
+import { Book, Play, Plus, Save, X,Search } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteConfirmation } from "../../Providers/sweetalert";
 import "animate.css";
@@ -124,12 +124,12 @@ const Batch = () => {
 
   return (
     <div className="batch-container">
-      <div className="header-section">
+      <div className="header-batch">
         <h1 className="batch-title">Batch Management</h1>
 
-        <div className="header-batch">
+        <div className="header-button">
           <button
-            className="add-batch-btn"
+            className="btn btn-primary add-btn"
             onClick={() => {
               setShowModal(true);
               setFormData(initialFormData);
@@ -140,6 +140,16 @@ const Batch = () => {
             <Plus size={18} />
             <span>Add New Batch</span>
           </button>
+        </div>
+        <div className="filter-container">
+          <div className="search-container">
+            <Search className="search-icon" size={18} />
+            <input
+              type="text"
+              placeholder="Search students..."
+              className="search-input"
+            />
+          </div>
         </div>
 
         <Modal show={showModal} onHide={handleCloseModal} size="lg" backdrop="static" keyboard={false}>
@@ -270,8 +280,8 @@ const Batch = () => {
           </Modal.Body>
         </Modal>
 
-        <div className="table-container">
-          <table className="data-table">
+        <div className="table-box">
+          <table className="course-table">
             <thead>
               <tr>
                 <th>Sr. No.</th>
@@ -286,7 +296,7 @@ const Batch = () => {
               {batches.length > 0 ? (
                 batches.map((batch, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                       {index + 1}
                     </td>
                     <td>{batch.name}</td>

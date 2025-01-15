@@ -2,7 +2,7 @@
 .student-dashboard {
     padding: 10px;
     background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
-    min-height: 100vh;
+    /* min-height: 100vh; */
     margin-top: 20px;
     width:100%;
   }
@@ -142,60 +142,49 @@
   } */
   
   /* Table */
-  .table-container {
+  .student-table {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: auto;
     width:100%;
   }
   
-  .data-table {
+  .student-data-table {
     width: 100%;
     border-collapse: collapse;
+    font-size: 14px; /* Smaller font size */
+    text-align: left;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Table border */
   }
   
-  .data-table th {
-    background: #f8fafc;
-    padding: 16px 24px;
+  .student-data-table th {
+    padding: 12px;
     text-align: left;
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: black;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    background-color: rgb(177, 170, 255);
+    color: #333;
+    font-weight: bold;
+    height: 48px; /* Fixed height for header */
+    vertical-align: middle;
   }
   
-  .data-table td {
-    padding: 16px 24px;
+  .student-data-table td {
+    padding: 12px 8px;
     border-bottom: 1px solid #e2e8f0;
     color: #1e293b;
-    font-size: 14px;
-  }
-  
-  .student-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 16px;
-  }
-  
-  .student-name {
-    font-weight: 600;
-    color: #1e293b;
-    font-size: 13px !important;
+    font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+    height: 60px; /* Fixed height for all rows */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .course-badge {

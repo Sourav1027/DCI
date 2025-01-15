@@ -243,8 +243,8 @@ const AddCenter = ({ onSubmit, onCancel }) => {
         </div>
       </div>
 
-      <div className="button-group">
-        <button type="submit" className="btn btn-primary">
+      <div className="form-actions">
+      <button type="submit" className="btn btn-primary">
           <FontAwesomeIcon icon={faPlus} className="me-2" />
           Add Center
         </button>

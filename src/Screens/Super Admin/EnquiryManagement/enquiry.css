@@ -2,7 +2,7 @@
 .student-dashboard {
     padding: 10px;
     background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
-    min-height: 100vh;
+    /* min-height: 100vh; */
     margin-top: 20px;
     width:100%;
   }
@@ -82,7 +82,7 @@
   .filter-container {
     display: flex;
     gap: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-top:15px;
     justify-content: end;
   }
@@ -125,75 +125,55 @@
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: auto;
     width:100%;
   }
   
   .table-full {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12px; /* Small text size */
-  background-color: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px; /* Smaller font size */
+    text-align: left;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Table border */
   }
   
   .table-full th {
-    background: #f8fafc;
-    padding: 16px 24px;
+    padding: 12px;
     text-align: left;
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: black;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    background-color: rgb(177, 170, 255);
+    color: #333;
+    font-weight: bold;
+    height: 48px; /* Fixed height for header */
+    vertical-align: middle;
+}
+
+  .table-tr-h{
+    height:10px;
+    display:block;
   }
-  
   .table-full td {
-    padding: 16px 24px;
+    padding: 12px 8px;
     border-bottom: 1px solid #e2e8f0;
     color: #1e293b;
     font-size: 12px;
+    text-align: left;
+    vertical-align: middle;
+    height: 60px; /* Fixed height for all rows */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
     
-  }
-  
-  .student-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 16px;
-  }
-  
-  .student-name {
-    font-weight: 600;
-    color: #1e293b;
-    font-size: 13px !important;
-  }
-  
-  .course-badge {
-    background: #f1f5f9;
-    color: #64748b;
+  .status-form {
     padding: 6px 12px;
     border-radius: 8px;
     font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .status {
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
   }
   
   .status.active {
@@ -237,29 +217,36 @@
     background: #fee2e2;
     transform: translateY(-2px);
   }
+  .icon-btn.remarks{
+    color:orange;
+  }
+  .icon-btn.remarks:hover{
+    background:rgb(248, 229, 214);
+    transform: translateY(-2px);
+  }
   
   /* Pagination */
   .pagination-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+    padding: 6px 8px;
     border-top: 1px solid #e2e8f0;
   }
   
   .page-info {
     color: #64748b;
-    font-size: 14px;
+    font-size: 10px;
   }
   
   .pagination {
     display: flex;
-    gap: 8px;
+    gap: 4px;
   }
   
   .page-btn {
-    min-width: 36px;
-    height: 36px;
+    min-width: 30px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -267,8 +254,71 @@
     border-radius: 10px;
     background: white;
     color: #6366f1;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all
   }
+  
+  /* Mobile Screens (up to 600px) */
+@media (max-width: 600px) {
+  .student-dashboard {
+    padding: 8px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+
+  .header-actions {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .add-btn, .export-btn {
+    padding: 8px 8px;
+    font-size: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .search-input {
+    padding: 10px 12px 10px 36px;
+    font-size: 12px;
+  }
+
+  .table-box {
+    border-radius: 8px;
+  }
+
+  .table-full th, .table-full td {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .page-btn {
+    min-width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+}
+

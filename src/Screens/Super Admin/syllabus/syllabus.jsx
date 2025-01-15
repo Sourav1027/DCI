@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPencil, faTrash, faPlus, faFileExport, faSearch,} from "@fortawesome/free-solid-svg-icons";
+import {
+  faPencil,
+  faTrash,
+  faPlus,
+  faFileExport,
+  faSearch,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, DialogActions, DialogTitle,DialogContent,Dialog } from "@mui/material";
 import AddSyllabus from "./addSyllabus/addSyllabus";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./syllabus.css";
-import { deleteConfirmation } from '../../../components/Providers/sweetalert';
+import { deleteConfirmation } from "../../../components/Providers/sweetalert";
 import "animate.css";
 
 const Syllabus = () => {
@@ -63,28 +70,49 @@ const Syllabus = () => {
         "React JS",
         "Node.js & Express",
         "MongoDB",
-        "AWS Basics"
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
+        "AWS Basics",
       ],
     },
   ]);
+  const [viewData, setViewData] = useState(null);
+const [showDialog, setShowDialog] = useState(false);
 
-    const handleDelete = async (syllabusId) => {
-      const deleteSyllabus = () => {
-        const updatedsyllabus = syllabus.filter(syllabus => syllabus.id !== syllabusId);
-        setsyllabus(updatedsyllabus);
-        setShowToast(true);
-      };
-  
-      await deleteConfirmation(deleteSyllabus);
+const handleView = (syllabus) => {
+  setViewData(syllabus);
+  setShowDialog(true);
+};
+
+const closeDialog = () => {
+  setViewData(null);
+  setShowDialog(false);
+};
+
+
+  const handleDelete = async (syllabusId) => {
+    const deleteSyllabus = () => {
+      const updatedsyllabus = syllabus.filter(
+        (syllabus) => syllabus.id !== syllabusId
+      );
+      setsyllabus(updatedsyllabus);
+      setShowToast(true);
     };
 
-   const exportToExcel = () => {
-     const ws = XLSX.utils.json_to_sheet(Syllabus);
-     const wb = XLSX.utils.book_new();
-     XLSX.utils.book_append_sheet(wb, ws, "syllabus");
-     XLSX.writeFile(wb, "syllabusList.xlsx");
-   };
- 
+    await deleteConfirmation(deleteSyllabus);
+  };
+
+  const exportToExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(Syllabus);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "syllabus");
+    XLSX.writeFile(wb, "syllabusList.xlsx");
+  };
 
   const handleSubmit = (formData) => {
     console.log("Form submitted:", formData);
@@ -124,6 +152,12 @@ const Syllabus = () => {
       <div className="dashboard-header">
         <h1 className="dashboard-title">Syllabus Management</h1>
         <div className="header-actions">
+        <button
+            className="btn btn-primary add-btn"
+            onClick={() => setShowModal(true)}
+          >
+            <FontAwesomeIcon icon={faPlus} className="me-2" /> Add New Syllabus
+          </button>
           <button
             className="btn btn-outline-primary export-btn"
             onClick={exportToExcel}
@@ -131,12 +165,7 @@ const Syllabus = () => {
             <FontAwesomeIcon icon={faFileExport} className="me-2" />
             Export
           </button>
-          <button
-            className="btn btn-primary add-btn"
-            onClick={() => setShowModal(true)}
-          >
-            <FontAwesomeIcon icon={faPlus} className="me-2" /> Add New Syllabus
-          </button>
+          
         </div>
         <div className="search-section">
           <div className="search-bar">
@@ -151,8 +180,8 @@ const Syllabus = () => {
           </div>
         </div>
 
-        <div className="data-card">
-          <table className="data-table">
+        <div className="table-box">
+          <table className="syllabus-table">
             <thead>
               <tr>
                 <th>Sr No</th>
@@ -164,17 +193,25 @@ const Syllabus = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {currentItems.map((item, index) => (
-                <tr key={item.id}>
-                  <td>{indexOfFirstItem + index + 1}</td>
+                <tr key={item.id} className="hover:bg-gray-50">
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h">
+                    {indexOfFirstItem + index + 1}
+                  </td>
                   <td>{item.batch}</td>
                   <td>{item.course}</td>
                   <td>{item.duration}</td>
                   <td>{item.startDate}</td>
-                  <td>{item.topics.join(", ")}</td>
+                  <td className="topics-column">{item.topics.join(", ")}</td>
                   <td>
                     <div className="action-buttons">
+                      <button
+                        className="btn btn-icon btn-view"
+                        onClick={() => handleView(item)}
+                      >
+                        <FontAwesomeIcon icon={faEye} />
+                      </button>
                       <button
                         className="btn btn-icon btn-edit"
                         onClick={() => handleEdit(item)}
@@ -215,7 +252,6 @@ const Syllabus = () => {
           </div>
         </div>
 
-
         {/* <Snackbar
           open={showToast}
           autoHideDuration={3000}
@@ -225,6 +261,72 @@ const Syllabus = () => {
           <Alert severity="success" onClose={() => setShowToast(false)}>
           </Alert>
         </Snackbar> */}
+
+<Dialog
+  open={showDialog}
+  onClose={closeDialog}
+  fullWidth
+  maxWidth="sm"
+  aria-labelledby="view-dialog-title"
+  PaperProps={{
+    style: {
+      position: "absolute",
+      top: 0,
+      borderRadius: "12px",
+      padding: "20px",
+      background: "linear-gradient(135deg, #eceff1, #ffffff)",
+      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+    },
+  }}
+>
+<DialogTitle
+    style={{
+      textAlign: "center",
+      color: "#4A4E69",
+      fontWeight: "700",
+      fontSize: "1.8rem",
+      letterSpacing: "1px",
+      borderBottom: "2px solid #c9d6df",
+      paddingBottom: "10px",
+      marginBottom:"20px",
+    }}
+  >    📘 Syllabus Details
+  </DialogTitle>
+  <DialogContent>
+    {viewData && (
+      <div className="view-data-modern">
+        <p>
+          <strong>📌 Batch :- </strong> <span className="highlight-modern">{viewData.batch}</span>
+        </p>
+        <p>
+          <strong>📚 Course :- </strong> <span className="highlight-modern">{viewData.course}</span>
+        </p>
+        <p>
+          <strong>⏳ Duration :- </strong> <span className="highlight-modern">{viewData.duration}</span>
+        </p>
+        <p>
+          <strong>🗓 Start Date :- </strong> <span className="highlight-modern">{viewData.startDate}</span>
+        </p>
+        <p>
+          <strong>📋 Topics :- </strong>
+          <ul className="topic-list-modern">
+            {viewData.topics.map((topic, index) => (
+              <li key={index} className="topic-item-modern">
+                {topic}
+              </li>
+            ))}
+          </ul>
+        </p>
+      </div>
+    )}
+  </DialogContent>
+  <DialogActions style={{ justifyContent: "center", marginTop: "20px" }}>
+  <button className="modern-btn" onClick={closeDialog}>
+  Close
+    </button>
+  </DialogActions>
+</Dialog>
+
 
         <div
           className={`modal fade ${showModal ? "show" : ""}`}

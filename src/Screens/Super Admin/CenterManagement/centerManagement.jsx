@@ -19,9 +19,9 @@ const CenterManagement = () => {
 
   // Sample data
   const [centers, setCenters] = useState([
-    { id: 1, centerId: "CTR001", centerName: "Tech Training", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210", status: "active" },
-    { id: 2, centerId: "CTR002", centerName: "Tech Training Center", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210", status: "active" },
-    { id: 3, centerId: "CTR003", centerName: "Tech Training Center", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210", status: "active" },
+    { id: 1, centerId: "CTR001", centerName: "Tech Training", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210",date:"12-01-2025",status: "active" },
+    { id: 2, centerId: "CTR002", centerName: "Tech Training Center", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210",date:"12-01-2025", status: "active" },
+    { id: 3, centerId: "CTR003", centerName: "Tech Training Center", ownerName: "Rahul Sharma", email: "rahul@example.com", phone: "9876543210",date:"12-01-2025", status: "active" },
   ]);
 
   // Updated delete handler to use SweetAlert
@@ -71,13 +71,13 @@ const CenterManagement = () => {
           <h1 className="dashboard-title">Center Management</h1>
         </div>
         <div className="header-actions">
+        <button className="btn btn-primary add-btn" onClick={() => setShowModal(true)}>
+            <FontAwesomeIcon icon={faPlus} className="me-2" />
+            Add New Center
+          </button>
           <button className="btn btn-outline-primary export-btn" onClick={exportToExcel}>
             <FontAwesomeIcon icon={faFileExport} className="me-2" />
             Export to Excel
-          </button>
-          <button className="btn btn-primary add-btn" onClick={() => setShowModal(true)}>
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            Add New Center
           </button>
         </div>
 
@@ -94,8 +94,8 @@ const CenterManagement = () => {
           </div>
         </div>
 
-        <div className="data-card">
-          <table className="data-table">
+        <div className="table-box">
+          <table className="center-table">
             <thead>
               <tr>
                 <th>Sr No</th>
@@ -104,33 +104,37 @@ const CenterManagement = () => {
                 <th>Owner Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Date</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {currentItems.map((center, index) => (
-                <tr key={center.id}>
-                  <td>{indexOfFirstItem + index + 1}</td>
+              <tr key={center.id} className="hover:bg-gray-50 ">
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h">
+                {index + 1}
+              </td>
                   <td>{center.centerId}</td>
                   <td>{center.centerName}</td>
                   <td>{center.ownerName}</td>
                   <td>{center.email}</td>
                   <td>{center.phone}</td>
+                  <td>{center.date}</td>
                   <td>
                     <span className={`status-badge ${center.status}`}>
                       {center.status}
                     </span>
                   </td>
                   <td>
-                    <div className="action-buttons">
-                      <button className="btn btn-icon btn-edit" onClick={() => handleEdit(center)}>
+                    <div className="action-buttons-three">
+                      <button className="btn btn-icon button-edit" onClick={() => handleEdit(center)}>
                         <FontAwesomeIcon icon={faPencil} />
                       </button>
-                      <button className="btn btn-icon btn-status">
+                      <button className="btn btn-icon button-status">
                         <FontAwesomeIcon icon={center.status === 'active' ? faBan : faCheck} />
                       </button>
-                      <button className="btn btn-icon btn-delete" onClick={() => handleDelete(center.centerId)}>
+                      <button className="btn btn-icon button-delete" onClick={() => handleDelete(center.centerId)}>
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </div>
@@ -159,7 +163,7 @@ const CenterManagement = () => {
         <div className={`modal fade ${showModal ? 'show' : ''}`} 
              style={{ display: showModal ? 'block' : 'none' }}
              tabIndex="-1">
-          <div className="modal-dialog modal-lg">
+          <div className="modal-dialog modal-l">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{selectedCenter ? 'Edit Center' : 'Add New Center'}</h5>

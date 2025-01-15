@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import {X, User, Mail, Phone, Calendar, MapPin, Book, Clock, Building2, UserSearch, ImageUp, Asterisk, IndianRupee, Landmark,
-  School } from "lucide-react";
+import {X,User,Mail,Phone,Calendar,MapPin,Book,Clock,Building2,UserSearch,ImageUp,Asterisk,IndianRupee,Landmark,School,WatchIcon, Award,} from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./addEnquiry.css";
@@ -19,6 +18,8 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
     gender: "",
     counsellorName: "",
     collegeName: "",
+    preferTiming: "",
+    professional: "",
   };
 
   const [errors, setErrors] = useState({});
@@ -55,7 +56,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
     if (!formData.dob) {
       newErrors.dob = "Date of Birth is required";
     }
-   
+
     if (!formData.gender) {
       newErrors.gender = "Gender is required";
     }
@@ -71,7 +72,12 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
     if (!formData.collegeName) {
       newErrors.collegeName = "College Name is required";
     }
-
+    if (!formData.preferTiming) {
+      newErrors.preferTiming = "Prefer Timing is required";
+    }
+    if (!formData.professional) {
+      newErrors.professional = "Professional is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -127,6 +133,166 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
 
         <form onSubmit={handleSubmit} className="student-form">
           <div className="form-grid">
+
+          <div className="form-section">
+              <div className="input-grid">
+                <div class="row g-2 text-center">
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="course" className="form-label">
+                        Course Name
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <Book size={18} />
+                        </span>
+                        <select
+                          id="course"
+                          name="course"
+                          className={`form-input ${errors.course ? "is-invalid" : ""}`}
+                        >
+                          <option value="">Select Course</option>
+                          <option>Web Development</option>
+                          <option>Mobile Development</option>
+                          <option>UI/UX Design</option>
+                          <option>Data Science</option>
+                        </select>
+                      </div>
+                      {errors.course && (
+                        <div className="error-message">{errors.course}</div>
+                      )}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="batch" className="form-label">
+                        Batch Name
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <Clock size={18} />
+                        </span>
+                        <select
+                          id="batch"
+                          name="batch"
+                          className={`form-input ${errors.batch ? "is-invalid" : ""}`}
+                        >
+                          <option value="">Select Batch</option>
+                          <option>Morning Batch</option>
+                          <option>Evening Batch</option>
+                        </select>
+                      </div>
+                      {errors.batch && (
+                        <div className="error-message">{errors.batch}</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="counsellorName" className="form-label">
+                        Counsellor Name
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <User size={18} />
+                        </span>
+                        <input
+                          type="counsellorName"
+                          className={`form-input ${errors.counsellorName ? "is-invalid" : ""}`}
+                          id="counsellorName"
+                          name="counsellorName"
+                          value={formData.counsellorName}
+                          onChange={handleChange}
+                          placeholder="Enter Counsellor Name"
+                        />
+                      </div>
+                      {errors.counsellorName && (
+                        <div className="error-message">
+                          {errors.counsellorName}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="preferTiming" className="form-label">
+                        Prefer Timing
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <WatchIcon size={18} />
+                        </span>
+                        <input
+                          type="time"
+                          className={`form-input ${errors.preferTiming ? "is-invalid" : ""}`}
+                          id="preferTiming"
+                          name="preferTiming"
+                          value={formData.preferTiming}
+                          onChange={handleChange}
+                          placeholder="Enter Prefer Timing"
+                        />
+                      </div>
+                      {errors.preferTiming && (
+                        <div className="error-message">{errors.preferTiming}</div>
+                      )}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="professional" className="form-label">
+                        Professional Name
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <Award size={18} />
+                        </span>
+                        <select
+                          id="professional"
+                          name="professional"
+                          className={`form-input ${errors.professional ? "is-invalid" : ""}`}
+                        >
+                          <option value="">Select professional</option>
+                          <option>Working</option>
+                          <option>Not Working</option>
+                          <option>Student</option>
+                          <option>Experienced</option>
+                        </select>
+                      </div>
+                      {errors.professional && (
+                        <div className="error-message">{errors.professional}</div>
+                      )}
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div className="form-group">
+                      <label htmlFor="collegeName" className="form-label">
+                        College Name
+                      </label>
+                      <div className="input-group">
+                        <span className="input-icon">
+                          <School size={18} />
+                        </span>
+                        <input
+                          type="collegeName"
+                          className={`form-input ${errors.collegeName ? "is-invalid" : ""}`}
+                          id="collegeName"
+                          name="collegeName"
+                          value={formData.collegeName}
+                          onChange={handleChange}
+                          placeholder="Enter College Name"
+                        />
+                      </div>
+                      {errors.collegeName && (
+                        <div className="error-message">
+                          {errors.collegeName}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="form-section">
               <div className="input-grid">
                 <div class="row g-2 text-center">
@@ -301,7 +467,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  
+
                   <div class="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="address" className="form-label">
@@ -324,120 +490,12 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </div>
 
-            <div className="form-section">
-              <h3>Academic Information</h3>
-              <div className="input-grid">
-              <div class="row g-2 text-center">
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="course" className="form-label">
-                      Course Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Book size={18} />
-                      </span>
-                      <select
-                        id="course"
-                        name="course"
-                        className={`form-input ${errors.course ? "is-invalid" : ""}`}
-                      >
-                        <option value="">Select Course</option>
-                        <option>Web Development</option>
-                        <option>Mobile Development</option>
-                        <option>UI/UX Design</option>
-                        <option>Data Science</option>
-                      </select>
-                    </div>
-                    {errors.course && (
-                      <div className="error-message">{errors.course}</div>
-                    )}
-                  </div>
-                </div>
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="batch" className="form-label">
-                      Batch Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <Clock size={18} />
-                      </span>
-                      <select
-                        id="batch"
-                        name="batch"
-                        className={`form-input ${errors.batch ? "is-invalid" : ""}`}
-                      >
-                        <option value="">Select Batch</option>
-                        <option>Morning Batch</option>
-                        <option>Evening Batch</option>
-                      </select>
-                    </div>
-                    {errors.batch && (
-                      <div className="error-message">{errors.batch}</div>
-                    )}
-                  </div>
-                </div>
-        
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="counsellorName" className="form-label">
-                      Counsellor Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <User size={18} />
-                      </span>
-                      <input
-                        type="counsellorName"
-                        className={`form-input ${errors.counsellorName ? "is-invalid" : ""}`}
-                        id="counsellorName"
-                        name="counsellorName"
-                        value={formData.counsellorName}
-                        onChange={handleChange}
-                        placeholder="Enter Previous Counsellor Name"
-                      />
-                    </div>
-                    {errors.counsellorName && (
-                      <div className="error-message">
-                        {errors.counsellorName}
-                      </div>
-                    )}
-                  </div>
-                </div>
-               
-                <div class="col-sm-12 col-md-4 col-lg-4">
-                  <div className="form-group">
-                    <label htmlFor="collegeName" className="form-label">
-                      College Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <School size={18} />
-                      </span>
-                      <input
-                        type="collegeName"
-                        className={`form-input ${errors.collegeName ? "is-invalid" : ""}`}
-                        id="collegeName"
-                        name="collegeName"
-                        value={formData.collegeName}
-                        onChange={handleChange}
-                        placeholder="Enter College Name"
-                      />
-                    </div>
-                    {errors.collegeName && (
-                      <div className="error-message">{errors.collegeName}</div>
-                    )}
-                  </div>
-                </div>
-               
-              </div>
-            </div>
-            </div>
+           
           </div>
 
           <div className="form-actions">

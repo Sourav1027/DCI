@@ -25,6 +25,7 @@ const Student = () => {
     {
       id: 1,
       name: "John Doe",
+      mobileNo: "9910140856",
       email: "john@example.com",
       course: "Web Development",
       batch: "Morning Batch",
@@ -33,6 +34,7 @@ const Student = () => {
     {
       id: 2,
       name: "Jane Smith",
+      mobileNo: "9910140856",
       email: "jane@example.com",
       course: "Mobile Development",
       batch: "Evening Batch",
@@ -41,27 +43,13 @@ const Student = () => {
     {
       id: 3,
       name: "Mike Johnson",
+      mobileNo: "9910140856",
       email: "mike@example.com",
       course: "UI/UX Design",
       batch: "Morning Batch",
       status: "Inactive",
     },
-    {
-      id: 4,
-      name: "Sarah Wilson",
-      email: "sarah@example.com",
-      course: "Web Development",
-      batch: "Evening Batch",
-      status: "Active",
-    },
-    {
-      id: 5,
-      name: "Alex Brown",
-      email: "alex@example.com",
-      course: "Data Science",
-      batch: "Morning Batch",
-      status: "Active",
-    },
+
   ]);
 
   const handleDelete = async (studentId) => {
@@ -91,7 +79,6 @@ const Student = () => {
       {/* Header */}
       <div className="dashboard-header">
         <div className="title-section">
-          <GraduationCap size={32} className="title-icon" />
           <h1>Student Management</h1>
         </div>
         <div className="header-actions">
@@ -147,8 +134,8 @@ const Student = () => {
         </div>
 
         {/* Table */}
-        <div className="table-container">
-          <table className="data-table">
+        <div className="student-table">
+          <table className="student-data-table">
             <thead>
               <tr>
                 <th>Sr No.</th>
@@ -163,19 +150,12 @@ const Student = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {students.map((student, index) => (
                 <tr key={student.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h">
                     {index + 1}
                   </td>
-                  <td>
-                    <div className="student-info">
-                      <div className="avatar">{student.name.charAt(0)}</div>
-                      <span className="student-name">{student.name}</span>
-                    </div>
-                  </td>
+                  <td>{student.name}</td>
                   <td>{student.email}</td>
-                  <td>
-                    <span className="course-badge">{student.course}</span>
-                  </td>
+                  <td>{student.course}</td>
                   <td>{student.batch}</td>
                   <td>
                     <span className={`status ${student.status.toLowerCase()}`}>

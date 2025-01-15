@@ -71,41 +71,52 @@
     margin-top: 4px;
   }
   
-  .button-group {
+  .form-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 24px;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-top: 2rem;
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 1rem 0;
+    border-top: 1px solid #e5e7eb;
+    z-index: 10;
   }
   
-  .btn {
-    padding: 10px 20px;
+  .cancel-btn,
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 6px;
     font-weight: 500;
-    font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s;
   }
   
-  .btn-primary {
-    background-color: #0d6efd;
+  .cancel-btn {
+    background:rgb(247, 17, 17);
+    border: 1px solid #e5e7eb;
+    color: #ffffff;
+  }
+  
+  .cancel-btn:hover {
+    background:rgb(224, 116, 116);
+  }
+  
+  .submit-btn {
+    background: #2563eb;
     border: none;
     color: white;
   }
   
-  .btn-primary:hover {
-    background-color: #0b5ed7;
+  .submit-btn:hover {
+    background:rgb(127, 154, 227);
+    transition: 0.3s ease-in-out;
   }
   
-  .btn-secondary {
-    background-color: red;
-    border: 1px solid #dce0e4;
-    color: #ffff;
-  }
-  
-  .btn-secondary:hover {
-    background-color:rgb(252, 99, 99);
-  }
   
   /* Responsive Design */
   @media (max-width: 768px) {

@@ -8,13 +8,14 @@
   
   .dashboard-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    flex-wrap:wrap;
-    margin-bottom: 24px;
-    background-color: white;
+    margin-bottom: 32px;
+    background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    flex-wrap:wrap;
   }
   
   .header-content {
@@ -22,7 +23,7 @@
   }
   
   .dashboard-title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 600;
     color: #2c3e50;
     margin: 0;
@@ -102,37 +103,59 @@
     border-color: #0d6efd;
     box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
   }
+  .topics-column {
+    white-space: normal; /* Multiline allow karega */
+    word-wrap: break-word; /* Long text ko break karega */
+    max-width: 200px; /* Ek limit set karega */
+  }
   
-  .data-card {
+  //=============table=======================
+
+  .table-box {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: auto;
     width:100%;
-    margin-top:10px;
   }
   
-  .custom-table {
+  .syllabus-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px; /* Smaller font size */
+    text-align: left;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Table border */
+    border-radius: 16px;
+
   }
   
-  .custom-table th {
-    background: #f8fafc;
+  .syllabus-table th {
+    padding: 12px;
     text-align: left;
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: black;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    background-color: rgb(177, 170, 255);
+    color: #333;
+    font-weight: bold;
+    height: 48px; /* Fixed height for header */
+    vertical-align: middle;
   }
   
-  .custom-table td {
+  .syllabus-table td {
+    padding: 12px 8px;
     border-bottom: 1px solid #e2e8f0;
     color: #1e293b;
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
+    vertical-align: middle;
+    height: 60px; /* Fixed height for all rows */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
   }
   
@@ -185,7 +208,12 @@
   .btn-delete {
     color: #dc3545;
   }
-  
+  .btn-view {
+   color:rgb(182, 113, 17);
+  }
+  .btn-view:hover {
+    background-color:rgb(231, 249, 234);
+  }
   .pagination-section {
     display: flex;
     justify-content: center;
@@ -219,3 +247,73 @@
     right: 0;
     z-index: 1000;
   }
+
+  //dialog-box==============css==============================
+  .view-data-modern p {
+    margin: 20px 0;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+  }
+  
+  .highlight-modern {
+    color: #6a0572; /* Elegant purple for highlighting */
+    font-weight: bold;
+    font-size: 17px;
+  }
+  
+  ul.topic-list-modern {
+    list-style: none;
+    margin: 15px 0;
+    padding-left: 0;
+  }
+  
+  li.topic-item-modern {
+    font-size: 15px;
+    color: #555;
+    background: #f1f3f6; /* Subtle background for items */
+    padding: 8px 12px;
+    margin: 5px 0;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  li.topic-item-modern:hover {
+    transform: scale(1.05);
+    background: #e3e7ed;
+  }
+  
+  .modern-btn {
+    background: linear-gradient(to right, #6a0572, #a4508b);
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .modern-btn:hover {
+    background: linear-gradient(to right, #a4508b, #d291bc);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .MuiDialog-paper {
+    animation: slideDown 0.4s ease; /* Animation for smooth appearance */
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

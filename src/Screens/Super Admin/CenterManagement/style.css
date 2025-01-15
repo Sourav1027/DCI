@@ -74,6 +74,7 @@
     display: flex;
     justify-content: flex-end; /* Adjust alignment if needed */
     flex-wrap: wrap; /* Ensures responsive wrapping */
+    margin-bottom: 10px;
   }
   
   .search-bar {
@@ -103,36 +104,55 @@
     box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
   }
   
-  .data-card {
+  //table ======================================
+  
+  .table-box {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: auto;
     width:100%;
-    margin-top:10px;
   }
   
-  .custom-table {
+  .center-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 14px; /* Smaller font size */
+    text-align: left;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Table border */
   }
   
-  .custom-table th {
-    background: #f8fafc;
+  .center-table th {
+    padding: 12px;
     text-align: left;
     font-size: 13px;
     font-weight: 600;
-    color: #64748b;
+    color: black;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    background-color: rgb(177, 170, 255);
+    color: #333;
+    font-weight: bold;
+    height: 48px; /* Fixed height for header */
+    vertical-align: middle;
   }
   
-  .custom-table td {
+  .table-tr-h{
+    height:10px;
+    display:block;
+  }
+  .center-table td {
+    padding: 12px 8px;
     border-bottom: 1px solid #e2e8f0;
     color: #1e293b;
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
+    vertical-align: middle;
+    height: 60px; /* Fixed height for all rows */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
   }
   
@@ -153,7 +173,7 @@
     color: #c62828;
   }
   
-  .action-buttons {
+  .action-buttons-three {
     display: flex;
     gap: 4px; /* Space between buttons */
     justify-content: left; /* Center buttons horizontally */
@@ -174,15 +194,15 @@
     background-color: #f8f9fa;
   }
   
-  .btn-edit {
+  .button-edit {
     color: #0d6efd;
   }
   
-  .btn-status {
+  .button-status {
     color: #dc3545;
   }
   
-  .btn-delete {
+  .button-delete {
     color: #dc3545;
   }
   
@@ -219,3 +239,64 @@
     right: 0;
     z-index: 1000;
   }
+  /* Mobile Screens (up to 600px) */
+@media (max-width: 600px) {
+  .student-dashboard {
+    padding: 8px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+
+  .header-actions {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .add-btn, .export-btn {
+    padding: 8px 8px;
+    font-size: 12px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .search-input {
+    padding: 10px 12px 10px 36px;
+    font-size: 12px;
+  }
+
+  .table-box {
+    border-radius: 8px;
+  }
+
+  .center-table th, .center-table td {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .page-btn {
+    min-width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+}

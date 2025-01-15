@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { User, Phone, Mail, MapPin, Book, Sparkles, IndianRupee } from "lucide-react";
+import {
+  User,
+  Phone,
+  Mail,
+  MapPin,
+  Book,
+  Sparkles,
+  IndianRupee,
+} from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./add.css";
 
 const AddTrainer = ({ onSubmit, onCancel }) => {
   const initialFormData = {
-    name: '',
-    mobile: '',
-    email: '',
-    address: '',
-    subject: '',
-    experience: '',
-    salary: '',
-    status: 'Active'
+    name: "",
+    phoneNo: "",
+    email: "",
+    address: "",
+    subject: "",
+    experience: "",
+    salary: "",
+    status: "Active",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -22,35 +30,35 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
+    if (!formData.name) {
       newErrors.name = "Name is required";
     }
 
-    if (!formData.subject.trim()) {
+    if (!formData.subject) {
       newErrors.subject = "Subject Name is required";
     }
 
-    if (!formData.mobile.trim()) {
-      newErrors.mobile = "Mobile Number is required";
-    } else if (!/^[0-9]{10}$/.test(formData.mobile)) {
-      newErrors.mobile = "Invalid mobile number";
+    if (!formData.phoneNo) {
+      newErrors.phoneNo = "phoneNo Number is required";
+    } else if (!/^[0-9]{10}$/.test(formData.phoneNo)) {
+      newErrors.phoneNo = "Invalid phoneNo number";
     }
 
-    if (!formData.email.trim()) {
+    if (!formData.email) {
       newErrors.email = "Email ID is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Invalid email format";
     }
 
-    if (!formData.address.trim()) {
+    if (!formData.address) {
       newErrors.address = "Address is required";
     }
 
-    if (!formData.experience.trim()) {
+    if (!formData.experience) {
       newErrors.experience = "Experience is required";
     }
 
-    if (!formData.salary.trim()) {
+    if (!formData.salary) {
       newErrors.salary = "Salary is required";
     }
 
@@ -80,12 +88,11 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
     }
   };
 
-  const handleMobileChange = (e) => {
+  const handlephoneNoChange = (e) => {
     const value = e.target.value;
-
     // Allow only digits and restrict to 10 characters
     if (/^\d{0,10}$/.test(value)) {
-      setFormData({ ...formData, mobileNo: value });
+      setFormData({ ...formData, phoneNoNo: value });
     }
   };
 
@@ -104,7 +111,6 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="add-center-form">
       <div className="form-row">
-      
         <div className="trainer-form">
           <label htmlFor="name" className="form-label">
             Trainer Name
@@ -123,14 +129,12 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
               placeholder="Enter Trainer Name"
             />
           </div>
-          {errors.name && (
-            <div className="error-message">{errors.name}</div>
-          )}
+          {errors.name && <div className="error-message">{errors.name}</div>}
         </div>
 
         <div className="trainer-form">
-          <label htmlFor="mobile" className="form-label">
-            Mobile Number
+          <label htmlFor="phone" className="form-label">
+            phoneNo Number
           </label>
           <div className="input-group">
             <span className="input-icon">
@@ -139,18 +143,16 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
             <input
               type="tel"
               maxLength="10"
-              className={`form-input ${errors.mobile ? "is-invalid" : ""}`}
-              id="mobile"
-              name="mobile"
-              value={formData.mobile}
-              onChange={handleMobileChange}
-              placeholder="Enter Mobile Number"
+              className={`form-input ${errors.phone ? "is-invalid" : ""}`}
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handlephoneNoChange}
+              placeholder="Enter phoneNo Number"
               pattern="[0-9]{10}"
             />
           </div>
-          {errors.mobile && (
-            <div className="error-message">{errors.mobile}</div>
-          )}
+          {errors.phone && <div className="error-message">{errors.phone}</div>}
         </div>
 
         <div className="trainer-form">
@@ -171,9 +173,7 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
               placeholder="Enter Email ID"
             />
           </div>
-          {errors.email && (
-            <div className="error-message">{errors.email}</div>
-          )}
+          {errors.email && <div className="error-message">{errors.email}</div>}
         </div>
 
         <div className="trainer-form">
@@ -283,6 +283,5 @@ const AddTrainer = ({ onSubmit, onCancel }) => {
     </form>
   );
 };
-
 
 export default AddTrainer;

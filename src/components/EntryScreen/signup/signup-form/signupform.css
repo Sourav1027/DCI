@@ -6,12 +6,12 @@ General Styles
   }
   
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .form-label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0rem;
     font-weight: bold;
     color: #333;
     text-align: left;

@@ -6,16 +6,21 @@
   width:100%;
 }
 
-.header-section {
+.course-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  flex-wrap:wrap;
 }
 
 .course-title {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
   color: #333;
   margin: 0;
   background: linear-gradient(to right, #6366f1, #8b5cf6);
@@ -113,34 +118,50 @@
 }
 
 /* Table */
-.table-container {
+.table-box {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    width:100%;
+    margin-top:10px;
 }
 
-.data-table {
+.course-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px; /* Smaller font size */
+  text-align: left;
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ddd; /* Table border */
 }
 
-.data-table th {
-  background: #f8fafc;
-  padding: 16px 24px;
+.course-table th {
+  padding: 12px;
   text-align: left;
   font-size: 13px;
   font-weight: 600;
-  color: #64748b;
+  color: black;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background-color: rgb(177, 170, 255);
+  color: #333;
+  font-weight: bold;
+  height: 48px; /* Fixed height for header */
+  vertical-align: middle;
 }
 
-.data-table td {
-  padding: 16px 24px;
+.course-table td {
+  padding: 12px 8px;
   border-bottom: 1px solid #e2e8f0;
   color: #1e293b;
-  font-size: 14px;
+  font-size: 12px;
+  text-align: left;
+  vertical-align: middle;
+  height: 60px; /* Fixed height for all rows */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

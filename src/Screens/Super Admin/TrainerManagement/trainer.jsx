@@ -90,13 +90,13 @@ const Trainer = () => {
           <h1 className="dashboard-title">Trainer Management</h1>
         </div>
         <div className="header-actions">
+        <button className="btn btn-primary add-btn" onClick={() => setShowModal(true)}>
+            <FontAwesomeIcon icon={faPlus} className="me-2" />
+            Add New Trainer
+          </button>
           <button className="btn btn-outline-primary export-btn" onClick={exportToExcel}>
             <FontAwesomeIcon icon={faFileExport} className="me-2" />
             Export
-          </button>
-          <button className="btn btn-primary add-btn" onClick={() => setShowModal(true)}>
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            Add New Trainer
           </button>
         </div>
 
@@ -113,8 +113,8 @@ const Trainer = () => {
           </div>
         </div>
 
-        <div className="data-card">
-          <table className="data-table">
+        <div className="trainer-table-container">
+          <table className="trainer-table">
             <thead>
               <tr>
                 <th>Sr No</th>
@@ -129,10 +129,11 @@ const Trainer = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {currentTrainers.map((trainer, index) => (
-                <tr key={trainer.id}>
-                  <td>{indexOfFirstItem + index + 1}</td>
+                <tr key={trainer.id} className="hover:bg-gray-50">
+                  <td className='px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h'>
+                    {indexOfFirstItem + index + 1}</td>
                   <td>{trainer.name}</td>
                   <td>{trainer.mobile}</td>
                   <td>{trainer.email}</td>

@@ -86,9 +86,7 @@ const SMS = () => {
   return (
     <div className="notification-container">
       <div className="header-container">
-        <div className="header-content">
-          <h1 className="main-title">Notification Management</h1>
-        </div>
+          <h1 className="sms-title">Notification Management</h1>
         <div className="header-actions">
           <button
             className="btn btn-primary add-btn"
@@ -111,8 +109,8 @@ const SMS = () => {
             />
           </div>
         </div>
-        <div className="data-card">
-          <table className="data-table">
+        <div className="table-box">
+          <table className="sms-table">
             <thead>
               <tr>
                 <th>Sr No</th>
@@ -125,10 +123,11 @@ const SMS = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white divide-y divide-gray-200">
               {currentItems.map((notification, index) => (
-                <tr key={notification.id}>
-                  <td>{indexOfFirstItem + index + 1}</td>
+                <tr key={notification.id} className="hover:bg-gray-50">
+                  <td className='px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h'>
+                    {indexOfFirstItem + index + 1}</td>
                   <td>{notification.centerName}</td>
                   <td>{notification.courseName}</td>
                   <td>{notification.batchName}</td>

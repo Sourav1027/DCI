@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
-import "./style.css";
-import { Book, Plus, Save, WatchIcon, X } from "lucide-react";
+import "./Coursestyle.css";
+import { Book, Plus, Save, WatchIcon, X, Search } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteConfirmation } from "../../Providers/sweetalert";
 import 'animate.css';
@@ -103,12 +103,12 @@ const Course = () => {
 
   return (
     <div className="course-container">
-      <div className="header-section">
+      <div className="course-header">
         <h1 className="course-title">Course Management</h1>
 
-        <div className="header-batch">
+        <div className="header-actions">
           <button
-            className="add-course-btn"
+            className="btn btn-primary add-btn"
             onClick={() => {
               setShowModal(true);
               setFormData(initialFormData);
@@ -120,6 +120,17 @@ const Course = () => {
             <span>Add New Course</span>
           </button>
         </div>
+        <div className="filter-container">
+          <div className="search-container">
+            <Search className="search-icon" size={18} />
+            <input
+              type="text"
+              placeholder="Search students..."
+              className="search-input"
+            />
+          </div>
+        </div>
+
 
         {/* Modal for Adding/Editing Batch */}
         <Modal show={showModal} onHide={handleCloseModal}  backdrop="static" keyboard={false}>
@@ -193,8 +204,8 @@ const Course = () => {
         </Modal>
 
         {/* Table Displaying courses */}
-        <div className="table-container">
-          <table className="data-table">
+        <div className="table-box">
+          <table className="course-table">
             <thead>
               <tr>
                 <th>Sr. No.</th>
@@ -208,7 +219,7 @@ const Course = () => {
               {courses.length > 0 ? (
                 courses.map((course, index) => (
                   <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                       {index + 1}
                     </td>
                     <td>{course.name}</td>
