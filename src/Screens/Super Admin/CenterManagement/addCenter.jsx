@@ -1,21 +1,26 @@
 import React, { useState } from "react";
-import { Building2, User, Phone, Mail, MapPin, Hash } from "lucide-react";
+import { Building2, User, Phone, Mail, MapPin, Hash, Lock } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCancel, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./addCenter.css";
 
-const AddCenter = ({ onSubmit, onCancel }) => {
+const AddCenter = ({ onSubmit, onCancel,initialValues }) => {
   const initialFormData = {
     centerId: "",
     centerName: "",
     ownerName: "",
     mobileNo: "",
     emailId: "",
+    password: "",
     address: "",
   };
 
-  const [formData, setFormData] = useState(initialFormData);
+  const API_BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1/";
+
+  const [formData, setFormData] = useState(initialValues || initialFormData);
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -47,18 +52,60 @@ const AddCenter = ({ onSubmit, onCancel }) => {
     if (!formData.address.trim()) {
       newErrors.address = "Address is required";
     }
+    if (!formData.password.trim()) {
+      newErrors.password = "Password is required";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
-      resetForm();
+      setIsSubmitting(true);
+      try {
+        const token = localStorage.getItem('token');
+        console.log(token,"token")
+        if (!token) {
+          throw new Error('Authentication token not found');
+        }
+
+        const url = initialValues 
+          ? `${API_BASE_URL}centers/${initialValues.centerId}`
+          : `${API_BASE_URL}centers`;
+
+        const method = initialValues ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to submit form');
+        }
+
+        onSubmit(data);
+        resetForm();
+      } catch (error) {
+        console.error('Error:', error);
+        setErrors(prev => ({
+          ...prev,
+          submit: error.message
+        }));
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -218,6 +265,28 @@ const AddCenter = ({ onSubmit, onCancel }) => {
             <div className="error-message">{errors.emailId}</div>
           )}
         </div>
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">
+            Password 
+          </label>
+          <div className="input-group">
+            <span className="input-icon">
+              <Lock size={18} />
+            </span>
+            <input
+              type="text"
+              className={`form-input ${errors.password ? "is-invalid" : ""}`}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter Password"
+            />
+          </div>
+          {errors.password && (
+            <div className="error-message">{errors.password}</div>
+          )}
+        </div>
 
         <div className="form-group">
           <label htmlFor="address" className="form-label">
@@ -244,14 +313,16 @@ const AddCenter = ({ onSubmit, onCancel }) => {
       </div>
 
       <div className="form-actions">
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           <FontAwesomeIcon icon={faPlus} className="me-2" />
           Add Center
+          {isSubmitting ? 'Submitting...' : initialValues ? 'Update Center' : 'Add Center'}
         </button>
         <button
           type="button"
           className="btn btn-secondary"
           onClick={handleCancel}
+          disabled={isSubmitting}
         >
           <FontAwesomeIcon icon={faXmark} className="me-2" />
           Cancel

@@ -65,7 +65,7 @@ const SoftSkills = () => {
         <h1 className="gradient-text">Fee Management System</h1>
 
         {/* Filters */}
-        <div className="filter-container">
+        <div className="skill-filter-container">
           <select className="select-input">
             <option value="">Select Center</option>
             <option>D-codetech Malad</option>

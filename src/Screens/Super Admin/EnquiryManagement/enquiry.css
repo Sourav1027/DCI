@@ -79,18 +79,13 @@
   
   
   /* Filters */
-  .filter-container {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 10px;
-    margin-top:15px;
-    justify-content: end;
-  }
   
-  .search-container {
-    position: relative;
-    border: 2px solid #e0e7ff;
-    border-radius: 12px;
+  .enquiry-search-container {
+    margin-top: 16px; /* Adds spacing from the header-actions */
+    width: 100%; /* Ensures it takes the full width of its container */
+    display: flex;
+    justify-content: flex-end; /* Adjust alignment if needed */
+    flex-wrap: wrap; /* Ensures responsive wrapping */
   }
   .search-wrapper:focus {
     border-color: #6366f1;

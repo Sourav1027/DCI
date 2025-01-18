@@ -1,0 +1,198 @@
+/* Base styles (keeping previous styles) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+/* Updated Math Editor styles */
+.math-editor {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.math-editor textarea {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-bottom: 1.5px solid #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+    margin-bottom: 0;
+}
+
+.math-editor textarea:focus {
+    outline: none;
+    border-bottom-color: #3b82f6;
+}
+
+.preview-section {
+    padding: 1rem;
+    background: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.preview-section h3 {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.symbol-section {
+    padding: 1.5rem;
+    background: #ffffff;
+}
+
+.symbol-category {
+    margin-bottom: 1.5rem;
+}
+
+.symbol-category:last-child {
+    margin-bottom: 0;
+}
+
+.symbol-category-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+    gap: 0.5rem;
+}
+
+.symbol-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0.5rem;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.symbol-button:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+}
+
+.symbol-button:active {
+    transform: translateY(0);
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+}
+
+.template-button {
+    padding: 0.625rem 1rem;
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.template-button:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+}
+
+.template-button:active {
+    transform: translateY(0);
+}
+
+/* Preview area styling */
+.math-preview {
+    background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border: 1.5px solid #e2e8f0;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.math-preview .placeholder-text {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+.math-input {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-bottom: 1.5px solid #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+    margin-bottom: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.math-input:focus {
+    outline: none;
+    border-bottom-color: #3b82f6;
+}
+
+.preview-section h3 {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Input fields styling */
+.input-field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .symbol-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    }
+
+    .template-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}

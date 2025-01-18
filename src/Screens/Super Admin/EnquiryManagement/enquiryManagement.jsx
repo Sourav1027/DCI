@@ -6,6 +6,7 @@ import {
   faTrash,
   faFileExport,
   faStickyNote,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
 import "./enquiry.css";
@@ -107,9 +108,9 @@ const EnquiryManagement = () => {
           </button>
         </div>
 
-        <div className="filter-container">
-          <div className="search-container">
-            <Search className="search-icon" size={18} />
+        <div className="enquiry-search-container">
+          <div className="search-bar">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
               type="text"
               placeholder="Search students..."
@@ -137,7 +138,9 @@ const EnquiryManagement = () => {
             <tbody className="bg-white divide-y divide-gray-200">
               {students.map((student, index) => (
                 <tr key={student.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h">{index + 1}</td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 table-tr-h">
+                    {index + 1}
+                  </td>
                   <td>{student.studentName}</td>
                   <td>{student.mobileNo}</td>
                   <td>{student.course}</td>

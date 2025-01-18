@@ -167,7 +167,7 @@ const closeDialog = () => {
           </button>
           
         </div>
-        <div className="search-section">
+        <div className="syllabus-search-section">
           <div className="search-bar">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input

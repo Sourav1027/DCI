@@ -28,6 +28,65 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   flex-wrap:wrap;
   }
+
+   /* Filters */
+   .fee-filter-container {
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 5px;
+    margin-top:15px;
+    width:100%;
+  }
+  
+  .select-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e7ff;
+    border-radius: 12px;
+    background: white;
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .select-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+  
+  .search-wrapper {
+    position: relative;
+    width:100%;
+    border: 2px solid #e0e7ff;
+    border-radius: 12px;
+  
+  }
+  .search-wrapper:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 44px;
+    border: 2px solid #e0e7ff;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
   
   .table-fee-container {
     background: white;

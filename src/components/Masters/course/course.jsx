@@ -209,7 +209,7 @@ const Course = () => {
             <thead>
               <tr>
                 <th>Sr. No.</th>
-                <th>Batch Name</th>
+                <th>Course Name</th>
                 <th>Duration Time</th>
                 <th>Date</th>
                 <th>Actions</th>

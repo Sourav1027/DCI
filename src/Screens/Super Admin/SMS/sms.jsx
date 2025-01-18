@@ -97,7 +97,7 @@ const SMS = () => {
           </button>
         </div>
 
-        <div className="search-section">
+        <div className="sms-search-section">
           <div className="search-bar">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input

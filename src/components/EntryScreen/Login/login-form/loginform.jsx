@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Alert from '@mui/material/Alert';
 import "./loginform.css";
 
-const apiUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5000/api/';
+const apiUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5000/v1/';
 
 const schema = z.object({
   email: z.string().min(1, { message: "Email is required" }),
@@ -58,30 +58,34 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${apiUrl}auth/login`, {
+      const response = await fetch(`${apiUrl}login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-
+  
       const result = await response.json();
-      
+      console.log(result); // Log response to inspect the result
+  
       if (!response.ok) {
         showAlert(result.message || "Login failed. Please try again.", "error");
         return;
       }
-
+  
       const token = result.token;
       if (!token) {
         showAlert("Login failed: Authentication token not received", "error");
         return;
       }
+  
+      localStorage.setItem("token", token);
+      console.log("Setting token:", localStorage.setItem("token", token)); // Log the token
 
-      localStorage.setItem("auth_token", token);
+  
       showAlert("Successfully logged in!", "success");
-      
+  
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
@@ -92,6 +96,7 @@ const LoginForm = () => {
       setIsLoading(false);
     }
   };
+  
 
   // Alert Container Styles
   const alertContainerStyle = {

@@ -83,7 +83,7 @@ const FeeManagement = () => {
         <h1 className="gradient-text">Fee Management System</h1>
 
         {/* Filters */}
-        <div className="filter-container">
+        <div className="fee-filter-container">
           <select className="select-input">
             <option value="">Select Center</option>
             <option>D-codetech Malad</option>
