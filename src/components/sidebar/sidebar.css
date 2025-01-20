@@ -1,6 +1,5 @@
 /* Layout */
 .layout-wrapper {
-  display: flex;
   min-height: 100vh;
   background-color: #f5f7fb;
   position: relative;
@@ -8,7 +7,7 @@
 
 /* Sidebar */
 .sidebar-container {
-  width: 240px;
+  width: 18%;
   min-height: 100vh;
   background-color: #1a1c23;
   color: #fff;
@@ -183,12 +182,15 @@
 
 /* Page Content */
 .page-content {
-  padding: 1.5rem;
+  width:100%;
+  padding-left:18%;
+  padding-right:1%;
+  /* padding: 1.5rem; */
   color: #2d3748;
   transition: all 0.3s ease;
   height: calc(100vh - 60px);
-  overflow-y: auto;
-  margin-bottom: 20px;
+  overflow-x: hidden;
+  margin-top: 20px;
 }
 
 /* Card Styles */

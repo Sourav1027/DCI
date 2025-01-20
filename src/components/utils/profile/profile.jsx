@@ -1,10 +1,25 @@
-import React from 'react';
-import { User, Mail, Phone, Calendar, MapPin, GraduationCap, Users, BookOpen, Award } from 'lucide-react';
-import './profile.css';
+import React, { useState } from "react";
+import {
+  User,
+  Mail,
+  Phone,
+  Calendar,
+  MapPin,
+  GraduationCap,
+  Users,
+  BookOpen,
+  Award,
+  Camera,
+  PenSquare,
+} from "lucide-react";
+import "./profile.css";
 import img from "../../../assets/photos/sorav.jpg";
 
 const Profile = () => {
-  const studentData = {
+  const [isEditing, setIsEditing] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const [formData, setFormData] = useState({
     name: "Sourav Rana",
     email: "souravrana@gmail.com",
     phone: "+91 9910140895",
@@ -12,129 +27,160 @@ const Profile = () => {
     address: "123, Gandhi Nagar, New Delhi - 110001",
     fatherName: "Rajeev Kumar",
     motherName: "Anita",
-    course: "B.Tech Computer Science",
-    batch: "2022-2026",
-    rollNo: "CSE2022001",
-    semester: "4th Semester",
+    parentContact:"9910140565",
+    course: "Mern Stack",
+    batch: "2025-2026",
+    rollNo: "DR12501",
     section: "A",
-    cgpa: "8.9"
+    cgpa: "8.9",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
   };
 
-  const InfoField = ({ icon: Icon, label, value }) => (
-    <div className="info-field">
-      <div className="info-icon">
-        <Icon className="h-5 w-5 text-blue-600" />
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsEditing(false);
+    console.log("Saving updated data:", formData);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const renderInfoField = (icon, label, value, name) => {
+    return (
+      <div className="form-group">
+        <div className="defaultform">
+          <span className="icon-wrapper">
+            {icon}
+          </span>
+          <div className="inputdefault w-full">
+            <label className="text-gray-500">{label}</label>
+            <input
+              type="text"
+              className="form-control bg-transparent"
+              value={value}
+              name={name}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+            />
+          </div>
+        </div>
       </div>
-      <div>
-        <p className="info-label">{label}</p>
-        <p className="info-value">{value}</p>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
-    <div className="profile-container">
-      <div className="profile-card">
-        <div className="profile-cover">
-          <h1 className="profile-title">Student Profile</h1>
+    <div className="profile-container bg-gray-50">
+      <div className="profile-card bg-white rounded-lg shadow">
+        <div className="profile-cover bg-indigo-500 rounded-t-lg">
+          <h1 className="profile-title text-white">Student Profile</h1>
         </div>
 
-        <div className="profile-header-content">
-          <div className="avatar-container">
-            <div className="avatar-wrapper">
-              <img 
-                src={img}
-                alt=" "
-                className="avatar-image"
-              />
+        <form onSubmit={handleSubmit}>
+          <div className="profile-header-content p-4">
+            <div className="avatar-container">
+              <div className="avatar-wrapper relative">
+                <img
+                  src={previewImage || img}
+                  alt=""
+                  className="avatar-image w-24 h-24 rounded-full"
+                />
+                {isEditing && (
+                  <label className="camera-icon absolute bottom-0 right-0 bg-white rounded-full p-2 cursor-pointer">
+                    <Camera className="h-5 w-5 text-indigo-600" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="student-info">
-            <h2 className="student-name">{studentData.name}</h2>
-            <p className="roll-number">{studentData.rollNo}</p>
-          </div>
-        </div>
-
-        <div className="profile-content">
-          <div className="highlight-section">
-            <h3 className="section-title">
-              <Award className="h-6 w-6" />
-              Academic Highlights
-            </h3>
-            <div className="info-grid">
-              <InfoField 
-                icon={GraduationCap}
-                label="Course"
-                value={studentData.course}
-              />
-              <InfoField 
-                icon={Users}
-                label="Batch"
-                value={studentData.batch}
-              />
-              <InfoField 
-                icon={BookOpen}
-                label="Current Semester"
-                value={studentData.semester}
-              />
-              <InfoField 
-                icon={Award}
-                label="CGPA"
-                value={studentData.cgpa}
-              />
+            <div className="student-info">
+              <div>
+                <h2 className="student-name">{formData.name}</h2>
+                <p className="roll-number">{formData.rollNo}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsEditing(!isEditing)}
+                style={{
+                  color: "green",
+                  border: "unset",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <PenSquare className="h-5 w-5 text-blue-600" />
+              </button>
             </div>
           </div>
 
-          {/* Personal Information */}
-          <div className="info-section">
-            <h3 className="section-title">
-              <User className="h-6 w-6" />
-              Personal Information
-            </h3>
-            <div className="info-grid">
-              <InfoField 
-                icon={Mail}
-                label="Email"
-                value={studentData.email}
-              />
-              <InfoField 
-                icon={Phone}
-                label="Phone"
-                value={studentData.phone}
-              />
-              <InfoField 
-                icon={Calendar}
-                label="Date of Birth"
-                value={studentData.dob}
-              />
-              <InfoField 
-                icon={MapPin}
-                label="Address"
-                value={studentData.address}
-              />
+          <div className="profile-content p-4">
+            <div className="highlight-section mb-6">
+              <h3 className="section-title flex items-center gap-2 mb-4">
+                <Award className="h-5 w-5 text-indigo-600" />
+                Academic Highlights
+              </h3>
+              <div className="info-grid grid grid-cols-2 gap-4">
+                {renderInfoField(<GraduationCap className="text-indigo-600" />, "Course", formData.course, "course")}
+                {renderInfoField(<Users className="text-indigo-600" />, "Batch", formData.batch, "batch")}
+                {renderInfoField(<Award className="text-indigo-600" />, "CGPA", formData.cgpa, "cgpa")}
+              </div>
             </div>
-          </div>
 
-          {/* Family Information */}
-          <div className="info-section">
-            <h3 className="section-title">
-              <Users className="h-6 w-6" />
-              Family Information
-            </h3>
-            <div className="info-grid">
-              <InfoField 
-                icon={User}
-                label="Father's Name"
-                value={studentData.fatherName}
-              />
-              <InfoField 
-                icon={User}
-                label="Mother's Name"
-                value={studentData.motherName}
-              />
+            <div className="info-section mb-6">
+              <h3 className="section-title flex items-center gap-2 mb-4">
+                <User className="h-5 w-5 text-indigo-600" />
+                Personal Information
+              </h3>
+              <div className="info-grid grid grid-cols-2 gap-4">
+                {renderInfoField(<Mail className="text-indigo-600" />, "Email", formData.email, "email")}
+                {renderInfoField(<Phone className="text-indigo-600" />, "Phone", formData.phone, "phone")}
+                {renderInfoField(<Calendar className="text-indigo-600" />, "Date of Birth", formData.dob, "dob")}
+                {renderInfoField(<MapPin className="text-indigo-600" />, "Address", formData.address, "address")}
+              </div>
             </div>
+
+            <div className="info-section">
+              <h3 className="section-title flex items-center gap-2 mb-4">
+                <Users className="h-5 w-5 text-indigo-600" />
+                Family Information
+              </h3>
+              <div className="info-grid grid grid-cols-2 gap-4">
+                {renderInfoField(<User className="text-indigo-600" />, "Father's Name", formData.fatherName, "fatherName")}
+                {renderInfoField(<User className="text-indigo-600" />, "Mother's Name", formData.motherName, "motherName")}
+                {renderInfoField(<Phone className="text-indigo-600" />, "Mother's Name", formData.parentContact, "Parent Contact")}
+              </div>
+            </div>
+
+            {isEditing && (
+              <div className="flex justify-end mt-6">
+                <button 
+                  type="submit" 
+                  className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600"
+                >
+                  Save Changes
+                </button>
+              </div>
+            )}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

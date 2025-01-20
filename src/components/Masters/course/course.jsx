@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Coursestyle.css";
-import { Book, Plus, Save, WatchIcon, X, Search } from "lucide-react";
+import { Book, Plus, Save, WatchIcon, X, Search, IndianRupee } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteConfirmation } from "../../Providers/sweetalert";
 import 'animate.css';
@@ -10,6 +10,7 @@ import 'animate.css';
 const initialFormData = {
   courseName: "",
   duration: "",
+  courseFee: "",
 };
 
 const Course = () => {
@@ -27,9 +28,13 @@ const Course = () => {
     if (!formData.courseName) {
       newErrors.courseName = "Course Name is required";
     }
+    if (!formData.courseFee) {
+      newErrors.courseFee = "Course Fee is required";
+    }
     if (!formData.duration || isNaN(formData.duration) || formData.duration <= 0) {
       newErrors.duration = "Duration must be a positive number";
     }
+   
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -133,7 +138,7 @@ const Course = () => {
 
 
         {/* Modal for Adding/Editing Batch */}
-        <Modal show={showModal} onHide={handleCloseModal}  backdrop="static" keyboard={false}>
+        <Modal show={showModal} onHide={handleCloseModal}  backdrop="static" keyboard={false} size="lg">
           <Modal.Header closeButton>
             <Modal.Title>
               {editIndex !== null ? "Edit Course" : "Add New Course"}
@@ -141,7 +146,8 @@ const Course = () => {
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={handleSubmit} noValidate>
-              <div className="form-group">
+              <div className="row">
+              <div className="col">
                 <label htmlFor="courseName">Course Name</label>
                 <div className="input-group">
                   <span className="input-icon">
@@ -161,7 +167,7 @@ const Course = () => {
                   <div className="error-message">{errors.courseName}</div>
                 )}
               </div>
-              <div className="form-group">
+              <div className="col">
                 <label htmlFor="duration">Duration Time</label>
                 <div className="input-group">
                   <span className="input-icon">
@@ -180,6 +186,27 @@ const Course = () => {
                 {errors.duration && (
                   <div className="error-message">{errors.duration}</div>
                 )}
+              </div>
+              <div className="col">
+                <label htmlFor="courseFee">Course Fee</label>
+                <div className="input-group">
+                  <span className="input-icon">
+                    <IndianRupee size={18} />
+                  </span>
+                  <input
+                    type="text"
+                    className={`form-input ${errors.courseFee ? "is-invalid" : ""}`}
+                    id="courseFee"
+                    name="courseFee"
+                    placeholder="Enter course Fee"
+                    value={formData.courseFee}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.courseFee && (
+                  <div className="error-message">{errors.courseFee}</div>
+                )}
+              </div>
               </div>
               <div className="button-group mt-3">
                 <Button 

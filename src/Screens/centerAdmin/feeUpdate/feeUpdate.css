@@ -1,0 +1,199 @@
+/* Custom styles for Fee Management System */
+.feeupdate-container{
+    padding: 10px;
+    background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
+    /* min-height: 100vh; */
+    margin-top: 45px;
+    width:100%;
+  }
+    
+  .fee-title {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(to right, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+  }
+  
+  
+    .feeupdate-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        background: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        flex-wrap:wrap;
+    }
+
+    .header-actions {
+        display: flex;
+        gap: 12px;
+      }
+  
+     /* Filters */
+     .fee-search-section {
+        margin-top: 16px; /* Adds spacing from the header-actions */
+        width: 100%; /* Ensures it takes the full width of its container */
+        display: flex;
+        justify-content: flex-end; /* Adjust alignment if needed */
+        flex-wrap: wrap; /* Ensures responsive wrapping */
+      }
+      
+      .search-bar {
+        position: relative;
+        max-width: 400px;
+      }
+      
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c757d;
+      }
+      
+      .search-input {
+        width: 100%;
+        padding: 10px 10px 10px 40px;
+        border: 1px solid #dce0e4;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      
+      .search-input:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
+      }
+    
+    
+    .table-fee-container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      overflow: auto;
+      width:100%;
+      margin-top:10px;
+    }
+    
+    .fee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px; /* Smaller font size */
+      text-align: left;
+      background-color: #f9f9f9; /* Light background */
+      border: 1px solid #ddd; /* Table border */
+    }
+  
+    .fee-table th {
+      padding: 12px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: black;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background-color: rgb(177, 170, 255);
+      color: #333;
+      font-weight: bold;
+      height: 48px; /* Fixed height for header */
+      vertical-align: middle;
+    }
+    
+    .fee-table td {
+      padding: 12px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #1e293b;
+      font-size: 12px;
+      text-align: left;
+      vertical-align: middle;
+      height: 60px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .table-hover tbody tr:hover {
+      background-color: #f9fafb;
+    }
+    .status-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    .status-cell .faCheckCircle {
+      color: #10b981; /* Green for Paid */
+    }
+    
+    .status-cell .faClock {
+      color: #fbbf24; /* Yellow for Pending */
+    }
+    
+  
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    
+    .pagination .btn {
+      margin: 0 5px;
+      border-radius: 5px;
+    }
+    
+    .badge.bg-success {
+      background-color: #28a745;
+    }
+    
+    .badge.bg-warning {
+      background-color: #ffc107;
+    }
+    
+    .badge.bg-danger {
+      background-color: #dc3545;
+    }
+    
+  
+    
+    /* Alert Styles */
+    .alert {
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+    }
+    
+    /* Badge Styles */
+    .badge {
+      padding: 0.5em 0.75em;
+      font-weight: 500;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .card-header {
+        padding: 1rem;
+      }
+      
+      .table {
+        font-size: 0.875rem;
+      }
+      
+      .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+      }
+    }
+    
+    /* Spacing */
+    .mb-4 {
+      margin-bottom: 1.5rem !important;
+    }
+    
+    .g-3 {
+      gap: 1rem !important;
+    }

@@ -1,26 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import {Routes,Route, Link, useLocation, useNavigate,} from "react-router-dom";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTachometerAlt,faUsers,faCreditCard,faBook,faSms,faUser,faSignOutAlt,faChevronDown,faChevronUp,faBars,faTimes,
-  faFileAlt,faClock,faScrewdriverWrench,faBookBookmark,faSchool,faSearchLocation,faChalkboardTeacher,faBookOpen,
-  faPersonDotsFromLine,} from "@fortawesome/free-solid-svg-icons";
-import Dashboard from "../Dashboard/dashboard";
+import {
+  faUser,
+  faSignOutAlt,
+  faChevronDown,
+  faChevronUp,
+  faBars,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import "./sidebar.css";
-import Student from "../../Screens/Students/student";
-import ExamManagement from "../../Screens/Super Admin/ExamManagement/examManagement";
-import SMS from "../../Screens/Super Admin/SMS/sms";
-import Certificate from "../../Screens/Certificates/certificate";
 import Profile from "../utils/profile/profile";
 import Login from "../EntryScreen/Login/login";
-import Course from "../Masters/course/course";
-import Batch from "../Masters/Batch/batch";
-import CenterManagement from "../../Screens/Super Admin/CenterManagement/centerManagement";
-import EnquiryManagement from "../../Screens/Super Admin/EnquiryManagement/enquiryManagement";
-import Trainer from "../../Screens/Super Admin/TrainerManagement/trainer";
-import Syllabus from "../../Screens/Super Admin/syllabus/syllabus";
-import FeeManagement from "../../Screens/Super Admin/FeeManagement/feeManagement";
-import SoftSkills from "../../Screens/Super Admin/softSkills/softSkills";
+import { menuItems } from "./menuItems"; // Import the menuItems
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -29,89 +22,6 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [masterSubmenuOpen, setMasterSubmenuOpen] = useState(false);
-
-  const menuItems = [
-    {
-      title: "Dashboard",
-      icon: <FontAwesomeIcon icon={faTachometerAlt} />,
-      path: "/dashboard",
-      component: Dashboard,
-    },
-    {
-      title: "Centers",
-      icon: <FontAwesomeIcon icon={faSchool} />,
-      path: "/center-management",
-      component: CenterManagement,
-    },
-    {
-      title: "Enquiry",
-      icon: <FontAwesomeIcon icon={faSearchLocation} />,
-      path: "/enquiry-management",
-      component: EnquiryManagement,
-    },
-    {
-      title: "Students",
-      icon: <FontAwesomeIcon icon={faUsers} />,
-      path: "/students",
-      component: Student,
-    },
-    {
-      title: "Trainers",
-      icon: <FontAwesomeIcon icon={faChalkboardTeacher} />,
-      path: "/trainer-management",
-      component: Trainer,
-    },
-    {
-      title: "Syllabus",
-      icon: <FontAwesomeIcon icon={faBookOpen} />,
-      path: "/syllabus-management",
-      component: Syllabus,
-    },
-    {
-      title: "SMS",
-      icon: <FontAwesomeIcon icon={faSms} />,
-      path: "/sms",
-      component: SMS,
-    },
-    {
-      title: "Fee Management",
-      icon: <FontAwesomeIcon icon={faSms} />,
-      path: "/fee-management",
-      component: FeeManagement,
-    },
-    {
-      title: "Exam Structure",
-      icon: <FontAwesomeIcon icon={faBook} />,
-      path: "/exam-management",
-      component: ExamManagement,
-    },
-    {
-      title: "Soft skills",
-      icon: <FontAwesomeIcon icon={faPersonDotsFromLine} />,
-      path: "/soft-skills",
-      component: SoftSkills,
-    },
-    {
-      title: "Master",
-      icon: <FontAwesomeIcon icon={faScrewdriverWrench} />,
-      path: "/master",
-      hasSubmenu: true,
-      submenuItems: [
-        {
-          title: "Course",
-          path: "/master/course",
-          icon: <FontAwesomeIcon icon={faBookBookmark} />,
-          component: Course,
-        },
-        {
-          title: "Batch",
-          path: "/master/batch",
-          icon: <FontAwesomeIcon icon={faClock} />,
-          component: Batch,
-        },
-      ],
-    },
-  ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -205,35 +115,8 @@ const Sidebar = () => {
 
   return (
     <div className="layout-wrapper">
-      {isMobileOrTablet && isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={toggleSidebar}
-        />
-      )}
-
-      <aside
-        className={`sidebar-container ${isOpen ? "expanded" : "collapsed"} ${
-          isMobileOrTablet ? "mobile" : ""
-        }`}
-      >
-        <div className="sidebar-header">
-          <h3 className="sidebar-title">d-Codetech</h3>
-          {isMobileOrTablet && (
-            <button onClick={toggleSidebar} className="mobile-close">
-              <FontAwesomeIcon icon={faTimes} size="lg" />
-            </button>
-          )}
-        </div>
-
-        <nav className="sidebar-nav">
-          {menuItems.map((item) => renderMenuItem(item))}
-        </nav>
-      </aside>
-
-      <main
-        className={`main-wrapper ${isOpen ? "sidebar-expanded" : "sidebar-collapsed"}`}
-      >
+      {/* Header */}
+      <div className="header">
         <header className="main-header">
           {isMobileOrTablet && (
             <button className="mobile-menu" onClick={toggleSidebar}>
@@ -266,6 +149,28 @@ const Sidebar = () => {
             </div>
           </div>
         </header>
+      </div>
+
+      {/* Sidebar and Page Content */}
+      <div className="content-wrapper">
+        <aside
+          className={`sidebar-container ${isOpen ? "expanded" : "collapsed"} ${
+            isMobileOrTablet ? "mobile" : ""
+          }`}
+        >
+          <div className="sidebar-header">
+            <h3 className="sidebar-title">d-Codetech</h3>
+            {isMobileOrTablet && (
+              <button onClick={toggleSidebar} className="mobile-close">
+                <FontAwesomeIcon icon={faTimes} size="lg" />
+              </button>
+            )}
+          </div>
+
+          <nav className="sidebar-nav">
+            {menuItems.map((item) => renderMenuItem(item))}
+          </nav>
+        </aside>
 
         <div className="page-content">
           <Routes>
@@ -289,7 +194,7 @@ const Sidebar = () => {
             <Route path="/" element={<Login />} />
           </Routes>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

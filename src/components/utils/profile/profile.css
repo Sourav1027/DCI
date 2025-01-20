@@ -1,173 +1,310 @@
 .profile-container {
-    min-height: 100vh;
-    padding: 2rem 1rem;
-    margin-top:10px;
-  }
-  
-  .profile-card {
-    max-width: 100%;
-    margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .profile-cover {
-    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-    height: 120px;
-    position: relative;
-    align-items: flex-start;
-    padding: 2.5rem;
-    text-align:center;
-  }
-  
-  .profile-title {
-    color: white;
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin: 0;
-    
-  }
-  
-  .profile-header-content {
-    position: relative;
-    margin-top: -75px;
-    padding: 3px 2rem;
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 2rem;
-  }
-  
-  .avatar-container {
-    width: 150px;
-    height: 150px;
-    margin-right: 2rem;
-  }
-  
-  .avatar-wrapper {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 6px solid white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: white;
-  }
-  
-  .avatar-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .student-info {
-    padding-top: 1rem;
-  }
-  
-  .student-name {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .roll-number {
-    font-size: 1.1rem;
-    color: #6b7280;
-    margin: 0.2rem 0 0 0;
-  }
-  
-  .profile-content {
-    padding: 0 2rem 2rem;
-  }
-  
-  .highlight-section {
-    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-bottom: 2.5rem;
-  }
-  
-  .section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #4f46e5;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .info-field {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 0.75rem;
-    background: #f8fafc;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  }
-  
-  .info-field:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background:rgb(160, 193, 226);
-  }
-  
-  .info-icon {
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  margin-top: 25px;
+  background-color: #f3f4f6;
+}
+
+.profile-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.profile-cover {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  height: 120px;
+  position: relative;
+  align-items: flex-start;
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.profile-title {
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.profile-header-content {
+  position: relative;
+  margin-top: -75px;
+  padding: 3px 2rem;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.avatar-container {
+  width: 150px;
+  height: 150px;
+  margin-right: 2rem;
+  position: relative;
+}
+
+.avatar-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: white;
+  position: relative;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%; border-radius: 50%;
+  object-fit: cover;
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: white;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.camera-icon:hover {
+  transform: scale(1.1);
+  background: #f0f0f0;
+}
+
+.student-info {
+  padding-top: 1rem;
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+}
+
+.student-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+}
+
+.roll-number {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin: 0.2rem 0 0 0;
+}
+
+.edit-button {
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+  background: #f3f4f6;
+}
+
+.profile-content {
+  padding: 0 2rem 2rem;
+}
+
+.highlight-section {
+  background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #4f46e5;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.info-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.info-field:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgb(160, 193, 226);
+}
+
+.info-icon {
+  padding: 0.5rem;
+  background: #f8f9ff;
+  color: rgb(25, 94, 232);
+  border-radius: 8px;
+}
+
+.info-label {
+  font-size: 0.875rem;
+  color: rgb(25, 94, 232);
+  margin: 0 0 0.25rem 0;
+}
+
+.info-value {
+  font-size: 1rem;
+  color: #1f2937;
+  font-weight: 500;
+  margin: 0;
+}
+
+.info-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: all 0.2s ease;
+}
+
+.info-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.info-section {
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+
+
+
+
+
+
+.defaultform{
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: #f8fafc;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+ .defaultform span{
     padding: 0.5rem;
     background: #f8f9ff;
-    color:rgb(25, 94, 232);
     border-radius: 8px;
-  }
-  
-  .info-label {
-    font-size: 0.875rem;
-    color:rgb(25, 94, 232);
-    margin: 0 0 0.25rem 0;
-  }
-  
-  .info-value {
-    font-size: 1rem;
-    color: #1f2937;
-    font-weight: 500;
-    margin: 0;
+    color: rgb(25, 94, 232);
+
   }
 
-  .info-section {
-    margin-bottom: 2.5rem;
-    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+.inputdefault label{
+  font-size: 0.875rem;
+  color: rgb(25, 94, 232) !important;
+  margin: 0 0 0.25rem 0 !important;
+}
+
+.defaultform:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: rgb(160, 193, 226);
+  transition: all 0.3s ease;
+}
+.inputdefault .form-control{
+  border:none;
+  background: transparent;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+  border:none;
+  box-shadow:none;
+}
+
+.defaultform span{
+  place-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  font-size: 35px;
+  display: grid;
+}
+.defaultform:hover span{
+  background: #fff;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .profile-header-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
   }
-  
-  @media (max-width: 768px) {
-    .profile-header-content {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 0 1rem;
-    }
-  
-    .avatar-container {
-      margin-right: 0;
-      margin-bottom: 1rem;
-    }
-  
-    .profile-content {
-      padding: 0 1rem 1rem;
-    }
-  
-    .student-name {
-      font-size: 1.5rem;
-    }
+  .profile-cover {
+    height: 175px;
+}
+  .avatar-container {
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
+
+  .profile-content {
+    padding: 0 1rem 1rem;
+  }
+
+  .student-name {
+    font-size: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+}
