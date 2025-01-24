@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Coursestyle.css";
 import { Book, Plus, Save, WatchIcon, X, Search, IndianRupee } from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
@@ -125,16 +125,16 @@ const Course = () => {
             <span>Add New Course</span>
           </button>
         </div>
-        <div className="filter-container">
-          <div className="search-container">
-            <Search className="search-icon" size={18} />
-            <input
-              type="text"
-              placeholder="Search students..."
-              className="search-input"
-            />
-          </div>
-        </div>
+          <div className="course-search-section">
+                   <div className="search-bar">
+                     <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                     <input
+                       type="text"
+                       placeholder="Search syllabus..."
+                       className="search-input"
+                     />
+                   </div>
+                 </div>
 
 
         {/* Modal for Adding/Editing Batch */}

@@ -68,8 +68,7 @@
     background-color: #0b5ed7;
   }
   
-  .search-section {
-    margin-top: 16px; /* Adds spacing from the header-actions */
+  .center-search-section {
     width: 100%; /* Ensures it takes the full width of its container */
     display: flex;
     justify-content: flex-end; /* Adjust alignment if needed */

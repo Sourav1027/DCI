@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { Search, ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPencil,
-  faTrash,
-  faFileExport,
-  faStickyNote,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import {faPencil,faTrash,faFileExport,faStickyNote,faSearch,} from "@fortawesome/free-solid-svg-icons";
 import * as XLSX from "xlsx";
 import "./enquiry.css";
 import AddEnquiry from "./AddEnquiry/addEnquiry";

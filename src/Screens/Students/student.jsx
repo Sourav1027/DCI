@@ -102,7 +102,7 @@ const Student = () => {
         </div>
 
         {/* Filters */}
-        <div className="filter-container">
+        <div className="student-filter-container">
           <select className="select-input">
             <option value="">Select Course</option>
             <option>Web Development</option>

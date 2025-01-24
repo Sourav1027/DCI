@@ -260,7 +260,7 @@ const CenterManagement = () => {
           </button>
         </div>
 
-        <div className="search-section">
+        <div className="center-search-section">
           <div className="search-bar">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input

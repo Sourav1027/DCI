@@ -70,11 +70,12 @@
   }
   
   .syllabus-search-section {
-    margin-top: 16px; /* Adds spacing from the header-actions */
+    /* margin-top: 16px; */
     width: 100%; /* Ensures it takes the full width of its container */
     display: flex;
     justify-content: flex-end; /* Adjust alignment if needed */
     flex-wrap: wrap; /* Ensures responsive wrapping */
+    margin-bottom:10px;
   }
   
   .search-bar {

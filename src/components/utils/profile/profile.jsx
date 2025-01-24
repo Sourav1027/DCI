@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import {
-  User,
-  Mail,
-  Phone,
-  Calendar,
-  MapPin,
-  GraduationCap,
-  Users,
-  BookOpen,
-  Award,
-  Camera,
-  PenSquare,
+  User, Mail, Phone, Calendar, MapPin, GraduationCap,
+  Users, Award, Camera, PenSquare,
 } from "lucide-react";
-import "./profile.css";
+import './profile.css';
 import img from "../../../assets/photos/sorav.jpg";
+
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "Sourav Rana",
@@ -27,7 +20,7 @@ const Profile = () => {
     address: "123, Gandhi Nagar, New Delhi - 110001",
     fatherName: "Rajeev Kumar",
     motherName: "Anita",
-    parentContact:"9910140565",
+    parentContact: "9910140565",
     course: "Mern Stack",
     batch: "2025-2026",
     rollNo: "DR12501",
@@ -37,10 +30,16 @@ const Profile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   const handleSubmit = (e) => {
@@ -63,19 +62,17 @@ const Profile = () => {
   const renderInfoField = (icon, label, value, name) => {
     return (
       <div className="form-group">
-        <div className="defaultform">
-          <span className="icon-wrapper">
-            {icon}
-          </span>
+        <div className={`defaultform ${isEditing ? 'editing-enabled' : ''}`}>
+          <span className="icon-wrapper">{icon}</span>
           <div className="inputdefault w-full">
-            <label className="text-gray-500">{label}</label>
+            <label className={isEditing ? 'editing-label' : ''}>{label}</label>
             <input
               type="text"
               className="form-control bg-transparent"
               value={value}
               name={name}
               onChange={handleInputChange}
-              readOnly={!isEditing}
+              disabled={!isEditing}
             />
           </div>
         </div>
@@ -85,6 +82,15 @@ const Profile = () => {
 
   return (
     <div className="profile-container bg-gray-50">
+      {/* Custom Toast */}
+      {showToast && (
+        <div className="toast-notification">
+          <div className="toast-content">
+            {isEditing ? "Now you can edit your profile" : "Edit mode disabled"}
+          </div>
+        </div>
+      )}
+
       <div className="profile-card bg-white rounded-lg shadow">
         <div className="profile-cover bg-indigo-500 rounded-t-lg">
           <h1 className="profile-title text-white">Student Profile</h1>
@@ -119,7 +125,7 @@ const Profile = () => {
               </div>
               <button
                 type="button"
-                onClick={() => setIsEditing(!isEditing)}
+                onClick={handleEditClick}
                 style={{
                   color: "green",
                   border: "unset",
@@ -138,9 +144,24 @@ const Profile = () => {
                 Academic Highlights
               </h3>
               <div className="info-grid grid grid-cols-2 gap-4">
-                {renderInfoField(<GraduationCap className="text-indigo-600" />, "Course", formData.course, "course")}
-                {renderInfoField(<Users className="text-indigo-600" />, "Batch", formData.batch, "batch")}
-                {renderInfoField(<Award className="text-indigo-600" />, "CGPA", formData.cgpa, "cgpa")}
+                {renderInfoField(
+                  <GraduationCap className="text-indigo-600" />,
+                  "Course",
+                  formData.course,
+                  "course"
+                )}
+                {renderInfoField(
+                  <Users className="text-indigo-600" />,
+                  "Batch",
+                  formData.batch,
+                  "batch"
+                )}
+                {renderInfoField(
+                  <Award className="text-indigo-600" />,
+                  "CGPA",
+                  formData.cgpa,
+                  "cgpa"
+                )}
               </div>
             </div>
 
@@ -150,10 +171,30 @@ const Profile = () => {
                 Personal Information
               </h3>
               <div className="info-grid grid grid-cols-2 gap-4">
-                {renderInfoField(<Mail className="text-indigo-600" />, "Email", formData.email, "email")}
-                {renderInfoField(<Phone className="text-indigo-600" />, "Phone", formData.phone, "phone")}
-                {renderInfoField(<Calendar className="text-indigo-600" />, "Date of Birth", formData.dob, "dob")}
-                {renderInfoField(<MapPin className="text-indigo-600" />, "Address", formData.address, "address")}
+                {renderInfoField(
+                  <Mail className="text-indigo-600" />,
+                  "Email",
+                  formData.email,
+                  "email"
+                )}
+                {renderInfoField(
+                  <Phone className="text-indigo-600" />,
+                  "Phone",
+                  formData.phone,
+                  "phone"
+                )}
+                {renderInfoField(
+                  <Calendar className="text-indigo-600" />,
+                  "Date of Birth",
+                  formData.dob,
+                  "dob"
+                )}
+                {renderInfoField(
+                  <MapPin className="text-indigo-600" />,
+                  "Address",
+                  formData.address,
+                  "address"
+                )}
               </div>
             </div>
 
@@ -163,18 +204,30 @@ const Profile = () => {
                 Family Information
               </h3>
               <div className="info-grid grid grid-cols-2 gap-4">
-                {renderInfoField(<User className="text-indigo-600" />, "Father's Name", formData.fatherName, "fatherName")}
-                {renderInfoField(<User className="text-indigo-600" />, "Mother's Name", formData.motherName, "motherName")}
-                {renderInfoField(<Phone className="text-indigo-600" />, "Mother's Name", formData.parentContact, "Parent Contact")}
+                {renderInfoField(
+                  <User className="text-indigo-600" />,
+                  "Father's Name",
+                  formData.fatherName,
+                  "fatherName"
+                )}
+                {renderInfoField(
+                  <User className="text-indigo-600" />,
+                  "Mother's Name",
+                  formData.motherName,
+                  "motherName"
+                )}
+                {renderInfoField(
+                  <Phone className="text-indigo-600" />,
+                  "Parent Contact",
+                  formData.parentContact,
+                  "parentContact"
+                )}
               </div>
             </div>
 
             {isEditing && (
               <div className="flex justify-end mt-6">
-                <button 
-                  type="submit" 
-                  className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600"
-                >
+                <button type="submit" className="submit-button">
                   Save Changes
                 </button>
               </div>

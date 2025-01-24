@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
+    /* margin-bottom: 32px; */
     background: white;
     padding: 20px;
     border-radius: 16px;
@@ -79,12 +79,11 @@
   
   
   /* Filters */
-  .filter-container {
+  .student-filter-container {
     display: flex;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
-    margin-bottom: 15px;
-    margin-top:15px;
+    margin-bottom: 10px;
     width:100%;
   }
   

@@ -184,7 +184,7 @@
 .page-content {
   width:100%;
   padding-left:18%;
-  padding-right:1%;
+  padding-right:0%;
   /* padding: 1.5rem; */
   color: #2d3748;
   transition: all 0.3s ease;

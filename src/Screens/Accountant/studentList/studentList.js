@@ -70,7 +70,7 @@ const StudentList = () => {
         </div>
         <div className="header-actions">
           <button
-            className="btn btn-outline-primary export-btn"
+            className="btn btn-primary add-btn"
             onClick={exportToExcel}
           >
             <FontAwesomeIcon icon={faFileExport} className="me-2" />

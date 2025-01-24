@@ -16,11 +16,13 @@
 
 .profile-cover {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  height: 120px;
+  height: 90px;
   position: relative;
-  align-items: flex-start;
   padding: 2.5rem;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-title {
@@ -36,7 +38,6 @@
   padding: 3px 2rem;
   display: flex;
   align-items: flex-end;
-  margin-bottom: 2rem;
 }
 
 .avatar-container {
@@ -273,10 +274,57 @@
 
 
 
+/* Toast notification styles */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: slideDown 0.5s ease-out;
+}
+
+.toast-content {
+  background: white;
+  color: #4f46e5;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  font-weight: 500;
+  border: 2px solid #4f46e5;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateX(-50%) translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Edit mode styles */
+.editing-enabled {
+  background: #eef2ff !important;
+}
+
+.editing-enabled:hover {
+  background: #e0e7ff !important;
+}
+
+.editing-label {
+  color: #4f46e5 !important;
+}
+
+.editing-enabled .form-control {
+  border-bottom: 1px solid #818cf8;
+}
 
 
-
-
+ 
 
 
 @media (max-width: 768px) {
