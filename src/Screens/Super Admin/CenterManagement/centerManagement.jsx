@@ -170,25 +170,26 @@ const CenterManagement = () => {
 
   const handleStatusChange = async (center) => {
     try {
-      const newStatus = center.status === "active" ? "suspended" : "active";
-      const endpoint = newStatus === "active" ? "unsuspend" : "suspend";
-
+      const newStatus = !center.status;
+      const endpoint = newStatus ? 'unsuspend' : 'suspend';
+      
       const response = await fetch(
         `${API_BASE_URL}centers/${center.centerId}/${endpoint}`,
         {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+            'Content-Type': 'application/json',
+          }
         }
       );
       const data = await response.json();
-
+  
       if (!response.ok) {
         throw new Error(data.message || "Failed to update status");
       }
-
-      showToast(`Center status updated to ${newStatus}`);
+  
+      showToast(`Center ${newStatus ? 'activated' : 'suspended'} successfully`);
       fetchCenters();
     } catch (error) {
       console.error("Error:", error);
@@ -304,13 +305,13 @@ const CenterManagement = () => {
                     <td>{center.mobileNo}</td>
                     <td>{center.createdAt}</td>
                     <td>
-                      <span
-                        className={`status-badge ${
-                          center.status === 1 ? "active" : "suspended"
-                        }`}
-                      >
-                        {center.status === 1 ? "active" : "suspended"}
-                      </span>
+                    <span
+                      className={`status-badge ${
+                        center.status ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                      } px-3 py-1 rounded-full text-sm font-medium`}
+                    >
+                      {center.status ? "Active" : "Inactive"}
+                    </span>
                     </td>
                     <td>
                       <div className="action-buttons-three">
@@ -321,8 +322,8 @@ const CenterManagement = () => {
                           <FontAwesomeIcon icon={faPencil} />
                         </button>
                         <button
-                          className={`btn btn-icon ${
-                            center.status === 1 ? "icon-green" : "icon-red"
+                           className={`btn btn-icon ${
+                            center.status ? "text-red-600 hover:text-red-800" : "text-green-600 hover:text-green-800"
                           }`}
                           onClick={() => handleStatusChange(center)}
                         >

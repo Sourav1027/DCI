@@ -1,106 +1,222 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash, } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
-import { Book, Play, Plus, Save, X,Search } from "lucide-react";
+import {
+  Book,
+  Play,
+  Plus,
+  Save,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ToggleLeft,
+  ToggleRight
+} from "lucide-react";
 import { Modal, Button } from "react-bootstrap";
+import { Alert, Snackbar } from "@mui/material";
 import { deleteConfirmation } from "../../Providers/sweetalert";
 import "animate.css";
 import { Trello, Watch } from "react-bootstrap-icons";
 
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1";
 
 const initialFormData = {
   batchName: "",
   timing: "",
   course: "",
   startsAt: "",
+  status: true,
 };
 
 const Batch = () => {
   const [batches, setBatches] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [selectedBatch, setSelectedBatch] = useState(null);
+  const [toast, setToast] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const itemsPerPage = 10;
+  const [courses, setCourses] = useState([]);
 
-  const validateForm = (data) => {
-    const errors = {};
-
-    if (!data.batchName.trim()) {
-      errors.batchName = "Batch Name is required";
-    }
-
-    if (!data.timing) {
-      errors.timing = "Batch Timing is required";
-    }
-
-    if (!data.course.trim()) {
-      errors.course = "Course Name is required";
-    }
-
-    if (!data.startsAt.trim()) {
-      errors.startsAt = "Start Time is required";
-    } 
-
-    return errors;
+  // Toast handling function
+  const showToast = (message, severity = "success") => {
+    setToast({
+      open: true,
+      message: message,
+      severity: severity,
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm(formData);
+  // Handle toast close
+  const handleCloseToast = () => {
+    setToast((prev) => ({ ...prev, open: false }));
+  };
 
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+  const fetchBatches = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("No token found", "error");
+        return;
+      }
+
+      setLoading(true);
+      const response = await fetch(
+        `${API_BASE_URL}/batches?page=${currentPage}&limit=${itemsPerPage}&search=${searchTerm}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setBatches(responseData.data || []);
+      setTotalCount(responseData.totalCount || 0);
+    } catch (error) {
+      console.error("Error fetching batches:", error);
+      showToast("Failed to load batches", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      fetchBatches();
+    }, 300);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchTerm, currentPage]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.batchName?.trim()) {
+      newErrors.batchName = "Batch Name is required";
+    }
+    if (!formData.timing?.trim()) {
+      newErrors.timing = "Timing is required";
+    }
+    if (!formData.course?.trim()) {
+      newErrors.course = "course is required";
+    }
+    if (!formData.startsAt?.trim()) {
+      newErrors.startsAt = "startsAt is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showToast("No token found", "error");
       return;
     }
 
-    const currentDate = new Date().toLocaleDateString();
+    const batchData = {
+      batchName: formData.batchName.trim(),
+      timing: formData.timing.trim(),
+      course: formData.course.trim(),
+      startsAt: formData.startsAt.trim(),
+      status: formData.status,
+      createdAt: new Date().toLocaleDateString(),
+      updatedAt: new Date().toLocaleDateString(),
+    };
 
-    if (editIndex !== null) {
-      const updatedBatches = [...batches];
-      updatedBatches[editIndex] = {
-        name: formData.batchName.trim(),
-        timing: formData.timing,
-        course: formData.course.trim(),
-        startsAt: formData.startsAt,
-        date: currentDate,
-      };
-      setBatches(updatedBatches);
-      setEditIndex(null);
-    } else {
-      setBatches([
-        ...batches,
-        {
-          name: formData.batchName.trim(),
-          timing: formData.timing,
-          course: formData.course.trim(),
-          startsAt: formData.startsAt,
-          date: currentDate,
+    try {
+      const url = selectedBatch
+        ? `${API_BASE_URL}/batches/${selectedBatch.id}`
+        : `${API_BASE_URL}/batches`;
+
+      const response = await fetch(url, {
+        method: selectedBatch ? "PUT" : "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-      ]);
-    }
+        body: JSON.stringify(batchData),
+      });
 
-    setFormData(initialFormData);
-    setShowModal(false);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || `HTTP error! status: ${response.status}`
+        );
+      }
+
+      showToast(
+        selectedBatch
+          ? "Batch updated successfully"
+          : "Batch added successfully"
+      );
+      await fetchBatches();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error saving batch:", error);
+      showToast(error.message || "Failed to save batch", "error");
+    }
   };
 
-  const handleEdit = (index) => {
-    const batch = batches[index];
+  const handleEdit = (batch) => {
+    setSelectedBatch(batch);
     setFormData({
-      batchName: batch.name,
-      timing: batch.timing,
-      course: batch.course,
-      startsAt: batch.startsAt,
+      batchName: batch.batchName || "",
+      timing: batch.timing || "",
+      course: batch.course || "",
+      startsAt: batch.startsAt || "",
+      status: batch.status !== undefined ? batch.status : true,
     });
-    setEditIndex(index);
     setShowModal(true);
     setErrors({});
   };
 
-  const handleDelete = async (index) => {
-    const deleteBatch = () => {
-      const updatedBatches = batches.filter((_, i) => i !== index);
-      setBatches(updatedBatches);
+  const handleDelete = async (batch) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      showToast("No token found", "error");
+      return;
+    }
+
+    const deleteBatch = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/batches/${batch.id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        showToast("Batch deleted successfully");
+        await fetchBatches();
+      } catch (error) {
+        console.error("Error deleting batch:", error);
+        showToast("Failed to delete batch", "error");
+      }
     };
 
     await deleteConfirmation(deleteBatch);
@@ -109,7 +225,7 @@ const Batch = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     setFormData(initialFormData);
-    setEditIndex(null);
+    setSelectedBatch(null);
     setErrors({});
   };
 
@@ -122,6 +238,124 @@ const Batch = () => {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderPagination = () => {
+    const totalPages = Math.ceil(totalCount / itemsPerPage);
+    return (
+      <div className="pagination-container">
+        <span className="page-info">
+          Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+          {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount}{" "}
+          results
+        </span>
+        <div className="pagination">
+          <button
+            className="page-btn"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft size={16} />
+          </button>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`page-btn ${currentPage === index + 1 ? "active" : ""}`}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className="page-btn"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  //fetch course
+
+  // New function to fetch courses
+  const fetchCourses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("No token found", "error");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/courses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setCourses(responseData.data || []);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      showToast("Failed to load courses", "error");
+    }
+  };
+
+  // Fetch courses when component mounts
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+
+    const handleStatusChange = async (batch) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("No token found", "error");
+        return;
+      }
+  
+      try {
+        const response = await fetch(`${API_BASE_URL}/batches/${batch.id}`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...batch,
+            status: !batch.status
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        showToast(
+          `Batch status ${!batch.status ? 'activated' : 'deactivated'} successfully`
+        );
+        await fetchBatches();
+      } catch (error) {
+        console.error("Error toggling batch status:", error);
+        showToast("Failed to update batch status", "error");
+      }
+    };
+  
+
   return (
     <div className="batch-container">
       <div className="header-batch">
@@ -133,30 +367,111 @@ const Batch = () => {
             onClick={() => {
               setShowModal(true);
               setFormData(initialFormData);
-              setEditIndex(null);
               setErrors({});
+              setSelectedBatch(null);
             }}
           >
             <Plus size={18} />
             <span>Add New Batch</span>
           </button>
         </div>
-        <div className="filter-container">
-          <div className="search-container">
-            <Search className="search-icon" size={18} />
+
+        <div className="batch-search-section">
+          <div className="search-bar">
+            <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
               type="text"
-              placeholder="Search students..."
+              placeholder="Search batches..."
+              value={searchTerm}
+              onChange={handleSearch}
               className="search-input"
             />
           </div>
         </div>
 
-        <Modal show={showModal} onHide={handleCloseModal} size="lg" backdrop="static" keyboard={false}>
-          
+        <div className="table-box">
+          {loading ? (
+            <div className="loading">Loading...</div>
+          ) : (
+            <table className="course-table">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Batch Name</th>
+                  <th>Batch Timing</th>
+                  <th>Course Name</th>
+                  <th>Starts At</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {batches.length > 0 ? (
+                  batches.map((batch, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {index + 1}
+                      </td>
+                      <td>{batch.batchName}</td>
+                      <td>{batch.timing}</td>
+                      <td>{batch.course}</td>
+                      <td>{batch.startsAt}</td>
+                      <td>
+                      <span className={`status-badge ${batch.status ? 'active' : 'inactive'}`}>
+                        {batch.status ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                      <td>
+                        <div className="action-buttons">
+                          <button
+                            className="btn btn-icon btn-edit"
+                            onClick={() => handleEdit(batch)}
+                          >
+                            <FontAwesomeIcon icon={faPencil} />
+                          </button>
+                          <button
+                          className={`btn btn-icon ${batch.status ? 'btn-deactivate' : 'btn-activate'}`}
+                          onClick={() => handleStatusChange(batch)}
+                          title={batch.status ? 'Deactivate Batch' : 'Activate Batch'}
+                        >
+                          {batch.status ? 
+                            <ToggleRight className="text-success" size={18} /> : 
+                            <ToggleLeft className="text-danger" size={18} />
+                          }
+                        </button>
+                          <button
+                            className="btn btn-icon btn-delete"
+                            onClick={() => handleDelete(batch)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="no-data text-center">
+                      No batches available. Please add a batch.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
+          {renderPagination()}
+        </div>
+
+        <Modal
+          show={showModal}
+          onHide={handleCloseModal}
+          size="lg"
+          backdrop="static"
+          keyboard={false}
+        >
           <Modal.Header closeButton>
             <Modal.Title>
-              {editIndex !== null ? "Edit Batch" : "Add New Batch"}
+              {selectedBatch ? "Edit Batch" : "Add New Batch"}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -184,7 +499,9 @@ const Batch = () => {
                           />
                         </div>
                         {errors.batchName && (
-                          <div className="error-message">{errors.batchName}</div>
+                          <div className="error-message">
+                            {errors.batchName}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -221,15 +538,20 @@ const Batch = () => {
                           <span className="input-icon">
                             <Book size={18} />
                           </span>
-                          <input
-                            type="text"
+                          <select
                             className={`form-input ${errors.course ? "is-invalid" : ""}`}
                             id="course"
                             name="course"
                             value={formData.course}
                             onChange={handleChange}
-                            placeholder="Enter Course Name"
-                          />
+                          >
+                            <option value="">Select Course</option>
+                            {courses.map((course) => (
+                              <option key={course.id} value={course.courseName}>
+                                {course.courseName}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         {errors.course && (
                           <div className="error-message">{errors.course}</div>
@@ -262,15 +584,15 @@ const Batch = () => {
                   </div>
                 </div>
                 <div className="button-group mt-3">
-                <Button type="submit" variant="primary" >
+                  <Button type="submit" variant="primary">
                     <Save size={16} className="me-2" />
-                    {editIndex !== null ? "Update Batch" : "Add Batch"}
+                    {selectedBatch ? "Update Batch" : "Add Batch"}
                   </Button>
-                  <Button 
-                    variant="secondary" 
+                  <Button
+                    variant="secondary"
                     onClick={handleCloseModal}
                     className="ms-2"
-                    >
+                  >
                     <X size={16} className="me-2" />
                     Cancel
                   </Button>
@@ -280,51 +602,20 @@ const Batch = () => {
           </Modal.Body>
         </Modal>
 
-        <div className="table-box">
-          <table className="course-table">
-            <thead>
-              <tr>
-                <th>Sr. No.</th>
-                <th>Batch Name</th>
-                <th>Batch Timing</th>
-                <th>Course Name</th>
-                <th>Starts At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {batches.length > 0 ? (
-                batches.map((batch, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {index + 1}
-                    </td>
-                    <td>{batch.name}</td>
-                    <td>{batch.timing}</td>
-                    <td>{batch.course}</td>
-                    <td>{batch.startsAt}</td>
-                    <td>
-                    <div className="action-buttons">
-                    <button className="btn btn-icon btn-edit" onClick={() => handleEdit(index)}>
-                        <FontAwesomeIcon icon={faPencil} />
-                      </button>
-                       <button className="btn btn-icon btn-delete"onClick={() => handleDelete(index)} >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="no-data text-center">
-                    No batches available. Please add a batch.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <Snackbar
+          open={toast.open}
+          autoHideDuration={3000}
+          onClose={handleCloseToast}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={handleCloseToast}
+            severity={toast.severity}
+            sx={{ width: "100%" }}
+          >
+            {toast.message}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
