@@ -12,7 +12,7 @@ import {
 import * as XLSX from "xlsx";
 import AddCenter from "./addCenter";
 import "./style.css";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ToggleLeft, ToggleRight } from "lucide-react";
 import { Alert, Snackbar } from "@mui/material";
 import { deleteConfirmation } from "../../../components/Providers/sweetalert";
 import "animate.css";
@@ -96,27 +96,38 @@ const CenterManagement = () => {
     setCurrentPage(newPage);
   };
 
-  const handleDelete = async (centerId) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}centers/${centerId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to delete center");
-      }
-
-      showToast("Center deleted successfully");
-      fetchCenters();
-    } catch (error) {
-      console.error("Error:", error);
-      showToast(error.message || "Failed to delete center", "error");
-    }
-  };
+  const handleDelete = async (id) => {
+     const token = localStorage.getItem("token");
+     if (!token) {
+       showToast("No token found", "error");
+       return;
+     }
+ 
+     const deleteCenter = async () => {
+       try {
+         const response = await fetch(`${API_BASE_URL}centers/${id}`, {
+           method: "DELETE",
+           headers: {
+             Authorization: `Bearer ${token}`,
+             "Content-Type": "application/json",
+           },
+         });
+ 
+         if (!response.ok) {
+           const data = await response.json();
+           throw new Error(data.message || "Failed to delete center");
+         }
+ 
+         showToast("center deleted successfully");
+         await fetchCenters();
+       } catch (error) {
+         console.error("Error deleting center:", error);
+         showToast(error.message || "Failed to delete center", "error");
+       }
+     };
+ 
+     await deleteConfirmation(deleteCenter);
+   };
 
   const exportToExcel = () => {
     try {
@@ -133,36 +144,45 @@ const CenterManagement = () => {
   const handleSubmit = async (formData) => {
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error("Authentication token not found");
+      }
+  
+      // Remove both createdAt and updatedAt fields from the data
+      const { createdAt, updatedAt, ...dataToSend } = formData;
+  
       const url = selectedCenter 
-        ? `${API_BASE_URL}centers/${selectedCenter.centerId}`
+        ? `${API_BASE_URL}centers/${selectedCenter.id}` 
         : `${API_BASE_URL}centers`;
       
       const response = await fetch(url, {
         method: selectedCenter ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
-
-      const data = await response.json();
-
+  
       if (!response.ok) {
-        throw new Error(data.message || "Operation failed");
+        const errorData = await response.json().catch(() => ({
+          message: `HTTP error! status: ${response.status}`
+        }));
+        throw new Error(errorData.message || "Operation failed");
       }
-
+  
+      const data = await response.json();
       setShowModal(false);
       showToast(
         selectedCenter ? 'Center updated successfully' : 'Center added successfully'
       );
       fetchCenters();
+      setSelectedCenter(null);
     } catch (error) {
       console.error('Error:', error);
-      showToast(error.message, 'error');
+      showToast(error.message || 'Failed to process request', 'error');
     }
   };
-
   const handleEdit = (center) => {
     setSelectedCenter(center);
     setShowModal(true);
@@ -321,19 +341,20 @@ const CenterManagement = () => {
                         >
                           <FontAwesomeIcon icon={faPencil} />
                         </button>
+                      
                         <button
-                           className={`btn btn-icon ${
-                            center.status ? "text-red-600 hover:text-red-800" : "text-green-600 hover:text-green-800"
-                          }`}
+                          className={`btn btn-icon ${center.status ? 'btn-deactivate' : 'btn-activate'}`}
                           onClick={() => handleStatusChange(center)}
+                          title={center.status ? 'Deactivate center' : 'Activate center'}
                         >
-                          <FontAwesomeIcon
-                            icon={center.status === 1 ? faBan : faCheck}
-                          />
+                          {center.status ? 
+                            <ToggleRight className="text-success" size={18} /> : 
+                            <ToggleLeft className="text-danger" size={18} />
+                          }
                         </button>
                         <button
                           className="btn btn-icon button-delete"
-                          onClick={() => handleDelete(center.centerId)}
+                          onClick={() => handleDelete(center.id)}
                         >
                           <FontAwesomeIcon icon={faTrash} />
                         </button>

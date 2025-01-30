@@ -60,45 +60,23 @@ const AddCenter = ({ onSubmit, onCancel,initialValues }) => {
     return Object.keys(newErrors).length === 0;
   };
 
- const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    console.log("Submitting Form...");
+    if (validateForm() && !isSubmitting) {
       setIsSubmitting(true);
       try {
-        const token = localStorage.getItem('token');
-        console.log(token,"token")
-        if (!token) {
-          throw new Error('Authentication token not found');
+        const dataToSubmit = { ...formData };
+        if (initialValues && !dataToSubmit.password) {
+          delete dataToSubmit.password;
         }
-
-        const url = initialValues 
-          ? `${API_BASE_URL}centers/${initialValues.centerId}`
-          : `${API_BASE_URL}centers`;
-
-        const method = initialValues ? 'PUT' : 'POST';
-
-        const response = await fetch(url, {
-          method: method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || 'Failed to submit form');
-        }
-
-        onSubmit(data);
+        await onSubmit(dataToSubmit);
         resetForm();
       } catch (error) {
-        console.error('Error:', error);
-        setErrors(prev => ({
+        console.error("Error submitting form:", error);
+        setErrors((prev) => ({
           ...prev,
-          submit: error.message
+          submit: error.message || "Failed to submit form",
         }));
       } finally {
         setIsSubmitting(false);

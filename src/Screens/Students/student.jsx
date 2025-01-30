@@ -121,44 +121,105 @@ const Student = () => {
   };
 
 
-  const handleSubmit = async (formData) => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error("Authentication token not found");
-      }
+ // Check if all required fields are present before sending
+const validateFields = (data) => {
+  const requiredFields = [
+    'centerName',
+    'firstName',
+    'lastName',
+    'email',
+    'phone',
+    'dob',
+    'address',
+    'fatherName',
+    'motherName',
+    'course',
+    'batch',
+    'previousEducation',
+    'emergencyContact',
+    'gender',
+    'admissionDate',
+    'fee',
+    'counsellorName',
+    'reference',
+    'paymentTerm',
+    'collegeName'
+  ];
 
-      const url = selectedStudent 
-        ? `${API_BASE_URL}/students/${selectedStudent.id}`
-        : `${API_BASE_URL}/students`;
-      
-      const response = await fetch(url, {
-        method: selectedStudent ? 'PUT' : 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
+  const missingFields = requiredFields.filter(field => !data[field]);
+  if (missingFields.length > 0) {
+    throw new Error(`Missing required fields: ${missingFields.join(', ')}`);
+  }
+};
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Operation failed");
-      }
-
-      setShowAddForm(false);
-      displayToast(
-        selectedStudent ? 'Student updated successfully' : 'Student added successfully'
-      );
-      fetchStudents();
-      setSelectedStudent(null);
-    } catch (error) {
-      console.error('Error:', error);
-      displayToast(error.message, 'error');
+const handleSubmit = async (formData) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error("Authentication token not found");
     }
-  };
 
+    // Validate required fields
+    validateFields(formData);
+
+    // Format the data
+    const formattedData = {
+      centerName: formData.centerName,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      dob: formData.dob ? new Date(formData.dob).toISOString().split('T')[0] : null,
+      address: formData.address,
+      fatherName: formData.fatherName,
+      motherName: formData.motherName,
+      course: formData.course,
+      batch: formData.batch,
+      previousEducation: formData.previousEducation,
+      emergencyContact: formData.emergencyContact,
+      gender: formData.gender,
+      admissionDate: formData.admissionDate ? new Date(formData.admissionDate).toISOString().split('T')[0] : null,
+      fee: formData.fee,
+      counsellorName: formData.counsellorName,
+      reference: formData.reference,
+      paymentTerm: formData.paymentTerm,
+      collegeName: formData.collegeName,
+      status: formData.status !== undefined ? formData.status : true
+    };
+
+    console.log('Formatted data being sent:', formattedData);
+
+    const url = selectedStudent 
+      ? `${API_BASE_URL}/students/${selectedStudent.id}` 
+      : `${API_BASE_URL}/students`;
+    
+    const response = await fetch(url, {
+      method: selectedStudent ? 'PUT' : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formattedData),
+    });
+
+    const data = await response.json();
+    
+    if (!response.ok) {
+      console.error('Server error response:', data);
+      throw new Error(data.message || "Operation failed");
+    }
+
+    setShowAddForm(false);
+    displayToast(
+      selectedStudent ? 'Student updated successfully' : 'Student added successfully'
+    );
+    fetchStudents();
+    setSelectedStudent(null);
+  } catch (error) {
+    console.error('Submission error:', error);
+    displayToast(error.message || 'An error occurred while saving the student', 'error');
+  }
+};
 
 
   const handleFilterChange = (e) => {

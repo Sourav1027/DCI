@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LibraryBig, Clock, ScrollText } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./addsyllabus.css";
 
-const AddSyllabus = ({ onSubmit, onClose }) => {
+const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
   const initialFormData = {
     batch: "",
     course: "",
@@ -13,6 +13,18 @@ const AddSyllabus = ({ onSubmit, onClose }) => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (initialValues) {
+      setFormData({
+        batch: initialValues.batch || "",
+        course: initialValues.course || "",
+        topics: Array.isArray(initialValues.topics) 
+        ? initialValues.topics.join(', ')
+        : initialValues.topics || "",
+    });
+  }
+}, [initialValues]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -45,10 +57,16 @@ const AddSyllabus = ({ onSubmit, onClose }) => {
     }
   };
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      // Convert topics string to array before submitting
+      const processedFormData = {
+        ...formData,
+        topics: formData.topics.trim()
+      };
+      onSubmit(processedFormData);
       resetForm();
     }
   };
