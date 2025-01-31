@@ -1,11 +1,9 @@
-/* Main Container Styles */
 .certificate-container {
     min-height: 100vh;
     background-color: #f7f7f7;
     padding: 2rem 1rem;
   }
   
-  /* Form Styles */
   .form-container {
     max-width: 90rem;
     margin: 0 auto 2rem;
@@ -30,7 +28,6 @@
   
   .form-group {
     margin-bottom: 1rem;
-    /* width : 20rem; */
   }
   
   .form-label {
@@ -55,7 +52,6 @@
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
   }
   
-  /* Certificate Preview Styles */
   .certificate-preview {
     max-width: 1024px;
     margin: 0 auto 2rem;
@@ -72,7 +68,6 @@
     background-color: white;
   }
   
-  /* Decorative Corners */
   .corner {
     position: absolute;
     width: 4rem;
@@ -107,7 +102,6 @@
     border-right: 4px solid #ca8a04;
   }
   
-  /* Certificate Content */
   .certificate-content {
     position: relative;
     z-index: 10;
@@ -162,7 +156,6 @@
     margin: 1rem 0;
   }
   
-  /* Signatures Section */
   .signatures-section {
     display: flex;
     justify-content: space-between;
@@ -193,7 +186,7 @@
     opacity: 0.8;
   }
   
-  /* Action Buttons */
+
   .buttons-container {
     max-width: 1024px;
     margin: 0 auto;
@@ -234,7 +227,6 @@
     margin-right: 0.5rem;
   }
   
-  /* Print Styles */
   @media print {
     .form-container, 
     .buttons-container {
@@ -248,7 +240,6 @@
     }
   }
   
-  /* Responsive Styles */
   @media (max-width: 768px) {
     .certificate-preview {
       margin: 1rem;

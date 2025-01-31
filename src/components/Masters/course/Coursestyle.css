@@ -1,7 +1,6 @@
 .course-container {
   padding: 10px;
   background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
-  /* min-height: 100vh; */
   margin-top: 45px;
   width:100%;
 }
@@ -117,13 +116,11 @@
   transform: translateY(-2px);
 }
 
-   /* Filters */
    .course-search-section {
-    /* margin-top: 16px; */
-    width: 100%; /* Ensures it takes the full width of its container */
+    width: 100%;
     display: flex;
-    justify-content: flex-end; /* Adjust alignment if needed */
-    flex-wrap: wrap; /* Ensures responsive wrapping */
+    justify-content: flex-end; 
+    flex-wrap: wrap; 
     margin-bottom:10px;
   }
   
@@ -154,7 +151,6 @@
     box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
   }
 
-/* Table */
 .table-box {
   background: white;
     border-radius: 16px;
@@ -166,10 +162,10 @@
 .course-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px; /* Smaller font size */
+  font-size: 14px;
   text-align: left;
-  background-color: #f9f9f9; /* Light background */
-  border: 1px solid #ddd; /* Table border */
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
 }
 
 .course-table th {
@@ -183,7 +179,7 @@
   background-color: rgb(177, 170, 255);
   color: #333;
   font-weight: bold;
-  height: 48px; /* Fixed height for header */
+  height: 48px; 
   vertical-align: middle;
 }
 
@@ -194,7 +190,7 @@
   font-size: 12px;
   text-align: left;
   vertical-align: middle;
-  height: 60px; /* Fixed height for all rows */
+  height: 60px; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -203,10 +199,10 @@
 
 .action-buttons {
   display: flex;
-  gap: 4px; /* Space between buttons */
-  justify-content: left; /* Center buttons horizontally */
-  align-items: left; /* Center buttons vertically */
-  height: 100%; /* Ensure it spans the height of the table cell */
+  gap: 4px; 
+  justify-content: left; 
+  align-items: left; 
+  height: 100%;
 }
 
 .action-buttons.edit {

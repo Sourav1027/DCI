@@ -1,8 +1,6 @@
-/* syllabus.css */
 .syllabus-container {
     padding: 10px;
     background-color: #f8f9fa;
-    /* min-height: 100vh; */
     margin-top:45px;
   }
   
@@ -70,11 +68,10 @@
   }
   
   .syllabus-search-section {
-    /* margin-top: 16px; */
-    width: 100%; /* Ensures it takes the full width of its container */
+    width: 100%;
     display: flex;
-    justify-content: flex-end; /* Adjust alignment if needed */
-    flex-wrap: wrap; /* Ensures responsive wrapping */
+    justify-content: flex-end; 
+    flex-wrap: wrap; 
     margin-bottom:10px;
   }
   
@@ -105,12 +102,11 @@
     box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
   }
   .topics-column {
-    white-space: normal; /* Multiline allow karega */
-    word-wrap: break-word; /* Long text ko break karega */
-    max-width: 200px; /* Ek limit set karega */
+    white-space: normal; 
+    word-wrap: break-word; 
+    max-width: 200px; 
   }
   
-  //=============table=======================
 
   .table-box {
     background: white;
@@ -123,10 +119,10 @@
   .syllabus-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14px; /* Smaller font size */
+    font-size: 14px;
     text-align: left;
-    background-color: #f9f9f9; /* Light background */
-    border: 1px solid #ddd; /* Table border */
+    background-color: #f9f9f9; 
+    border: 1px solid #ddd; 
     border-radius: 16px;
 
   }
@@ -142,7 +138,7 @@
     background-color: rgb(177, 170, 255);
     color: #333;
     font-weight: bold;
-    height: 48px; /* Fixed height for header */
+    height: 48px; 
     vertical-align: middle;
   }
   
@@ -153,7 +149,7 @@
     font-size: 12px;
     text-align: left;
     vertical-align: middle;
-    height: 60px; /* Fixed height for all rows */
+    height: 60px; 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -179,10 +175,10 @@
   
   .action-buttons {
     display: flex;
-    gap: 4px; /* Space between buttons */
-    justify-content: left; /* Center buttons horizontally */
-    align-items: center; /* Center buttons vertically */
-    height: 100%; /* Ensure it spans the height of the table cell */
+    gap: 4px;
+    justify-content: left; 
+    align-items: center; 
+    height: 100%; 
 }
   
   .btn-icon {
@@ -249,7 +245,6 @@
     z-index: 1000;
   }
 
-  //dialog-box==============css==============================
   .view-data-modern p {
     margin: 20px 0;
     font-size: 16px;
@@ -258,7 +253,7 @@
   }
   
   .highlight-modern {
-    color: #6a0572; /* Elegant purple for highlighting */
+    color: #6a0572;
     font-weight: bold;
     font-size: 17px;
   }
@@ -272,7 +267,7 @@
   li.topic-item-modern {
     font-size: 15px;
     color: #555;
-    background: #f1f3f6; /* Subtle background for items */
+    background: #f1f3f6;
     padding: 8px 12px;
     margin: 5px 0;
     border-radius: 10px;
@@ -304,7 +299,7 @@
   }
   
   .MuiDialog-paper {
-    animation: slideDown 0.4s ease; /* Animation for smooth appearance */
+    animation: slideDown 0.4s ease; 
   }
   
   @keyframes slideDown {

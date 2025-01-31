@@ -1,4 +1,3 @@
-/* Base styles (keeping previous styles) */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -7,7 +6,7 @@
     min-height: 100vh;
 }
 
-/* Updated Math Editor styles */
+
 .math-editor {
     background: #ffffff;
     border: 1.5px solid #e2e8f0;
@@ -126,7 +125,6 @@
     transform: translateY(0);
 }
 
-/* Preview area styling */
 .math-preview {
     background: #ffffff;
   padding: 1.5rem;
@@ -170,7 +168,6 @@
     margin-bottom: 0.5rem;
 }
 
-/* Input fields styling */
 .input-field {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -186,7 +183,6 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .symbol-grid {
         grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));

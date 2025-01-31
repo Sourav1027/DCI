@@ -76,7 +76,6 @@
   
   .form-section {
     background: #f9fafb;
-    /* padding: 1.5rem; */
     border-radius: 8px;
     border: 1px solid #e5e7eb;
     margin-bottom: 0rem;
@@ -90,7 +89,6 @@
   
   .input-grid {
     display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
     gap: 1rem;
   }
   
@@ -255,7 +253,7 @@
     margin-left: calc(var(--bs-border-width) * -1);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    padding-left: 2.5rem; /* Adjusts the input field padding to accommodate the icon */
+    padding-left: 2.5rem; 
   }
   .input-icon {
     position: absolute;

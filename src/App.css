@@ -14,13 +14,12 @@
 }
 
 
-/* Center the loader on the screen */
 .loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
-  background-color: #fff; /* Optional background for loader */
+  height: 100vh;
+  background-color: #fff; 
 }
 
 .loader {

@@ -35,12 +35,6 @@ const Login = () => {
             </div>
             <LoginForm />
             <hr className="login-divider" />
-            <p className="login-register-prompt">
-              Don’t have an account?{" "}
-              <Link to="/Signup" className="login-register-link">
-                Sign up
-              </Link>
-            </p>
           </div>
           <div className="login-copyright">
             <Copyright />

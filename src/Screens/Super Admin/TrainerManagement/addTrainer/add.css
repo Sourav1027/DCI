@@ -1,4 +1,3 @@
-/* AddCenter.css */
 .add-center-form {
     padding: 20px;
   }
@@ -33,7 +32,7 @@
     margin-left: calc(var(--bs-border-width) * -1);
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    padding-left: 2.5rem; /* Adjusts the input field padding to accommodate the icon */
+    padding-left: 2.5rem;
   }
   .input-icon {
     position: absolute;
@@ -107,7 +106,6 @@
     background-color:rgb(252, 99, 99);
   }
   
-  /* Responsive Design */
   @media (max-width: 768px) {
     .form-row {
       grid-template-columns: 1fr;
@@ -119,7 +117,7 @@
     }
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .form-row {
         grid-template-columns: 1fr;
@@ -142,7 +140,7 @@
 
 @media (max-width: 480px) {
     .form-input {
-        font-size: 16px; /* Prevents zoom on focus in iOS */
+        font-size: 16px; 
     }
 
     .error-message {
@@ -152,7 +150,6 @@
     }
 }
 
-/* Print Styles */
 @media print {
     .add-center-form {
         padding: 0;

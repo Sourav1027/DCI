@@ -1,11 +1,11 @@
-/* Layout */
+
 .layout-wrapper {
   min-height: 100vh;
   background-color: #f5f7fb;
   position: relative;
 }
 
-/* Sidebar */
+
 .sidebar-container {
   width: 18%;
   min-height: 100vh;
@@ -97,7 +97,7 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Main Content */
+
 .main-wrapper {
   flex: 1;
   margin-left: 240px;
@@ -110,7 +110,6 @@
   margin-left: 70px;
 }
 
-/* Header */
 .main-header {
   position: fixed;
   top: 0;
@@ -132,7 +131,6 @@
   gap: 1rem;
 }
 
-/* Profile Menu */
 .profile-menu {
   position: relative;
 }
@@ -180,12 +178,10 @@
   margin: 0.5rem 0;
 }
 
-/* Page Content */
 .page-content {
   width:100%;
   padding-left:18%;
   padding-right:0%;
-  /* padding: 1.5rem; */
   color: #2d3748;
   transition: all 0.3s ease;
   height: calc(100vh - 60px);
@@ -193,7 +189,6 @@
   margin-top: 20px;
 }
 
-/* Card Styles */
 .content-card {
   background-color: #fff;
   border-radius: 0.5rem;
@@ -203,7 +198,6 @@
   transition: all 0.3s ease;
 }
 
-/* Table Styles */
 .content-table {
   width: 100%;
   background-color: #fff;
@@ -211,7 +205,6 @@
   transition: all 0.3s ease;
 }
 
-/* Submenu Styles */
 .nav-item-with-submenu > a {
   background: transparent !important;
   margin: 5px 10px;
@@ -277,7 +270,6 @@
   transition: all 0.3s ease;
 }
 
-/* Responsive Styles */
 @media (max-width: 991px) {
   .sidebar-container {
     width: 240px;
@@ -318,7 +310,6 @@
   }
 }
 
-/* Additional Mobile Styles */
 @media (max-width: 480px) {
   .profile-dropdown {
     width: 180px;
@@ -330,7 +321,6 @@
   }
 }
 
-/* Utility Classes */
 .hidden {
   display: none;
 }
@@ -339,7 +329,6 @@
   display: block;
 }
 
-/* Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

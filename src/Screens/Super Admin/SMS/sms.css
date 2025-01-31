@@ -1,8 +1,8 @@
-/* Notification.css */
+
 .notification-container {
   padding: 10px;
   background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
-  /* min-height: 100vh; */
+ 
   margin-top: 45px;
   width:100%;
 }
@@ -54,11 +54,10 @@
 }
 
 .sms-search-section {
-  /* margin-top: 16px; */
-  width: 100%; /* Ensures it takes the full width of its container */
+  width: 100%; 
   display: flex;
-  justify-content: flex-end; /* Adjust alignment if needed */
-  flex-wrap: wrap; /* Ensures responsive wrapping */
+  justify-content: flex-end; 
+  flex-wrap: wrap;
   margin-bottom:10px;
 }
 
@@ -89,7 +88,6 @@
   box-shadow: 0 0 0 2px rgba(13,110,253,0.25);
 }
 
-// table============================
 
 .table-box {
   background: white;
@@ -103,10 +101,10 @@
 .sms-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px; /* Smaller font size */
+  font-size: 14px; 
   text-align: left;
-  background-color: #f9f9f9; /* Light background */
-  border: 1px solid #ddd; /* Table border */
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd;
 }
 
 .sms-table th {
@@ -120,7 +118,7 @@
   background-color: rgb(177, 170, 255);
   color: #333;
   font-weight: bold;
-  height: 48px; /* Fixed height for header */
+  height: 48px; 
   vertical-align: middle;
 }
 
@@ -131,7 +129,7 @@
   font-size: 12px;
   text-align: left;
   vertical-align: middle;
-  height: 60px; /* Fixed height for all rows */
+  height: 60px; 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -157,10 +155,10 @@
 
 .last-buttons {
   display: flex;
-  gap: 4px; /* Space between buttons */
-  justify-content: left; /* Center buttons horizontally */
-  align-items: center; /* Center buttons vertically */
-  height: 100%; /* Ensure it spans the height of the table cell */
+  gap: 4px;
+  justify-content: left; 
+  align-items: center;
+  height: 100%;
 }
 
 .btn-icon {

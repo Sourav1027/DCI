@@ -1,8 +1,6 @@
-/* Custom styles for Fee Management System */
 .feeupdate-container{
     padding: 10px;
     background: linear-gradient(135deg, #f6f9fc 0%, #f1f5f9 100%);
-    /* min-height: 100vh; */
     margin-top: 45px;
     width:100%;
   }
@@ -34,13 +32,11 @@
         gap: 12px;
       }
   
-     /* Filters */
      .fee-search-section {
-        /* margin-top: 16px;  */
-        width: 100%; /* Ensures it takes the full width of its container */
+        width: 100%;
         display: flex;
-        justify-content: flex-end; /* Adjust alignment if needed */
-        flex-wrap: wrap; /* Ensures responsive wrapping */
+        justify-content: flex-end; 
+        flex-wrap: wrap; 
       }
       
       .search-bar {
@@ -83,10 +79,10 @@
     .fee-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px; /* Smaller font size */
+      font-size: 14px;
       text-align: left;
-      background-color: #f9f9f9; /* Light background */
-      border: 1px solid #ddd; /* Table border */
+      background-color: #f9f9f9; 
+      border: 1px solid #ddd;
     }
   
     .fee-table th {
@@ -100,7 +96,7 @@
       background-color: rgb(177, 170, 255);
       color: #333;
       font-weight: bold;
-      height: 48px; /* Fixed height for header */
+      height: 48px; 
       vertical-align: middle;
     }
     
@@ -128,11 +124,11 @@
     }
     
     .status-cell .faCheckCircle {
-      color: #10b981; /* Green for Paid */
+      color: #10b981;
     }
     
     .status-cell .faClock {
-      color: #fbbf24; /* Yellow for Pending */
+      color: #fbbf24; 
     }
     
   
@@ -160,20 +156,16 @@
     }
     
   
-    
-    /* Alert Styles */
     .alert {
       border-radius: 0.5rem;
       font-size: 0.875rem;
     }
     
-    /* Badge Styles */
     .badge {
       padding: 0.5em 0.75em;
       font-weight: 500;
     }
     
-    /* Responsive */
     @media (max-width: 768px) {
       .card-header {
         padding: 1rem;
@@ -189,7 +181,6 @@
       }
     }
     
-    /* Spacing */
     .mb-4 {
       margin-bottom: 1.5rem !important;
     }
