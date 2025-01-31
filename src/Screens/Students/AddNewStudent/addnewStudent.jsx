@@ -344,8 +344,8 @@ const handleMobileChange = (e) => {
             <div className="form-section">
               <h3>Personal Information</h3>
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                  <div class="col-sm-6 col-md-4">
+                <div className="row g-2 text-center">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="centerName" className="form-label">
                         Center Name
@@ -377,7 +377,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="firstName" className="form-label">
                         First Name
@@ -401,7 +401,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="lastName" className="form-label">
                         Last Name
@@ -425,7 +425,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="phone" className="form-label">
                         Mobile Number
@@ -451,7 +451,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="email" className="form-label">
                         Email ID
@@ -475,7 +475,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="dob" className="form-label">
                         Date of Birth
@@ -499,7 +499,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="gender" className="form-label">
                         Gender
@@ -527,7 +527,7 @@ const handleMobileChange = (e) => {
                     </div>
                   </div>
                  
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="address" className="form-label">
                         Address
@@ -556,8 +556,8 @@ const handleMobileChange = (e) => {
             <div className="form-section">
               <h3>Contact Information</h3>
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                <div className="row g-2 text-center">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="fatherName" className="form-label">
                         Father Name
@@ -581,7 +581,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="motherName" className="form-label">
                         Mother Name
@@ -606,7 +606,7 @@ const handleMobileChange = (e) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="emergencyContact" className="form-label">
                         Emergency Contact Number
@@ -641,8 +641,8 @@ const handleMobileChange = (e) => {
             <div className="form-section">
               <h3>Academic Information</h3>
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                <div className="row g-2 text-center">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="course" className="form-label">
                         Course Name
@@ -671,7 +671,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="batch" className="form-label">
                         Batch Name
@@ -700,7 +700,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="reference" className="form-label">
                         Reference
@@ -724,7 +724,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="counsellorName" className="form-label">
                         Counsellor Name
@@ -750,7 +750,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="fee" className="form-label">
                         Fee Amount
@@ -774,7 +774,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="paymentTerm" className="form-label">
                         Payment Term
@@ -802,7 +802,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="collegeName" className="form-label">
                         College Name
@@ -828,7 +828,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="previousEducation" className="form-label">
                         Previous Education
@@ -854,7 +854,7 @@ const handleMobileChange = (e) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="admissionDate" className="form-label">
                         Admission Date

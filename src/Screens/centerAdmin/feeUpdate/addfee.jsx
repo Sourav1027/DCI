@@ -117,8 +117,8 @@ const AddFee = ({ onClose, onSubmit }) => {
 
           <div className="form-section">
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                <div class="col-sm-12 col-md-4 col-lg-4">
+                <div className="row g-2 text-center">
+                <div className="col-sm-12 col-md-4 col-lg-4">
                 <div className="form-group">
                       <label htmlFor="centerName" className="form-label">
                         Center Name
@@ -142,7 +142,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="course" className="form-label">
                         Course Name
@@ -168,7 +168,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="batch" className="form-label">
                         Batch Name
@@ -193,7 +193,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="studentName" className="form-label">
                         Student Name
@@ -220,7 +220,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="phone" className="form-label">
                         Mobile Number
@@ -247,7 +247,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="modeOfPayment" className="form-label">
                         Payment mode
@@ -272,7 +272,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="totalAmount" className="form-label">
                         Total Amount
@@ -299,7 +299,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="recievedAmount" className="form-label">
                       Recieved Amount
@@ -326,7 +326,7 @@ const AddFee = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="status" className="form-label">
                         Fee status

@@ -136,8 +136,8 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
 
           <div className="form-section">
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                <div className="row g-2 text-center">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="course" className="form-label">
                         Course Name
@@ -163,7 +163,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="batch" className="form-label">
                         Batch Name
@@ -188,7 +188,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="counsellorName" className="form-label">
                         Counsellor Name
@@ -214,7 +214,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="preferTiming" className="form-label">
                         Prefer Timing
@@ -238,7 +238,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="professional" className="form-label">
                         Professional Name
@@ -264,7 +264,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="collegeName" className="form-label">
                         College Name
@@ -295,8 +295,8 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
             </div>
             <div className="form-section">
               <div className="input-grid">
-                <div class="row g-2 text-center">
-                  <div class="col-sm-6 col-md-4">
+                <div className="row g-2 text-center">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="centerName" className="form-label">
                         Center Name
@@ -320,7 +320,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="firstName" className="form-label">
                         First Name
@@ -344,7 +344,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="lastName" className="form-label">
                         Last Name
@@ -368,7 +368,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="phone" className="form-label">
                         Mobile Number
@@ -394,7 +394,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="email" className="form-label">
                         Email ID
@@ -418,7 +418,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="dob" className="form-label">
                         Date of Birth
@@ -442,7 +442,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                       )}
                     </div>
                   </div>
-                  <div class="col-sm-6 col-md-4">
+                  <div className="col-sm-6 col-md-4">
                     <div className="form-group">
                       <label htmlFor="gender" className="form-label">
                         Gender
@@ -468,7 +468,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="address" className="form-label">
                         Address
