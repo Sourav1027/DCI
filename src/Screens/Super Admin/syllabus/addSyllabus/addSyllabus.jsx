@@ -3,8 +3,13 @@ import { LibraryBig, Clock, ScrollText } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./addsyllabus.css";
+import { Alert, Snackbar } from "@mui/material";
 
-const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1";
+
+const AddSyllabus = ({ onSubmit, onClose, initialValues }) => {
   const initialFormData = {
     batch: "",
     course: "",
@@ -13,18 +18,40 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
 
   const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
+  const [courses, setCourses] = useState([]);
+  const [batches, setBatches] = useState([]);
+
+   const [toast, setToast] = useState({
+      open: false,
+      message: "",
+      severity: "success",
+    });
+  
+    // Toast handling function
+    const showToast = (message, severity = "success") => {
+      setToast({
+        open: true,
+        message: message,
+        severity: severity,
+      });
+    };
+  
+    // Handle toast close
+    const handleCloseToast = () => {
+      setToast((prev) => ({ ...prev, open: false }));
+    };
 
   useEffect(() => {
     if (initialValues) {
       setFormData({
         batch: initialValues.batch || "",
         course: initialValues.course || "",
-        topics: Array.isArray(initialValues.topics) 
-        ? initialValues.topics.join(', ')
-        : initialValues.topics || "",
-    });
-  }
-}, [initialValues]);
+        topics: Array.isArray(initialValues.topics)
+          ? initialValues.topics.join(", ")
+          : initialValues.topics || "",
+      });
+    }
+  }, [initialValues]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -57,14 +84,13 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
     }
   };
 
-  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       // Convert topics string to array before submitting
       const processedFormData = {
         ...formData,
-        topics: formData.topics.trim()
+        topics: formData.topics.trim(),
       };
       onSubmit(processedFormData);
       resetForm();
@@ -83,6 +109,72 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
     }
   };
 
+  //fetch course
+  const fetchCourses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("No token found", "error");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/courses`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setCourses(responseData.data || []);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      showToast("Failed to load courses", "error");
+    }
+  };
+
+  // Fetch courses when component mounts
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  //fetch Batches
+  const fetchBatches = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        showToast("No token found", "error");
+        return;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/batches`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setBatches(responseData.data || []);
+    } catch (error) {
+      console.error("Error fetching batches:", error);
+      showToast("Failed to load batches", "error");
+    }
+  };
+
+  // Fetch courses when component mounts
+  useEffect(() => {
+    fetchBatches();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit} className="add-syllabus-form">
       <div className="form-row">
@@ -94,15 +186,20 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
             <span className="input-icon">
               <Clock size={18} />
             </span>
-            <input
-              type="text"
+            <select
               className={`form-input ${errors.batch ? "is-invalid" : ""}`}
               id="batch"
               name="batch"
               value={formData.batch}
               onChange={handleInputChange}
-              placeholder="Enter Batch"
-            />
+            >
+              <option value="">Select Batch</option>
+              {batches.map((batch) => (
+                <option key={batch.id} value={batch.batchName}>
+                  {batch.batchName}
+                </option>
+              ))}
+            </select>
           </div>
           {errors.batch && <div className="error-message">{errors.batch}</div>}
         </div>
@@ -114,15 +211,20 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
             <span className="input-icon">
               <LibraryBig size={18} />
             </span>
-            <input
-              type="text"
+            <select
               className={`form-input ${errors.course ? "is-invalid" : ""}`}
               id="course"
               name="course"
               value={formData.course}
               onChange={handleInputChange}
-              placeholder="Enter course"
-            />
+            >
+              <option value="">Select Course</option>
+              {courses.map((course) => (
+                <option key={course.id} value={course.courseName}>
+                  {course.courseName}
+                </option>
+              ))}
+            </select>
           </div>
           {errors.course && (
             <div className="error-message">{errors.course}</div>
@@ -151,6 +253,20 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
           )}
         </div>
       </div>
+ <Snackbar
+          open={toast.open}
+          autoHideDuration={3000}
+          onClose={handleCloseToast}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Alert
+            onClose={handleCloseToast}
+            severity={toast.severity}
+            sx={{ width: "100%" }}
+          >
+            {toast.message}
+          </Alert>
+        </Snackbar>
 
       <div className="button-group">
         <button type="submit" className="btn btn-primary">
@@ -167,6 +283,7 @@ const AddSyllabus = ({ onSubmit, onClose,initialValues }) => {
         </button>
       </div>
     </form>
+    
   );
 };
 
