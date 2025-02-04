@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import {X,User,Mail,Phone,Calendar,MapPin,Book,Clock,Building2,UserSearch,ImageUp,Asterisk,IndianRupee,Landmark,School,WatchIcon, Award,} from "lucide-react";
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from "react";
+import {X,User,Mail,Phone,Calendar,MapPin,Book,Clock,Building2,UserSearch,School,WatchIcon, Award,} from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./addEnquiry.css";
+import { Alert, Snackbar } from "@mui/material";
 
-const AddEnquiry = ({ onClose, onSubmit }) => {
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1";
+
+const AddEnquiry = ({ onClose, onSubmit,initialValues }) => {
   const initialFormData = {
     centerName: "",
     firstName: "",
@@ -23,7 +28,44 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
   };
 
   const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState(initialValues || initialFormData);
+ const [courses, setCourses] = useState([]);
+  const [batches, setBatches] = useState([]);
+  const [centers, setCenters] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (initialValues) {
+      const formattedDate = initialValues.dob ? 
+        new Date(initialValues.dob).toISOString().split('T')[0] : '';
+      
+      setFormData({
+        ...initialValues,
+        dob: formattedDate,
+        address: initialValues.address || '',
+      });
+    }
+  }, [initialValues]);
+  
+    const [toast, setToast] = useState({
+      open: false,
+      message: "",
+      severity: "success",
+    });
+  
+    const showToast = (message, severity = "success") => {
+      setToast({
+        open: true,
+        message: message,
+        severity: severity,
+      });
+    };
+  
+    const handleCloseToast = () => {
+      setToast((prev) => ({ ...prev, open: false }));
+    };
+
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -90,11 +132,21 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
       [name]: type === "file" ? files[0] : value,
     });
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      onSubmit(formData);
-      resetForm();
+    if (validateForm() && !isSubmitting) {
+      setIsSubmitting(true);
+      try {
+        await onSubmit(formData);
+        setFormData(initialFormData);
+        setErrors({});
+        resetForm();
+        onClose();
+      } catch (error) {
+        showToast(error.message || "Failed to create fee update", "error");
+      }
+      setIsSubmitting(false);
     }
   };
 
@@ -118,6 +170,100 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
       onClose();
     }
   };
+
+    const fetchCourses = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          showToast("No token found", "error");
+          return;
+        }
+  
+        const response = await fetch(`${API_BASE_URL}/courses`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const responseData = await response.json();
+        setCourses(responseData.data || []);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        showToast("Failed to load courses", "error");
+      }
+    };
+  
+    useEffect(() => {
+      fetchCourses();
+    }, []);
+  
+    const fetchBatches = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          showToast("No token found", "error");
+          return;
+        }
+  
+        const response = await fetch(`${API_BASE_URL}/batches`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const responseData = await response.json();
+        setBatches(responseData.data || []);
+      } catch (error) {
+        console.error("Error fetching batches:", error);
+        showToast("Failed to load batches", "error");
+      }
+    };
+  
+    useEffect(() => {
+      fetchBatches();
+    }, []);
+  
+    const fetchCenters = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          showToast("No token found", "error");
+          return;
+        }
+  
+        const response = await fetch(`${API_BASE_URL}/centers`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+  
+        const responseData = await response.json();
+        setCenters(responseData.data || []);
+      } catch (error) {
+        console.error("Error fetching centers:", error);
+        showToast("Failed to load centers", "error");
+      }
+    };
+  
+    useEffect(() => {
+      fetchCenters();
+    }, []);
+  
 
   return (
     <div className="modal-overlay">
@@ -147,15 +293,18 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                           <Book size={18} />
                         </span>
                         <select
+                          className={`form-input ${errors.course ? "is-invalid" : ""}`}
                           id="course"
                           name="course"
-                          className={`form-input ${errors.course ? "is-invalid" : ""}`}
+                          value={formData.course}
+                          onChange={handleChange}
                         >
                           <option value="">Select Course</option>
-                          <option>Web Development</option>
-                          <option>Mobile Development</option>
-                          <option>UI/UX Design</option>
-                          <option>Data Science</option>
+                          {courses.map((course) => (
+                            <option key={course.id} value={course.courseName}>
+                              {course.courseName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                       {errors.course && (
@@ -173,13 +322,18 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                           <Clock size={18} />
                         </span>
                         <select
+                          className={`form-input ${errors.batch ? "is-invalid" : ""}`}
                           id="batch"
                           name="batch"
-                          className={`form-input ${errors.batch ? "is-invalid" : ""}`}
+                          value={formData.batch}
+                          onChange={handleChange}
                         >
                           <option value="">Select Batch</option>
-                          <option>Morning Batch</option>
-                          <option>Evening Batch</option>
+                          {batches.map((batch) => (
+                            <option key={batch.id} value={batch.batchName}>
+                              {batch.batchName}
+                            </option>
+                          ))}
                         </select>
                       </div>
                       {errors.batch && (
@@ -247,17 +401,15 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                         <span className="input-icon">
                           <Award size={18} />
                         </span>
-                        <select
+                        <input
+                          type="professional"
+                          className={`form-input ${errors.professional ? "is-invalid" : ""}`}
                           id="professional"
                           name="professional"
-                          className={`form-input ${errors.professional ? "is-invalid" : ""}`}
-                        >
-                          <option value="">Select professional</option>
-                          <option>Working</option>
-                          <option>Not Working</option>
-                          <option>Student</option>
-                          <option>Experienced</option>
-                        </select>
+                          value={formData.professional}
+                          onChange={handleChange}
+                          placeholder="Enter Professional"
+                        />
                       </div>
                       {errors.professional && (
                         <div className="error-message">{errors.professional}</div>
@@ -305,15 +457,23 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                         <span className="input-icon">
                           <Building2 size={18} />
                         </span>
-                        <input
-                          type="text"
+                        <select
                           className={`form-input ${errors.centerName ? "is-invalid" : ""}`}
                           id="centerName"
                           name="centerName"
                           value={formData.centerName}
                           onChange={handleChange}
-                          placeholder="Enter Center Name"
-                        />
+                        >
+                          <option value="">Select Center</option>
+                          {centers.map((centerName) => (
+                            <option
+                              key={centerName.id}
+                              value={centerName.centerName}
+                            >
+                              {centerName.centerName}
+                            </option>
+                          ))}
+                        </select>
                       </div>
                       {errors.centerName && (
                         <div className="error-message">{errors.centerName}</div>
@@ -454,11 +614,13 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                         <select
                           id="gender"
                           name="gender"
+                          value={formData.gender}
+                          onChange={handleChange}
                           className={`form-input ${errors.gender ? "is-invalid" : ""}`}
                         >
                           <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
                           <option value="other">Other</option>
                         </select>
                       </div>
@@ -481,6 +643,7 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
                           id="address"
                           name="address"
                           rows="1"
+                          value={formData.address || ''}
                           onChange={handleChange}
                           className={`form-input ${errors.address ? "is-invalid" : ""}`}
                         ></textarea>
@@ -499,20 +662,36 @@ const AddEnquiry = ({ onClose, onSubmit }) => {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary"  disabled={isSubmitting}
+            >
               <FontAwesomeIcon icon={faPlus} className="me-2" />
-              Submit
+              {isSubmitting ? 'Saving...' : (initialValues ? 'Update Enquiry' : 'Add Enquiry')}
             </button>
             <button
               type="button"
               className="btn btn-secondary"
               onClick={handleCancel}
+              disabled={isSubmitting}
             >
               <FontAwesomeIcon icon={faXmark} className="me-2" />
               Cancel
             </button>
           </div>
         </form>
+         <Snackbar
+                  open={toast.open}
+                  autoHideDuration={3000}
+                  onClose={handleCloseToast}
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert
+                    onClose={handleCloseToast}
+                    severity={toast.severity}
+                    sx={{ width: "100%" }}
+                  >
+                    {toast.message}
+                  </Alert>
+                </Snackbar>
       </div>
     </div>
   );

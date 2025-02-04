@@ -123,11 +123,6 @@ const FeeUpdate = () => {
     }
   };
 
-  const handleCloseForm = () => {
-    setSelectedFee(null); // Clear selected fee
-    setShowAddForm(false); // Hide the form
-  };
-
   const handleEdit = (item) => {
     setSelectedFee(item);
     setShowAddForm(true);

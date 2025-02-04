@@ -6,7 +6,6 @@ import {
   Book,
   Clock,
   Building2,
-  Award,
   CreditCard,
   IndianRupeeIcon,
 } from "lucide-react";
@@ -14,12 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./addfee.css";
 import { Alert, Snackbar } from "@mui/material";
-import { Paid, Pending } from "@mui/icons-material";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1";
 
-const AddFee = ({ onClose, onSubmit,initialValues }) => {
+const AddFee = ({ onClose, onSubmit, initialValues }) => {
   const initialFormData = {
     centerName: "",
     course: "",
@@ -38,14 +36,12 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
   const [batches, setBatches] = useState([]);
   const [centers, setCenters] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
 
   const formatIndianCurrency = (x) => {
     if (x === undefined || x === null) return '0.00'
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   }
 
-  // Reset form when initialValues changes
   useEffect(() => {
     if (initialValues) {
       setFormData(initialValues);
@@ -76,24 +72,20 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
     const newErrors = {};
 
     if (!formData.centerName) newErrors.centerName = "Center Name is required";
-    if (!formData.studentName)
-      newErrors.studentName = "Student Name is required";
-    if (!formData.modeOfPayment)
-      newErrors.modeOfPayment = "Mode of Payment is required";
+    if (!formData.studentName) newErrors.studentName = "Student Name is required";
+    if (!formData.modeOfPayment) newErrors.modeOfPayment = "Mode of Payment is required";
     if (!formData.phone) {
       newErrors.phone = "Mobile Number is required";
     } else if (!/^[0-9]{10}$/.test(formData.phone)) {
       newErrors.phone = "Invalid mobile number";
     }
-    if (!formData.totalAmount)
-      newErrors.totalAmount = "Total Amount is required";
-    if (!formData.receivedAmount)
-      newErrors.receivedAmount = "Received Amount is required";
+    if (!formData.totalAmount) newErrors.totalAmount = "Total Amount is required";
+    if (!formData.receivedAmount) newErrors.receivedAmount = "Received Amount is required";
     if (!formData.course) newErrors.course = "Course is required";
     if (!formData.batch) newErrors.batch = "Batch is required";
 
-    const totalAmount = parseFloat(formData.totalAmount) || 0;
-    const receivedAmount = parseFloat(formData.receivedAmount) || 0;
+    const totalAmount = parseFloat(formData.totalAmount.replace(/,/g, '')) || 0;
+    const receivedAmount = parseFloat(formData.receivedAmount.replace(/,/g, '')) || 0;
 
     if (receivedAmount > totalAmount) {
       newErrors.receivedAmount = "Received amount cannot be greater than total amount";
@@ -101,6 +93,46 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleReceivedAmountChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+    
+    if (value === '') {
+      setFormData(prev => ({
+        ...prev,
+        receivedAmount: '',
+        pendingAmount: formData.totalAmount
+      }));
+      return;
+    }
+
+    const totalAmount = parseFloat(formData.totalAmount.replace(/,/g, '')) || 0;
+    const receivedAmount = parseFloat(value) || 0;
+
+    if (receivedAmount <= totalAmount) {
+      const pendingAmount = totalAmount - receivedAmount;
+      setFormData(prev => ({
+        ...prev,
+        receivedAmount: value,
+        pendingAmount: pendingAmount.toString(),
+        status: pendingAmount <= 0 ? "Paid" : "Pending"
+      }));
+      // Clear the error if it exists
+      if (errors.receivedAmount) {
+        setErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors.receivedAmount;
+          return newErrors;
+        });
+      }
+    } else {
+      // Show error but keep the previous valid value
+      setErrors(prev => ({
+        ...prev,
+        receivedAmount: "Received amount cannot be greater than total amount"
+      }));
+    }
   };
 
   const handleChange = (e) => {
@@ -113,40 +145,12 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
           ...prev,
           [name]: value,
           totalAmount: selectedCourse.courseFee,
-          receivedAmount: "", // Reset received amount when course changes
+          receivedAmount: "",
           pendingAmount: selectedCourse.courseFee
         }));
       }
     } else if (name === "receivedAmount") {
-      // Remove commas from the values for calculation
-      const cleanValue = value.replace(/,/g, '');
-      const totalAmount = parseFloat(formData.totalAmount.replace(/,/g, '')) || 0;
-      const receivedAmount = parseFloat(cleanValue) || 0;
-
-      // Only update if received amount is not greater than total amount
-      if (receivedAmount <= totalAmount) {
-        const pendingAmount = totalAmount - receivedAmount;
-        setFormData(prev => ({
-          ...prev,
-          receivedAmount: cleanValue,
-          pendingAmount: pendingAmount.toString(),
-          status: pendingAmount <= 0 ? "Paid" : "Pending"
-        }));
-        // Clear the error if it exists
-        if (errors.receivedAmount) {
-          setErrors(prev => {
-            const newErrors = { ...prev };
-            delete newErrors.receivedAmount;
-            return newErrors;
-          });
-        }
-      } else {
-        // Show error and don't update the received amount
-        setErrors(prev => ({
-          ...prev,
-          receivedAmount: "Received amount cannot be greater than total amount"
-        }));
-      }
+      handleReceivedAmountChange(e);
     } else {
       setFormData(prev => ({
         ...prev,
@@ -157,11 +161,11 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()&& !isSubmitting) {
+    if (validateForm() && !isSubmitting) {
       setIsSubmitting(true);
       try {
         await onSubmit(formData);
-        setFormData(initialFormData); 
+        setFormData(initialFormData);
         setErrors({});
         resetForm();
         onClose();
@@ -186,7 +190,7 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
 
   const handleCancel = () => {
     resetForm();
-    onClose(); 
+    onClose();
   };
 
   const fetchCourses = async () => {
@@ -287,7 +291,7 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
       <div className="modal-content">
         <div className="modal-header">
           <div className="header-content">
-          <h2>{initialValues ? 'Update Student Fee' : 'Add Student Fee'}</h2>
+            <h2>{initialValues ? 'Update Student Fee' : 'Add Student Fee'}</h2>
           </div>
           <button className="close-btn" onClick={onClose}>
             <X size={20} />
@@ -400,13 +404,13 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                           <User size={18} />
                         </span>
                         <input
-                          type="studentName"
+                          type="text"
                           className={`form-input ${errors.studentName ? "is-invalid" : ""}`}
                           id="studentName"
                           name="studentName"
                           value={formData.studentName}
                           onChange={handleChange}
-                          placeholder="Enter Counsellor Name"
+                          placeholder="Enter Student Name"
                         />
                       </div>
                       {errors.studentName && (
@@ -451,7 +455,7 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                       </label>
                       <div className="input-group">
                         <span className="input-icon">
-                          <CreditCard size={18} />
+                        <CreditCard size={18} />
                         </span>
                         <select
                           id="modeOfPayment"
@@ -483,7 +487,7 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                           <IndianRupeeIcon size={18} />
                         </span>
                         <input
-                          type="totalAmount"
+                          type="text"
                           className={`form-input ${errors.totalAmount ? "is-invalid" : ""}`}
                           id="totalAmount"
                           name="totalAmount"
@@ -492,7 +496,7 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                           placeholder="Enter Total Amount"
                           disabled
                         />
-                        </div>
+                      </div>
                       {errors.totalAmount && (
                         <div className="error-message">
                           {errors.totalAmount}
@@ -504,20 +508,25 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                   <div className="col-sm-12 col-md-4 col-lg-4">
                     <div className="form-group">
                       <label htmlFor="receivedAmount" className="form-label">
-                        Recieved Amount
+                        Received Amount
                       </label>
                       <div className="input-group">
                         <span className="input-icon">
                           <IndianRupeeIcon size={18} />
                         </span>
                         <input
-                          type="receivedAmount"
+                          type="text"
                           className={`form-input ${errors.receivedAmount ? "is-invalid" : ""}`}
                           id="receivedAmount"
                           name="receivedAmount"
                           value={formatIndianCurrency(formData.receivedAmount)}
                           onChange={handleChange}
-                          placeholder="Enter Recieve Amount"
+                          placeholder="Enter Received Amount"
+                          onKeyPress={(e) => {
+                            if (!/[0-9]/.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}
                         />
                       </div>
                       {errors.receivedAmount && (
@@ -538,13 +547,13 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
                           <IndianRupeeIcon size={18} />
                         </span>
                         <input
-                          type="pendingAmount"
+                          type="text"
                           className={`form-input ${errors.pendingAmount ? "is-invalid" : ""}`}
                           id="pendingAmount"
                           name="pendingAmount"
                           value={formatIndianCurrency(formData.pendingAmount)}
                           onChange={handleChange}
-                          placeholder="Enter Recieve Amount"
+                          placeholder="Pending Amount"
                           disabled
                         />
                       </div>
@@ -561,10 +570,10 @@ const AddFee = ({ onClose, onSubmit,initialValues }) => {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="btn btn-primary"  disabled={isSubmitting}>
+            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
               <FontAwesomeIcon icon={faPlus} className="me-2" />
               {isSubmitting ? 'Submitting...' : initialValues ? 'Update' : 'Add'}
-              </button>
+            </button>
             <button
               type="button"
               className="btn btn-secondary"
