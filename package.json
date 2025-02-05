@@ -20,6 +20,7 @@
     "html2canvas": "^1.4.1",
     "html2canvas-pro": "^1.5.8",
     "jspdf": "^2.5.2",
+    "jwt-decode": "^4.0.0",
     "katex": "^0.16.20",
     "lucide-react": "^0.469.0",
     "mdb-react-ui-kit": "^9.0.0",
