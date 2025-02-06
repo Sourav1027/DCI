@@ -121,7 +121,7 @@
   margin-bottom: 2.5rem;
 }
 
-.section-title {
+.section-heading{
   font-size: 1.25rem;
   font-weight: 600;
   color: #4f46e5;
@@ -129,7 +129,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
+}           
 
 .info-grid {
   display: grid;
@@ -324,35 +324,257 @@
 }
 
 
- 
 
+@media (max-width: 1440px) {
+  .profile-card {
+    max-width: 1100px;
+  }
 
+  .profile-header-content {
+    padding: 3px 1.5rem;
+  }
+
+  .avatar-container {
+    width: 130px;
+    height: 130px;
+  }
+
+  .student-name {
+    font-size: 1.8rem;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* Desktop */
+@media (max-width: 1280px) {
+  .profile-card {
+    max-width: 1000px;
+  }
+
+  .profile-cover {
+    height: 80px;
+  }
+
+  .avatar-container {
+    width: 120px;
+    height: 120px;
+  }
+
+  .student-name {
+    font-size: 1.6rem;
+  }
+
+  .section-heading{
+    font-size: 1.2rem;
+  }
+}
+
+/* Small Desktop/Laptop */
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .profile-card {
+    max-width: 900px;
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .info-field {
+    padding: 0.6rem;
+  }
+}
+
+/* Tablet */
 @media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+
+  .profile-card {
+    border-radius: 15px;
+  }
+
+  .profile-cover {
+    height: 175px;
+    padding: 2rem;
+  }
+
   .profile-header-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 0 1rem;
+    margin-top: -60px;
   }
-  .profile-cover {
-    height: 175px;
-}
+
   .avatar-container {
     margin-right: 0;
     margin-bottom: 1rem;
+    width: 110px;
+    height: 110px;
+  }
+
+  .student-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .profile-content {
     padding: 0 1rem 1rem;
   }
 
-  .student-name {
-    font-size: 1.5rem;
-  }
-
   .info-grid {
     grid-template-columns: 1fr;
   }
 
+  .highlight-section {
+    padding: 1.25rem;
+  }
+}
 
+/* Large Mobile */
+@media (max-width: 600px) {
+  .profile-container {
+    margin-top: 15px;
+  }
+
+  .profile-cover {
+    height: 150px;
+  }
+
+  .profile-title {
+    font-size: 1.5rem;
+  }
+
+  .student-name {
+    font-size: 1.4rem;
+  }
+
+  .info-section {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .defaultform {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .defaultform span {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 0.75rem;
+  }
+
+  .profile-cover {
+    height: 130px;
+    padding: 1.5rem;
+  }
+
+  .profile-title {
+    font-size: 1.3rem;
+  }
+
+  .avatar-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .student-name {
+    font-size: 1.2rem;
+  }
+
+  .roll-number {
+    font-size: 1rem;
+  }
+
+  .section-heading{
+    font-size: 1.1rem;
+  }
+
+  .info-field {
+    padding: 0.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 375px) {
+  .profile-cover {
+    height: 120px;
+  }
+
+  .avatar-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .camera-icon {
+    padding: 6px;
+  }
+
+  .info-field {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .info-icon {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 320px) {
+  .profile-container {
+    padding: 0.5rem;
+  }
+
+  .profile-cover {
+    height: 110px;
+  }
+
+  .profile-title {
+    font-size: 1.2rem;
+  }
+
+  .avatar-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .student-name {
+    font-size: 1.1rem;
+  }
+
+  .section-heading{
+    font-size: 1rem;
+  }
+
+  .info-label {
+    font-size: 0.8rem;
+  }
+
+  .info-value {
+    font-size: 0.9rem;
+  }
 }

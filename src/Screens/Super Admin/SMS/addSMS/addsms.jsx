@@ -23,285 +23,164 @@ import "./addsms.css";
 const API_BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5000/v1";
 
 const AddSMS = ({ onSubmit, onCancel }) => {
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     centerName: "",
-    courseName: "",
-    batchName: "",
-    selectStudent: "",
-    sms: "",
-  };
+    course: "",
+    batch: "",
+    selectStudent: [],
+    message: "", 
+  });
 
-  const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
-  const [selectedCenter, setSelectedCenter] = useState("");
-  const [selectedCourse, setSelectedCourse] = useState("");
-  const [selectedBatch, setSelectedBatch] = useState("");
-  const [messageContent, setMessageContent] = useState("");
-  
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [centers, setCenters] = useState([]);
   const [courses, setCourses] = useState([]);
   const [batches, setBatches] = useState([]);
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [studentSearch, setStudentSearch] = useState("");
-  const [selectedStudents, setSelectedStudents] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
-
-  const [toast, setToast] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  const showToast = (message, severity = "success") => {
-    setToast({
-      open: true,
-      message: message,
-      severity: severity,
-    });
-  };
 
   const validateForm = () => {
     const newErrors = {};
-
-    if (!selectedCenter.trim()) {
-      newErrors.centerName = "Center Name is required";
-    }
-    if (!selectedCourse.trim()) {
-      newErrors.courseName = "Course Name is required";
-    }
-    if (!selectedBatch.trim()) {
-      newErrors.batchName = "Batch Name is required";
-    }
-    if (!messageContent.trim()) {
-      newErrors.sms = "Message Content is required";
-    }
-    if (selectedStudents.length === 0) {
-      newErrors.selectStudent = "At least one student must be selected";
-    }
+    if (!formData.centerName) newErrors.centerName = "Center Name is required";
+    if (!formData.course) newErrors.course = "Course Name is required";
+    if (!formData.batch) newErrors.batch = "Batch Name is required";
+    if (!formData.message) newErrors.message = "Message Content is required";
+    if (!formData.selectStudent.length) newErrors.selectStudent = "At least one student must be selected";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      const submissionData = {
-        center: selectedCenter,
-        course: selectedCourse,
-        batch: selectedBatch,
-        students: selectedStudents,
-        message: messageContent,
-      };
-      onSubmit(submissionData);
-      resetForm();
+    if (validateForm() && !isSubmitting) {
+      setIsSubmitting(true);
+      try {
+        // Transform the selected student IDs into the required format
+        const formattedStudents = formData.selectStudent.map(studentId => {
+          const student = students.find(s => s.id === studentId);
+          return {
+            id: student.id,
+            name: student.fullName
+          };
+        });
+  
+        const submissionData = {
+          centerName: formData.centerName,
+          course: formData.course,
+          batch: formData.batch,
+          selectStudent: formattedStudents, // Send the formatted student array
+          message: formData.message,
+        };
+  
+        await onSubmit(submissionData);
+        resetForm();
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setErrors(prev => ({
+          ...prev,
+          submit: error.message || "Failed to submit form"
+        }));
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
-
+  
   const resetForm = () => {
-    setFormData(initialFormData);
-    setSelectedCenter("");
-    setSelectedCourse("");
-    setSelectedBatch("");
-    setSelectedStudents([]);
-    setMessageContent("");
+    setFormData({
+      centerName: "",
+      course: "",
+      batch: "",
+      selectStudent: [],
+      message: "",
+    });
     setErrors({});
     setStudentSearch("");
     setFilteredStudents(students);
     setIsAllSelected(false);
   };
 
-  const handleCancel = () => {
-    resetForm();
-    if (onCancel) {
-      onCancel();
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
-
-    // Update corresponding selected states
-    switch (name) {
-      case "centerName":
-        setSelectedCenter(value);
-        break;
-      case "courseName":
-        setSelectedCourse(value);
-        break;
-      case "batchName":
-        setSelectedBatch(value);
-        break;
-      default:
-        break;
-    }
   };
 
-  // Fetch Centers
-  const fetchCenters = async () => {
+  // Fetch data functions
+  const fetchData = async (endpoint, setter) => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        showToast("No token found", "error");
-        return;
-      }
+      if (!token) throw new Error("No token found");
 
-      const response = await fetch(`${API_BASE_URL}/centers`, {
+      const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
       const responseData = await response.json();
-      setCenters(responseData.data || []);
+      setter(responseData.data || []);
     } catch (error) {
-      console.error("Error fetching centers:", error);
-      showToast("Failed to load centers", "error");
+      console.error(`Error fetching ${endpoint}:`, error);
     }
   };
 
-  // Fetch Courses
-  const fetchCourses = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        showToast("No token found", "error");
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/courses`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-      setCourses(responseData.data || []);
-    } catch (error) {
-      console.error("Error fetching courses:", error);
-      showToast("Failed to load courses", "error");
-    }
-  };
-
-  // Fetch Batches
-  const fetchBatches = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        showToast("No token found", "error");
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/batches`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-      setBatches(responseData.data || []);
-    } catch (error) {
-      console.error("Error fetching batches:", error);
-      showToast("Failed to load batches", "error");
-    }
-  };
-
-  // Fetch Students
-  const fetchStudents = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        showToast("No token found", "error");
-        return;
-      }
-
-      const response = await fetch(`${API_BASE_URL}/students`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-      const transformedStudents = responseData.data.map(student => ({
+  useEffect(() => {
+    fetchData("centers", setCenters);
+    fetchData("courses", setCourses);
+    fetchData("batches", setBatches);
+    fetchData("students", (data) => {
+      const transformedStudents = data.map(student => ({
         id: student.id,
         fullName: `${student.firstName} ${student.lastName}`,
         centerName: student.centerName,
         course: student.course,
         batch: student.batch
       }));
-      
       setStudents(transformedStudents);
       setFilteredStudents(transformedStudents);
-    } catch (error) {
-      console.error("Error fetching students:", error);
-      showToast("Failed to load students", "error");
-    }
-  };
-
-  useEffect(() => {
-    fetchCenters();
-    fetchCourses();
-    fetchBatches();
-    fetchStudents();
+    });
   }, []);
 
   const handleStudentSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setStudentSearch(searchTerm);
     
-    const newFilteredStudents = students.filter((student) =>
+    const filtered = students.filter(student =>
       student.fullName.toLowerCase().includes(searchTerm)
     );
-    setFilteredStudents(newFilteredStudents);
-    
-    // Update selected students if all were previously selected
-    if (isAllSelected) {
-      const allStudentIds = newFilteredStudents.map(student => student.id);
-      setSelectedStudents(allStudentIds);
-    }
+    setFilteredStudents(filtered);
   };
 
   const handleSelectAllClick = () => {
     if (isAllSelected) {
-      setSelectedStudents([]);
+      setFormData(prev => ({ ...prev, selectStudent: [] }));
       setIsAllSelected(false);
     } else {
       const allStudentIds = students.map(student => student.id);
-      setSelectedStudents(allStudentIds);
+      setFormData(prev => ({ ...prev, selectStudent: allStudentIds }));
       setIsAllSelected(true);
     }
   };
 
   const handleStudentChange = (event) => {
-    const { value } = event.target;
-    const newSelected = typeof value === 'string' ? value.split(',') : value;
-    setSelectedStudents(newSelected);
-    setIsAllSelected(newSelected.length === students.length);
+    const selectedIds = typeof event.target.value === 'string' 
+      ? event.target.value.split(',') 
+      : event.target.value;
+    
+    setFormData(prev => ({
+      ...prev,
+      selectStudent: selectedIds
+    }));
+    setIsAllSelected(selectedIds.length === students.length);
   };
 
   return (
@@ -313,34 +192,30 @@ const AddSMS = ({ onSubmit, onCancel }) => {
           </span>
           <select
             className={`form-input ${errors.centerName ? "is-invalid" : ""}`}
-            id="centerName"
             name="centerName"
             value={formData.centerName}
             onChange={handleChange}
           >
             <option value="">Select Center</option>
-            {centers.map((centerName) => (
-              <option key={centerName.id} value={centerName.centerName}>
-                {centerName.centerName}
+            {centers.map((center) => (
+              <option key={center.id} value={center.centerName}>
+                {center.centerName}
               </option>
             ))}
           </select>
           {errors.centerName && (
-            <FormHelperText style={{ color: "#ff0000c7" }}>
-              {errors.centerName}
-            </FormHelperText>
+            <FormHelperText error>{errors.centerName}</FormHelperText>
           )}
         </FormControl>
 
         <FormControl fullWidth margin="normal" style={{ position: "relative" }}>
           <span className="input-icon">
-            <FontAwesomeIcon icon={faBook} className="me-2" />
+            <FontAwesomeIcon icon={faBook} />
           </span>
           <select
-            className={`form-input ${errors.courseName ? "is-invalid" : ""}`}
-            id="courseName"
-            name="courseName"
-            value={formData.courseName}
+            className={`form-input ${errors.course ? "is-invalid" : ""}`}
+            name="course"
+            value={formData.course}
             onChange={handleChange}
           >
             <option value="">Select Course</option>
@@ -350,22 +225,19 @@ const AddSMS = ({ onSubmit, onCancel }) => {
               </option>
             ))}
           </select>
-          {errors.courseName && (
-            <FormHelperText style={{ color: "#ff0000c7" }}>
-              {errors.courseName}
-            </FormHelperText>
+          {errors.course && (
+            <FormHelperText error>{errors.course}</FormHelperText>
           )}
         </FormControl>
 
         <FormControl fullWidth margin="normal" style={{ position: "relative" }}>
           <span className="input-icon">
-            <FontAwesomeIcon icon={faGraduationCap} className="me-2" />
+            <FontAwesomeIcon icon={faGraduationCap} />
           </span>
           <select
-            className={`form-input ${errors.batchName ? "is-invalid" : ""}`}
-            id="batchName"
-            name="batchName"
-            value={formData.batchName}
+            className={`form-input ${errors.batch ? "is-invalid" : ""}`}
+            name="batch"
+            value={formData.batch}
             onChange={handleChange}
           >
             <option value="">Select Batch</option>
@@ -375,27 +247,23 @@ const AddSMS = ({ onSubmit, onCancel }) => {
               </option>
             ))}
           </select>
-          {errors.batchName && (
-            <FormHelperText style={{ color: "#ff0000c7" }}>
-              {errors.batchName}
-            </FormHelperText>
+          {errors.batch && (
+            <FormHelperText error>{errors.batch}</FormHelperText>
           )}
         </FormControl>
 
-        <FormControl fullWidth margin="normal" style={{ position: "relative" }}>
+        <FormControl fullWidth margin="normal">
           <span className="input-icon">
-            <FontAwesomeIcon icon={faUsers} className="me-2" />
+            <FontAwesomeIcon icon={faUsers} />
           </span>
           <Select
             multiple
-            value={selectedStudents}
+            value={formData.selectStudent}
             onChange={handleStudentChange}
             renderValue={(selected) => {
-              if (isAllSelected) {
-                return "All Students Selected";
-              }
+              if (isAllSelected) return "All Students Selected";
               return selected
-                .map((id) => students.find((s) => s.id === id)?.fullName)
+                .map(id => students.find(s => s.id === id)?.fullName)
                 .join(", ");
             }}
             MenuProps={{
@@ -419,56 +287,47 @@ const AddSMS = ({ onSubmit, onCancel }) => {
             <MenuItem onClick={handleSelectAllClick}>
               <Checkbox 
                 checked={isAllSelected}
-                indeterminate={!isAllSelected && selectedStudents.length > 0}
+                indeterminate={!isAllSelected && formData.selectStudent.length > 0}
               />
               <ListItemText primary="Select All" />
             </MenuItem>
             {filteredStudents.map((student) => (
               <MenuItem key={student.id} value={student.id}>
-                <Checkbox 
-                  checked={selectedStudents.includes(student.id) || isAllSelected}
-                />
+                <Checkbox checked={formData.selectStudent.includes(student.id)} />
                 <ListItemText primary={student.fullName} />
               </MenuItem>
             ))}
           </Select>
           {errors.selectStudent && (
-            <FormHelperText style={{ color: "#ff0000c7" }}>
-              {errors.selectStudent}
-            </FormHelperText>
+            <FormHelperText error>{errors.selectStudent}</FormHelperText>
           )}
+        </FormControl>
+
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Message Content"
+            multiline
+            rows={4}
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            error={!!errors.message}
+            helperText={errors.message}
+            InputProps={{
+              startAdornment: (
+                <FontAwesomeIcon icon={faComment} style={{ marginRight: '8px' }} />
+              ),
+            }}
+          />
         </FormControl>
       </div>
 
-      <FormControl className="m-0" fullWidth margin="normal">
-        <TextField
-          label={
-            <>
-              <FontAwesomeIcon icon={faComment} className="me-2" /> Message
-              Content
-            </>
-          }
-          multiline
-          rows={4}
-          value={messageContent}
-          onChange={(e) => setMessageContent(e.target.value)}
-          fullWidth
-          margin="normal"
-          error={!!errors.sms}
-          helperText={errors.sms}
-        />
-      </FormControl>
-
       <div className="button-group">
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
           <FontAwesomeIcon icon={faPlus} className="me-2" />
-          Send SMS
+          {isSubmitting ? 'Sending...' : 'Send SMS'}
         </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={handleCancel}
-        >
+        <button type="button" className="btn btn-secondary" onClick={onCancel}>
           <FontAwesomeIcon icon={faXmark} className="me-2" />
           Cancel
         </button>

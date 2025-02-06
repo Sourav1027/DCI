@@ -139,7 +139,7 @@ const Profile = () => {
 
           <div className="profile-content p-4">
             <div className="highlight-section mb-6">
-              <h3 className="section-title flex items-center gap-2 mb-4">
+              <h3 className="section-heading">
                 <Award className="h-5 w-5 text-indigo-600" />
                 Academic Highlights
               </h3>
@@ -166,7 +166,7 @@ const Profile = () => {
             </div>
 
             <div className="info-section mb-6">
-              <h3 className="section-title flex items-center gap-2 mb-4">
+              <h3 className="section-heading">
                 <User className="h-5 w-5 text-indigo-600" />
                 Personal Information
               </h3>
@@ -199,7 +199,7 @@ const Profile = () => {
             </div>
 
             <div className="info-section">
-              <h3 className="section-title flex items-center gap-2 mb-4">
+              <h3 className="section-heading">
                 <Users className="h-5 w-5 text-indigo-600" />
                 Family Information
               </h3>
