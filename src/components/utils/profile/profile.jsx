@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   User, Mail, Phone, Calendar, MapPin, GraduationCap,
-  Users, Award, Camera, PenSquare,
+  Users, Award, Camera, PenSquare,Building2
 } from "lucide-react";
 import './profile.css';
 import img from "../../../assets/photos/sorav.jpg";
@@ -25,7 +25,7 @@ const Profile = () => {
     batch: "2025-2026",
     rollNo: "DR12501",
     section: "A",
-    cgpa: "8.9",
+    center: "Dcodetech-thane",
   });
 
   const handleInputChange = (e) => {
@@ -157,10 +157,10 @@ const Profile = () => {
                   "batch"
                 )}
                 {renderInfoField(
-                  <Award className="text-indigo-600" />,
-                  "CGPA",
-                  formData.cgpa,
-                  "cgpa"
+                  <Building2 className="text-indigo-600" />,
+                  "Center",
+                  formData.center,
+                  "center"
                 )}
               </div>
             </div>

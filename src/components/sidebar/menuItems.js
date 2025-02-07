@@ -25,6 +25,8 @@ import StudentList from "../../Screens/Accountant/studentList/studentList";
 import PendingPayment from "../../Screens/Accountant/pendingPayment/pendingpayment";
 import RecievedPayment from "../../Screens/Accountant/recievedPayment/recievedPayment";
 import StudentCompletion from "../../Screens/completedCouse/completedCourse";
+import softSkills from "../../Screens/centerAdmin/softskills/softSkills";
+
 // import Certificate from "../../Screens/Certificates/certificate";
 
 
@@ -95,6 +97,12 @@ export const menuItems = [
     icon: <FontAwesomeIcon icon={faPersonDotsFromLine} />,
     path: "/soft-skills",
     component: SoftSkills,
+  },
+  {
+    title: "Add skills",
+    icon: <FontAwesomeIcon icon={faPersonDotsFromLine} />,
+    path: "/add-soft-skills-marks",
+    component: softSkills,
   },
   {
     title: "Fee Update",
